@@ -163,11 +163,19 @@ em, .italic {
 }
 
 .header__logo a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-serif);
   font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--color-text);
+}
+
+.header__logo-img {
+  height: 24px;
+  width: auto;
 }
 
 .header__nav {

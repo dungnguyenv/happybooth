@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio — Happy Booth — Studio</title>
-  <meta name="description" content="Explore our wedding photography portfolio — a collection of our favorite captures from the past 12 years.">
+  <title>Portfolio — Happy Booth — Photobooth Event</title>
+  <meta name="description" content="Explore our photobooth portfolio — a collection of fun event captures and premium setups.">
+  <link rel="icon" type="image/svg+xml" href="assets/SVG/Logo_web.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -16,14 +17,17 @@
   <header class="header">
     <div class="header__inner">
       <div class="header__logo">
-        <a href="index.html">Happy Booth — Studio</a>
+        <a href="index.html">
+          <img src="assets/SVG/Logo_web.svg" alt="Happy Booth" class="header__logo-img">
+          Happy Booth — Photobooth Event
+        </a>
       </div>
       <nav class="header__nav">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
         <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Portfolio</a>
-        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
-        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+        <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
         <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
         <span class="header__social">
           <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener" aria-label="Instagram">
@@ -49,8 +53,8 @@
     <a href="index.html" data-i18n="common.nav.home">Home</a>
     <a href="about.html" data-i18n="common.nav.about">About</a>
     <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-    <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
-    <a href="video.html" data-i18n="common.nav.video">Video</a>
+    <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+    <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
     <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
     <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">Instagram</a>
     <span class="lang-toggle lang-toggle--mobile">
@@ -63,7 +67,7 @@
   <!-- Page Header -->
   <section class="page-header">
     <h1 class="fade-in" data-i18n="portfolio.title">Portfolio</h1>
-    <p class="fade-in" data-i18n="portfolio.description">Welcome to our wedding photography portfolio, a collection of our favorite captures from the past 12 years. We specialize in documenting natural moments through timeless images. Our goal is to be there for the intimate exchanges, the little moments, and everything in between.</p>
+    <p class="fade-in" data-i18n="portfolio.description">Welcome to our event photobooth portfolio, a collection of our favorite captures. We specialize in creating fun, engaging moments with our premium photobooths. Our goal is to bring smiles and high-quality prints to your weddings, birthdays, and parties.</p>
   </section>
 
   <!-- Portfolio Gallery -->
@@ -101,8 +105,8 @@
     <p data-i18n="portfolio.cta.text">Thank you so much for taking the time to look through our work — we loved sharing some of our favourites with you. Please do get in touch if you feel we're a right fit.</p>
     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
       <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Get In Touch</a>
-      <a href="weddings.html" class="btn" data-i18n="portfolio.cta.seeGalleries">See Our Full Galleries</a>
-      <a href="video.html" class="btn" data-i18n="portfolio.cta.seeFilms">See — Le Wed Films</a>
+      <a href="frame.html" class="btn" data-i18n="portfolio.cta.seeGalleries">See Frame Designs</a>
+      <a href="tips.html" class="btn" data-i18n="portfolio.cta.seeFilms">See Photobooth Tips</a>
     </div>
   </section>
 
@@ -112,13 +116,16 @@
       <nav class="footer__nav">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
-        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+        <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
         <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
         <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
       </nav>
-      <p class="footer__brand">Happy Booth — Studio</p>
-      <p class="footer__tagline" data-i18n="common.footer.tagline">Wedding Photography & Videography</p>
+      <div class="footer__brand-wrap" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
+        <img src="assets/SVG/Logo_web.svg" alt="Logo" class="footer__logo-img" style="height: 30px; width: auto;">
+        <p class="footer__brand" style="margin-bottom: 0;">Happy Booth</p>
+      </div>
+      <p class="footer__tagline" data-i18n="common.footer.tagline">Premium Photobooth Event Rental</p>
       <p class="footer__divider">—</p>
       <div class="footer__social">
         <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">@happybooth</a>

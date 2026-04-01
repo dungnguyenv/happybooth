@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — Happy Booth — Studio</title>
-  <meta name="description" content="Get in touch with Happy Booth Studio for wedding photography and videography inquiries.">
+  <title>Contact — Happy Booth — Photobooth Event</title>
+  <meta name="description" content="Get in touch with Happy Booth for photobooth event rental inquiries.">
+  <link rel="icon" type="image/svg+xml" href="assets/SVG/Logo_web.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -16,14 +17,17 @@
   <header class="header">
     <div class="header__inner">
       <div class="header__logo">
-        <a href="index.html">Happy Booth — Studio</a>
+        <a href="index.html">
+          <img src="assets/SVG/Logo_web.svg" alt="Happy Booth" class="header__logo-img">
+          Happy Booth — Photobooth Event
+        </a>
       </div>
       <nav class="header__nav">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
         <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
-        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+        <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
         <a href="contact.html" class="active" data-i18n="common.nav.contact">Contact</a>
         <span class="header__social">
           <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener" aria-label="Instagram">
@@ -49,8 +53,8 @@
     <a href="index.html" data-i18n="common.nav.home">Home</a>
     <a href="about.html" data-i18n="common.nav.about">About</a>
     <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-    <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
-    <a href="video.html" data-i18n="common.nav.video">Video</a>
+    <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+    <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
     <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
     <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">Instagram</a>
     <span class="lang-toggle lang-toggle--mobile">
@@ -90,7 +94,7 @@
     </div>
 
     <div class="form-group">
-      <label for="fianceName" data-i18n="contact.form.fianceName">Fianc&eacute;'s Name</label>
+      <label for="fianceName" data-i18n="contact.form.fianceName">Co-Host Name</label>
       <input type="text" id="fianceName" name="fianceName">
     </div>
 
@@ -100,12 +104,12 @@
     </div>
 
     <div class="form-group">
-      <label for="country" data-i18n="contact.form.country">Country / City of Wedding</label>
+      <label for="country" data-i18n="contact.form.country">Country / City of Event</label>
       <input type="text" id="country" name="country">
     </div>
 
     <div class="form-group">
-      <label for="venue" data-i18n="contact.form.venue">Wedding Venue</label>
+      <label for="venue" data-i18n="contact.form.venue">Event Venue</label>
       <input type="text" id="venue" name="venue">
     </div>
 
@@ -113,10 +117,10 @@
       <label for="eventType" data-i18n="contact.form.eventType">Event Type</label>
       <select id="eventType" name="eventType">
         <option value="" disabled selected data-i18n="contact.form.selectDefault">Select...</option>
-        <option value="full-wedding" data-i18n="contact.form.fullWedding">Full Wedding Day</option>
-        <option value="elopement" data-i18n="contact.form.elopement">Elopement</option>
-        <option value="couples-shoot" data-i18n="contact.form.couplesShoot">Couple's Shoot</option>
-        <option value="event-other" data-i18n="contact.form.eventOther">Event / Other</option>
+        <option value="full-wedding" data-i18n="contact.form.fullWedding">Wedding</option>
+        <option value="elopement" data-i18n="contact.form.elopement">Birthday Party</option>
+        <option value="couples-shoot" data-i18n="contact.form.couplesShoot">Corporate Event</option>
+        <option value="event-other" data-i18n="contact.form.eventOther">Other Private Event</option>
       </select>
     </div>
 
@@ -124,19 +128,19 @@
       <label data-i18n="contact.form.servicesLabel">Services Interested In</label>
       <div class="form-checkboxes">
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="photography"> <span data-i18n="contact.form.photography">Photography</span>
+          <input type="checkbox" name="services" value="standard-booth"> <span data-i18n="contact.form.photography">Standard Booth</span>
         </label>
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="videography"> <span data-i18n="contact.form.videography">Videography</span>
+          <input type="checkbox" name="services" value="mirror-booth"> <span data-i18n="contact.form.videography">Mirror Booth</span>
         </label>
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="photo-video"> <span data-i18n="contact.form.photoVideo">Photo + Video Package</span>
+          <input type="checkbox" name="services" value="360-video"> <span data-i18n="contact.form.photoVideo">360 Video Booth</span>
         </label>
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="film-rolls"> <span data-i18n="contact.form.filmRolls">Film Rolls</span>
+          <input type="checkbox" name="services" value="audio-guestbook"> <span data-i18n="contact.form.filmRolls">Audio Guestbook</span>
         </label>
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="albums"> <span data-i18n="contact.form.albums">Albums</span>
+          <input type="checkbox" name="services" value="custom-backdrop"> <span data-i18n="contact.form.albums">Custom Backdrop</span>
         </label>
       </div>
     </div>
@@ -147,12 +151,12 @@
     </div>
 
     <div class="form-group">
-      <label for="planner" data-i18n="contact.form.planner">Wedding Planner</label>
+      <label for="planner" data-i18n="contact.form.planner">Event Planner</label>
       <input type="text" id="planner" name="planner">
     </div>
 
     <div class="form-group">
-      <label for="budget" data-i18n="contact.form.budget">Photography / Videography Budget</label>
+      <label for="budget" data-i18n="contact.form.budget">Photobooth Budget</label>
       <input type="text" id="budget" name="budget">
     </div>
 
@@ -176,13 +180,16 @@
       <nav class="footer__nav">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
-        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+        <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
         <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
         <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
       </nav>
-      <p class="footer__brand">Happy Booth — Studio</p>
-      <p class="footer__tagline" data-i18n="common.footer.tagline">Wedding Photography & Videography</p>
+      <div class="footer__brand-wrap" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
+        <img src="assets/SVG/Logo_web.svg" alt="Logo" class="footer__logo-img" style="height: 30px; width: auto;">
+        <p class="footer__brand" style="margin-bottom: 0;">Happy Booth</p>
+      </div>
+      <p class="footer__tagline" data-i18n="common.footer.tagline">Premium Photobooth Event Rental</p>
       <p class="footer__divider">—</p>
       <div class="footer__social">
         <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">@happybooth</a>
