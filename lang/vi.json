@@ -1,11 +1,10 @@
 {
-  "meta.title.home": "Happy Booth — Studio",
+  "meta.title.home": "Happy Booth — Photobooth Event",
   "meta.title.about": "Giới thiệu — Happy Booth — Studio",
   "meta.title.portfolio": "Bộ sưu tập — Happy Booth — Studio",
   "meta.title.weddings": "Đám cưới — Happy Booth — Studio",
   "meta.title.video": "Phim cưới — Happy Booth — Studio",
   "meta.title.contact": "Liên hệ — Happy Booth — Studio",
-
   "common.nav.home": "Trang chủ",
   "common.nav.about": "Giới thiệu",
   "common.nav.portfolio": "Bộ sưu tập",
@@ -15,7 +14,6 @@
   "common.cta.getInTouch": "Liên Hệ Ngay",
   "common.footer.tagline": "Nhiếp ảnh & Quay phim cưới",
   "common.footer.copyright": "© 2024 Happy Booth Ltd.",
-
   "home.hero.welcome": "Chào mừng bạn đến với <em>Happy Booth — Studio,</em> đội ngũ nhiếp ảnh chuyên nghiệp với mười hai năm kinh nghiệm. Xuất phát từ New Zealand, hiện đặt trụ sở tại Vương quốc Anh và Châu Âu,",
   "home.hero.quote": "\u201cHappy Booth kết hợp thẩm mỹ hiện đại với sự sang trọng vượt thời gian để ghi lại ngày trọng đại của bạn với tâm huyết và sự tinh tế.\u201d",
   "home.featured.title": "Được giới thiệu bởi",
@@ -24,7 +22,6 @@
   "home.testimonial3.text": "\u201cHọ đã ghi lại mọi khoảnh khắc đặc biệt mà chúng tôi không hề hay biết. Những bức ảnh thật tuyệt đẹp và chúng tôi sẽ trân trọng những kỷ niệm này mãi mãi.\u201d",
   "home.testimonial4.text": "\u201cTừ lúc tư vấn đến khi giao ảnh, họ thể hiện sự chuyên nghiệp xuất sắc. Trong ngày cưới, họ bình tĩnh và kín đáo. Kết quả thật đáng kinh ngạc.\u201d",
   "home.cta.text": "Hãy liên hệ với chúng tôi nếu bạn cảm thấy chúng tôi phù hợp.",
-
   "about.est": "Thành lập 2012",
   "about.hero.text1": "Qua nhiều năm, <em>Happy Booth — Studio</em> đã phát triển từ một bộ đôi thành một đội ngũ gồm những cá nhân tài năng. Khởi đầu là sự hợp tác, nay đã trở thành một studio gắn kết, nơi niềm đam mê chung với việc ghi lại vẻ đẹp của đám cưới là động lực cho tất cả. Mỗi thành viên mang đến kỹ năng, kinh nghiệm và góc nhìn sáng tạo riêng — cho phép chúng tôi mang đến những bộ ảnh &amp; phim vượt thời gian.",
   "about.hero.text2": "Sự phát triển của đội ngũ studio không chỉ cho phép chúng tôi cung cấp dịch vụ chụp ảnh toàn diện cho đám cưới, mà còn đảm bảo mỗi cặp đôi nhận được sự chăm sóc và chú ý tỉ mỉ nhất. Cùng nhau, chúng tôi cam kết ghi lại những khoảnh khắc quý giá trong ngày trọng đại để tạo nên những kỷ niệm vĩnh cửu.",
@@ -42,17 +39,14 @@
   "about.faq.q6": "Các bạn có thể giới thiệu địa điểm cho đám cưới destination không?",
   "about.faq.a6": "Chúng tôi sẵn lòng giới thiệu địa điểm dựa trên kinh nghiệm và hiểu biết về các điểm đến khác nhau. Chúng tôi cũng có thể tư vấn về các yếu tố cần xem xét khi chọn địa điểm đám cưới destination. Hãy nhắn tin cho chúng tôi về vấn đề này!",
   "about.cta.text": "Bạn có câu hỏi? Chúng tôi rất muốn nghe từ bạn.",
-
   "portfolio.title": "Bộ sưu tập",
   "portfolio.description": "Chào mừng bạn đến với bộ sưu tập ảnh cưới của chúng tôi, tập hợp những bức ảnh yêu thích nhất trong 12 năm qua. Chúng tôi chuyên ghi lại những khoảnh khắc tự nhiên qua những hình ảnh vượt thời gian. Mục tiêu của chúng tôi là ghi lại những trao đổi thân mật, những khoảnh khắc nhỏ, và tất cả những gì ở giữa.",
   "portfolio.cta.text": "Cảm ơn bạn đã dành thời gian xem qua tác phẩm của chúng tôi — chúng tôi rất vui được chia sẻ những tác phẩm yêu thích. Hãy liên hệ nếu bạn cảm thấy chúng tôi phù hợp.",
   "portfolio.cta.seeGalleries": "Xem đầy đủ bộ ảnh",
   "portfolio.cta.seeFilms": "Xem phim cưới",
-
   "weddings.title": "Đám cưới —",
   "weddings.description": "Chúng tôi mời bạn khám phá các bộ ảnh cưới, tìm cảm hứng và hình dung những khả năng cho ngày trọng đại. Nếu bạn có bất kỳ câu hỏi nào hoặc muốn tìm hiểu về việc chúng tôi ghi lại đám cưới của bạn, chúng tôi rất muốn nghe từ bạn.",
   "weddings.cta.text": "Chúng tôi rất muốn ghi lại ngày trọng đại của bạn.",
-
   "video.hero.text1": "Tại Happy Booth — Studio, chúng tôi luôn đam mê tạo ra những thước phim cưới không chỉ là ghi hình thông thường, mà là bộ phim tài liệu vượt thời gian về ngày trọng đại. Chúng tôi nỗ lực ghi lại những cảm xúc chân thực và khoảnh khắc tự nhiên trong ngày đặc biệt của mỗi cặp đôi.",
   "video.hero.text2": "Mục tiêu không chỉ là ghi lại sự kiện mà còn nắm bắt cả những khoảnh khắc lớn lẫn nhỏ làm nên sự đặc biệt. Chúng tôi hiểu tầm quan trọng của việc lưu giữ kỷ niệm.",
   "video.hero.text3": "Với phong cách phim tài liệu điện ảnh độc đáo, chúng tôi hướng đến việc tạo ra những thước phim vượt xa video cưới truyền thống. Chúng tôi kết hợp kỹ thuật kể chuyện nghệ thuật, quay phim đẹp mắt, mỗi phim được chỉnh sửa cẩn thận, chỉnh màu và kết hợp nhạc nền phù hợp, đảm bảo mỗi khung hình đều toát lên tình yêu và cảm xúc.",
@@ -68,7 +62,6 @@
   "video.credits.dress": "Váy cưới",
   "video.credits.suit": "Vest",
   "video.cta.text": "Cảm ơn bạn đã dành thời gian xem qua các thước phim của chúng tôi — chúng tôi rất vui được chia sẻ. Hãy liên hệ nếu bạn cảm thấy chúng tôi phù hợp.",
-
   "contact.title": "Liên hệ.",
   "contact.based": "Trụ sở",
   "contact.location.ukeu": "Anh & EU — Tháng 4 đến tháng 11 năm 2025 & 2026",
