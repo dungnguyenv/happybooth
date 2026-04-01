@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Happy Booth — Studio</title>
+  <meta name="description" content="Get in touch with Happy Booth Studio for wedding photography and videography inquiries.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__logo">
+        <a href="index.html">Happy Booth — Studio</a>
+      </div>
+      <nav class="header__nav">
+        <a href="index.html" data-i18n="common.nav.home">Home</a>
+        <a href="about.html" data-i18n="common.nav.about">About</a>
+        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
+        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="contact.html" class="active" data-i18n="common.nav.contact">Contact</a>
+        <span class="header__social">
+          <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+        </span>
+        <span class="lang-toggle">
+          <button class="lang-toggle__btn active" data-lang="en">EN</button>
+          <span class="lang-toggle__divider">|</span>
+          <button class="lang-toggle__btn" data-lang="vi">VI</button>
+        </span>
+      </nav>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="index.html" data-i18n="common.nav.home">Home</a>
+    <a href="about.html" data-i18n="common.nav.about">About</a>
+    <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+    <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
+    <a href="video.html" data-i18n="common.nav.video">Video</a>
+    <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+    <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">Instagram</a>
+    <span class="lang-toggle lang-toggle--mobile">
+      <button class="lang-toggle__btn active" data-lang="en">EN</button>
+      <span class="lang-toggle__divider">|</span>
+      <button class="lang-toggle__btn" data-lang="vi">VI</button>
+    </span>
+  </nav>
+
+  <!-- Contact Page - Two Column Layout -->
+  <section class="contact-page">
+    <div class="contact-page__inner">
+      <div class="contact-page__left fade-in">
+        <h1 data-i18n="contact.title">Contact us.</h1>
+        <p class="contact-email"><a href="mailto:hello@happybooth.com">hello@happybooth.com</a></p>
+        <div class="contact-page__location">
+          <p><strong data-i18n="contact.based">Based</strong></p>
+          <p data-i18n="contact.location.ukeu">UK &amp; EU — April to November 2025 &amp; 2026</p>
+          <p data-i18n="contact.location.nz">NZ — November to March 2025 &amp; 2026</p>
+        </div>
+        <p class="contact-page__closing" data-i18n="contact.closing">We can't wait to hear from you. HB</p>
+      </div>
+      <div class="contact-page__carousel fade-in" id="contactCarousel">
+        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/1694501015498-YWBSKNFJ5HOP2BVKH6IV/L%26B-11.jpg" alt="Wedding photography" class="carousel-active">
+        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/18577a57-3f39-4005-9abb-3d07122e40d6/CS-355.jpg" alt="Wedding photography">
+        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/10f9b115-bc19-47bc-a814-daefe854fd92/J%26E-96.jpg" alt="Wedding photography">
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <form class="contact-form fade-in" onsubmit="return handleSubmit(event)">
+
+    <div class="form-group">
+      <label for="fullName" data-i18n="contact.form.fullName">Full Name *</label>
+      <input type="text" id="fullName" name="fullName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="fianceName" data-i18n="contact.form.fianceName">Fianc&eacute;'s Name</label>
+      <input type="text" id="fianceName" name="fianceName">
+    </div>
+
+    <div class="form-group">
+      <label for="eventDate" data-i18n="contact.form.eventDate">Event Date(s)</label>
+      <input type="text" id="eventDate" name="eventDate" placeholder="DD/MM/YYYY" data-i18n-placeholder="contact.form.datePlaceholder">
+    </div>
+
+    <div class="form-group">
+      <label for="country" data-i18n="contact.form.country">Country / City of Wedding</label>
+      <input type="text" id="country" name="country">
+    </div>
+
+    <div class="form-group">
+      <label for="venue" data-i18n="contact.form.venue">Wedding Venue</label>
+      <input type="text" id="venue" name="venue">
+    </div>
+
+    <div class="form-group">
+      <label for="eventType" data-i18n="contact.form.eventType">Event Type</label>
+      <select id="eventType" name="eventType">
+        <option value="" disabled selected data-i18n="contact.form.selectDefault">Select...</option>
+        <option value="full-wedding" data-i18n="contact.form.fullWedding">Full Wedding Day</option>
+        <option value="elopement" data-i18n="contact.form.elopement">Elopement</option>
+        <option value="couples-shoot" data-i18n="contact.form.couplesShoot">Couple's Shoot</option>
+        <option value="event-other" data-i18n="contact.form.eventOther">Event / Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label data-i18n="contact.form.servicesLabel">Services Interested In</label>
+      <div class="form-checkboxes">
+        <label class="form-checkbox">
+          <input type="checkbox" name="services" value="photography"> <span data-i18n="contact.form.photography">Photography</span>
+        </label>
+        <label class="form-checkbox">
+          <input type="checkbox" name="services" value="videography"> <span data-i18n="contact.form.videography">Videography</span>
+        </label>
+        <label class="form-checkbox">
+          <input type="checkbox" name="services" value="photo-video"> <span data-i18n="contact.form.photoVideo">Photo + Video Package</span>
+        </label>
+        <label class="form-checkbox">
+          <input type="checkbox" name="services" value="film-rolls"> <span data-i18n="contact.form.filmRolls">Film Rolls</span>
+        </label>
+        <label class="form-checkbox">
+          <input type="checkbox" name="services" value="albums"> <span data-i18n="contact.form.albums">Albums</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email" data-i18n="contact.form.email">Email *</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="planner" data-i18n="contact.form.planner">Wedding Planner</label>
+      <input type="text" id="planner" name="planner">
+    </div>
+
+    <div class="form-group">
+      <label for="budget" data-i18n="contact.form.budget">Photography / Videography Budget</label>
+      <input type="text" id="budget" name="budget">
+    </div>
+
+    <div class="form-group">
+      <label for="howHeard" data-i18n="contact.form.howHeard">How Did You Hear About Us?</label>
+      <input type="text" id="howHeard" name="howHeard">
+    </div>
+
+    <div class="form-group">
+      <label for="message" data-i18n="contact.form.message">Message</label>
+      <textarea id="message" name="message" rows="5"></textarea>
+    </div>
+
+    <button type="submit" class="btn" data-i18n="contact.form.send">Send</button>
+    <p class="contact-form__note" data-i18n="contact.form.note">Please check your spam/junk folders for our reply.</p>
+  </form>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <nav class="footer__nav">
+        <a href="index.html" data-i18n="common.nav.home">Home</a>
+        <a href="about.html" data-i18n="common.nav.about">About</a>
+        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
+        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+      </nav>
+      <p class="footer__brand">Happy Booth — Studio</p>
+      <p class="footer__tagline" data-i18n="common.footer.tagline">Wedding Photography & Videography</p>
+      <p class="footer__divider">—</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">@happybooth</a>
+      </div>
+      <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2024 Happy Booth Ltd.</p>
+    </div>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      var msg = (window.i18n && window.i18n.t('contact.form.successAlert'))
+        || 'Thank you for your inquiry! We will get back to you soon.';
+      alert(msg);
+      e.target.reset();
+      return false;
+    }
+  </script>
+</body>
+</html>

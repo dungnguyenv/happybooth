@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Happy Booth — Studio</title>
+  <meta name="description" content="Learn about Happy Booth Studio — a cohesive team of talented individuals passionate about capturing the beauty of weddings.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__logo">
+        <a href="index.html">Happy Booth — Studio</a>
+      </div>
+      <nav class="header__nav">
+        <a href="index.html" data-i18n="common.nav.home">Home</a>
+        <a href="about.html" class="active" data-i18n="common.nav.about">About</a>
+        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
+        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        <span class="header__social">
+          <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+        </span>
+        <span class="lang-toggle">
+          <button class="lang-toggle__btn active" data-lang="en">EN</button>
+          <span class="lang-toggle__divider">|</span>
+          <button class="lang-toggle__btn" data-lang="vi">VI</button>
+        </span>
+      </nav>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="index.html" data-i18n="common.nav.home">Home</a>
+    <a href="about.html" data-i18n="common.nav.about">About</a>
+    <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+    <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
+    <a href="video.html" data-i18n="common.nav.video">Video</a>
+    <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+    <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">Instagram</a>
+    <span class="lang-toggle lang-toggle--mobile">
+      <button class="lang-toggle__btn active" data-lang="en">EN</button>
+      <span class="lang-toggle__divider">|</span>
+      <button class="lang-toggle__btn" data-lang="vi">VI</button>
+    </span>
+  </nav>
+
+  <!-- About Hero - Overlapping Grid -->
+  <section class="about-hero">
+    <div class="about-hero__inner">
+      <div class="about-hero__heading fade-in">
+        <h1>HB — Studio</h1>
+        <span class="est" data-i18n="about.est"><em>Est. 2012</em></span>
+      </div>
+      <div class="about-hero__text fade-in">
+        <p data-i18n-html="about.hero.text1">Over the years, <em>Happy Booth — Studio</em> has grown from a duo into a cohesive team of talented individuals. What started as a partnership has evolved into a close-knit studio, where our shared passion for capturing the beauty of weddings is the driving force behind it all. Each team member brings their unique skills, experiences and creative perspective to the table — allowing us to deliver timeless galleries &amp; films.</p>
+        <p data-i18n-html="about.hero.text2">Our growth as a studio team not only allows us to provide comprehensive coverage of weddings, but also ensures that each couple receives the utmost care and attention to detail. Together, we are committed to documenting the precious moments of your day in creating timeless memories for our couples to hold.</p>
+      </div>
+      <div class="about-hero__image fade-in">
+        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/3e66e014-699a-46c5-b20a-e4db89dafe94/S%26N+Shoes+copy.jpg" alt="Happy Booth Studio">
+      </div>
+    </div>
+  </section>
+
+  <!-- Second Image -->
+  <section class="about-image-full fade-in">
+    <div class="about-image-full__inner">
+      <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/3d1287d2-0b3f-4b2b-ae99-dbc7d26d39af/00-2+%281%29.jpg" alt="Wedding photography">
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq__inner">
+      <h2 class="faq__title fade-in" data-i18n="about.faq.title">FAQs</h2>
+
+      <div class="faq__item fade-in">
+        <button class="faq__question" data-i18n="about.faq.q1">Where are you based?</button>
+        <div class="faq__answer">
+          <p data-i18n-html="about.faq.a1">Whilst we are from New Zealand — we are primarily based in the UK, covering weddings across the UK and Europe for most of the year. However, during the colder months from late November to March, we head down south to New Zealand and Australia. If you're planning a wedding outside of these regions, feel free to reach out — we're accustomed to traveling and often take on projects in other locations.<br><br>UK &amp; EU — April to November 2024, 2025 &amp; 2026<br>New Zealand — November to March 2024, 2025 &amp; 2026</p>
+        </div>
+      </div>
+
+      <div class="faq__item fade-in">
+        <button class="faq__question" data-i18n="about.faq.q2">What do you focus on when shooting a wedding day?</button>
+        <div class="faq__answer">
+          <p data-i18n-html="about.faq.a2">Our style of capturing a wedding is one of which a much more candid and timeless approach is taken. We love to shoot in a way that tells a story of the day through not just the big moments but has a focus also on little, often overseen moments that occur throughout. We have a large focus on the people, details &amp; surroundings, paired with the art of capturing in a timeless manner. It's important to note that our larger galleries displayed on our website showcase much more of our couples and leave out many of the more personal moments between them and their loved ones for our couples privacy, but each gallery our couples receive after their wedding day contain a significant amount of imagery highlighting their day filled with their loved ones and all that comes with.</p>
+        </div>
+      </div>
+
+      <div class="faq__item fade-in">
+        <button class="faq__question" data-i18n="about.faq.q3">Do you offer albums?</button>
+        <div class="faq__answer">
+          <p data-i18n-html="about.faq.a3">Yes, absolutely — we provide a range of albums &amp; wedding magazines. We can send over a list of options if this were something you are interested in.</p>
+        </div>
+      </div>
+
+      <div class="faq__item fade-in">
+        <button class="faq__question" data-i18n="about.faq.q4">Which package would suit my day best?</button>
+        <div class="faq__answer">
+          <p data-i18n-html="about.faq.a4">Every wedding day is unique, making it challenging to create a one-size-fits-all package. However, we recommend Package 01 for smaller/intimate celebrations, where fewer hours and images are needed. For larger celebrations, Package 02 is ideal. Additional hours can always be added as needed &amp; we also love capturing the moments from pre- and post-wedding celebration events. Get in-touch via email or our <a href="contact.html">Contact Form</a> to hear more.</p>
+        </div>
+      </div>
+
+      <div class="faq__item fade-in">
+        <button class="faq__question" data-i18n="about.faq.q5">How long do I have to wait after my wedding to receive my gallery?</button>
+        <div class="faq__answer">
+          <p data-i18n-html="about.faq.a5">We'll provide you with a preview gallery of your big day a week after your wedding. The full galleries will be delivered within 8-12 weeks, depending on the time of year.</p>
+        </div>
+      </div>
+
+      <div class="faq__item fade-in">
+        <button class="faq__question" data-i18n="about.faq.q6">Can you recommend venues or locations for destination weddings?</button>
+        <div class="faq__answer">
+          <p data-i18n-html="about.faq.a6">We're happy to provide recommendations for venues or locations based on our experience and knowledge of various destinations. We can also offer advice on factors to consider when choosing a destination wedding location. Feel free to message us about this!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta section fade-in">
+    <p data-i18n="about.cta.text">Have a question? We'd love to hear from you.</p>
+    <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Get In Touch</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <nav class="footer__nav">
+        <a href="index.html" data-i18n="common.nav.home">Home</a>
+        <a href="about.html" data-i18n="common.nav.about">About</a>
+        <a href="weddings.html" data-i18n="common.nav.photo">Photo</a>
+        <a href="video.html" data-i18n="common.nav.video">Video</a>
+        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+      </nav>
+      <p class="footer__brand">Happy Booth — Studio</p>
+      <p class="footer__tagline" data-i18n="common.footer.tagline">Wedding Photography & Videography</p>
+      <p class="footer__divider">—</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/happybooth" target="_blank" rel="noopener">@happybooth</a>
+      </div>
+      <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2024 Happy Booth Ltd.</p>
+    </div>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
