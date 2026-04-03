@@ -1,7 +1,15 @@
 /* ========================================
-   Happy Booth — Studio
+   Happy Booth — Photobooth Event
    Internationalization (i18n)
    ======================================== */
+
+// Immediately hide body if non-default language is saved (prevents FOUC)
+(function () {
+  var saved = localStorage.getItem('hb-lang');
+  if (saved && saved !== 'en') {
+    document.documentElement.classList.add('i18n-loading');
+  }
+})();
 
 (function () {
   const DEFAULT_LANG = 'en';
@@ -15,18 +23,26 @@
     updateToggleUI();
 
     if (currentLang !== DEFAULT_LANG) {
-      loadTranslations(currentLang).then(() => {
+      loadTranslations(currentLang).then(function () {
         applyTranslations();
+        reveal();
       });
+    } else {
+      reveal();
     }
+  }
+
+  function reveal() {
+    document.documentElement.classList.remove('i18n-loading');
+    document.documentElement.classList.add('i18n-ready');
   }
 
   async function loadTranslations(lang) {
     if (cache[lang]) return;
     try {
-      const basePath = document.querySelector('script[src*="i18n.js"]').src;
-      const langPath = basePath.replace('js/i18n.js', 'lang/' + lang + '.json');
-      const resp = await fetch(langPath);
+      var basePath = document.querySelector('script[src*="i18n.js"]').src;
+      var langPath = basePath.replace('js/i18n.js', 'lang/' + lang + '.json');
+      var resp = await fetch(langPath);
       cache[lang] = await resp.json();
     } catch (e) {
       console.warn('i18n: Could not load translations for', lang);
@@ -35,7 +51,7 @@
   }
 
   function applyTranslations() {
-    const strings = cache[currentLang];
+    var strings = cache[currentLang];
     if (!strings) return;
 
     // textContent replacements
@@ -77,7 +93,6 @@
     localStorage.setItem(STORAGE_KEY, lang);
 
     if (lang === DEFAULT_LANG) {
-      // Reload to restore original English HTML
       location.reload();
       return;
     }

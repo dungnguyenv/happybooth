@@ -1422,6 +1422,19 @@ em, .italic {
 }
 
 /* ========================================
+   i18n: Hide content while loading translations
+   ======================================== */
+
+html.i18n-loading body {
+  opacity: 0;
+}
+
+html.i18n-ready body {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+/* ========================================
    Animations
    ======================================== */
 
@@ -1447,6 +1460,10 @@ em, .italic {
 }
 
 @media (max-width: 1024px) {
+  .header__logo-suffix {
+    display: none;
+  }
+
   .gallery__grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1469,6 +1486,10 @@ em, .italic {
   :root {
     --site-gutter: 6vw;
     --header-height: 60px;
+  }
+
+  .header__logo-suffix {
+    display: none;
   }
 
   .header__nav {
