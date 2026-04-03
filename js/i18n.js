@@ -3,16 +3,11 @@
    Internationalization (i18n)
    ======================================== */
 
-// Immediately hide body if non-default language is saved (prevents FOUC)
-(function () {
-  var saved = localStorage.getItem('hb-lang');
-  if (saved && saved !== 'en') {
-    document.documentElement.classList.add('i18n-loading');
-  }
-})();
+// Note: FOUC prevention (i18n-loading class) is handled by inline <script> in <head>
 
 (function () {
-  const DEFAULT_LANG = 'en';
+  const DEFAULT_LANG = 'vi';
+  const HTML_LANG = 'en'; // language hardcoded in HTML
   const STORAGE_KEY = 'hb-lang';
   const cache = {};
   let currentLang = DEFAULT_LANG;
@@ -22,7 +17,7 @@
     setupToggleListeners();
     updateToggleUI();
 
-    if (currentLang !== DEFAULT_LANG) {
+    if (currentLang !== HTML_LANG) {
       loadTranslations(currentLang).then(function () {
         applyTranslations();
         reveal();
@@ -92,7 +87,8 @@
     currentLang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
 
-    if (lang === DEFAULT_LANG) {
+    if (lang === HTML_LANG) {
+      // Switching to HTML's native language — reload to restore original text
       location.reload();
       return;
     }
@@ -121,7 +117,7 @@
     });
   }
 
-  // Expose for contact form alert
+  // Expose API for router and contact form
   window.i18n = {
     t: function (key) {
       var strings = cache[currentLang];
@@ -130,6 +126,23 @@
     },
     currentLang: function () {
       return currentLang;
+    },
+    apply: function (root) {
+      if (currentLang === HTML_LANG) return;
+      var strings = cache[currentLang];
+      if (!strings) return;
+      root.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (strings[key] !== undefined) el.textContent = strings[key];
+      });
+      root.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n-html');
+        if (strings[key] !== undefined) el.innerHTML = strings[key];
+      });
+      root.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n-placeholder');
+        if (strings[key] !== undefined) el.setAttribute('placeholder', strings[key]);
+      });
     }
   };
 

@@ -1435,6 +1435,19 @@ html.i18n-ready body {
 }
 
 /* ========================================
+   SPA Page Transition
+   ======================================== */
+
+#page-content {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#page-content.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ========================================
    Animations
    ======================================== */
 

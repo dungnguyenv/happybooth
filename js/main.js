@@ -1,41 +1,72 @@
 /* ========================================
-   Happy Booth — Studio
+   Happy Booth — Photobooth Event
    Main JavaScript
    ======================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+var _scrollObserver = null;
+var _carouselInterval = null;
+
+document.addEventListener('DOMContentLoaded', function () {
+  // One-time inits (header/nav — permanent DOM)
   initMobileNav();
+  initHeaderScroll();
+
+  // Per-page inits (content-specific)
+  reinitPage();
+});
+
+/* ----------------------------------------
+   Exposed API for SPA Router
+   ---------------------------------------- */
+window.HB = {
+  reinitPage: reinitPage,
+  cleanup: cleanup
+};
+
+function reinitPage() {
   initScrollAnimations();
   initLightbox();
   initFAQ();
-  initHeaderScroll();
   initCarousel();
-});
+}
+
+function cleanup() {
+  // Clean up carousel interval
+  if (_carouselInterval) {
+    clearInterval(_carouselInterval);
+    _carouselInterval = null;
+  }
+  // Clean up scroll observer
+  if (_scrollObserver) {
+    _scrollObserver.disconnect();
+    _scrollObserver = null;
+  }
+}
 
 /* ----------------------------------------
    Mobile Navigation
    ---------------------------------------- */
 function initMobileNav() {
-  const hamburger = document.querySelector('.hamburger');
-  const mobileNav = document.querySelector('.mobile-nav');
+  var hamburger = document.querySelector('.hamburger');
+  var mobileNav = document.querySelector('.mobile-nav');
 
   if (!hamburger || !mobileNav) return;
 
-  hamburger.addEventListener('click', () => {
+  hamburger.addEventListener('click', function () {
     hamburger.classList.toggle('active');
     mobileNav.classList.toggle('active');
     document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
   });
 
-  mobileNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+  mobileNav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
       hamburger.classList.remove('active');
       mobileNav.classList.remove('active');
       document.body.style.overflow = '';
     });
   });
 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
       hamburger.classList.remove('active');
       mobileNav.classList.remove('active');
@@ -48,10 +79,10 @@ function initMobileNav() {
    Header Scroll Effect
    ---------------------------------------- */
 function initHeaderScroll() {
-  const header = document.querySelector('.header');
+  var header = document.querySelector('.header');
   if (!header) return;
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', function () {
     if (window.pageYOffset > 100) {
       header.style.boxShadow = '0 1px 0 rgba(0,0,0,0.05)';
     } else {
@@ -64,14 +95,18 @@ function initHeaderScroll() {
    Scroll Animations (Fade In)
    ---------------------------------------- */
 function initScrollAnimations() {
-  const elements = document.querySelectorAll('.fade-in');
+  var elements = document.querySelectorAll('.fade-in:not(.visible)');
   if (!elements.length) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+  if (_scrollObserver) {
+    _scrollObserver.disconnect();
+  }
+
+  _scrollObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        _scrollObserver.unobserve(entry.target);
       }
     });
   }, {
@@ -79,33 +114,33 @@ function initScrollAnimations() {
     rootMargin: '0px 0px -50px 0px'
   });
 
-  elements.forEach(el => observer.observe(el));
+  elements.forEach(function (el) { _scrollObserver.observe(el); });
 }
 
 /* ----------------------------------------
    Lightbox
    ---------------------------------------- */
 function initLightbox() {
-  const lightbox = document.getElementById('lightbox');
+  var lightbox = document.getElementById('lightbox');
   if (!lightbox) return;
 
-  const lightboxImg = lightbox.querySelector('.lightbox__image');
-  const lightboxClose = lightbox.querySelector('.lightbox__close');
-  const lightboxPrev = lightbox.querySelector('.lightbox__prev');
-  const lightboxNext = lightbox.querySelector('.lightbox__next');
-  const lightboxCounter = lightbox.querySelector('.lightbox__counter');
+  var lightboxImg = lightbox.querySelector('.lightbox__image');
+  var lightboxClose = lightbox.querySelector('.lightbox__close');
+  var lightboxPrev = lightbox.querySelector('.lightbox__prev');
+  var lightboxNext = lightbox.querySelector('.lightbox__next');
+  var lightboxCounter = lightbox.querySelector('.lightbox__counter');
 
-  const galleryItems = document.querySelectorAll('.gallery__item');
+  var galleryItems = document.querySelectorAll('.gallery__item');
   if (!galleryItems.length) return;
 
-  let currentIndex = 0;
-  const images = [];
+  var currentIndex = 0;
+  var images = [];
 
-  galleryItems.forEach((item, index) => {
-    const img = item.querySelector('img');
+  galleryItems.forEach(function (item, index) {
+    var img = item.querySelector('img');
     if (img) {
       images.push(img.src);
-      item.addEventListener('click', () => openLightbox(index));
+      item.addEventListener('click', function () { openLightbox(index); });
     }
   });
 
@@ -123,7 +158,7 @@ function initLightbox() {
 
   function updateLightbox() {
     lightboxImg.src = images[currentIndex];
-    lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+    lightboxCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
   }
 
   function prevImage() {
@@ -136,59 +171,63 @@ function initLightbox() {
     updateLightbox();
   }
 
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightboxPrev.addEventListener('click', prevImage);
-  lightboxNext.addEventListener('click', nextImage);
+  // Remove old listeners by cloning
+  var newClose = lightboxClose.cloneNode(true);
+  lightboxClose.parentNode.replaceChild(newClose, lightboxClose);
+  newClose.addEventListener('click', closeLightbox);
 
-  lightbox.addEventListener('click', (e) => {
+  var newPrev = lightboxPrev.cloneNode(true);
+  lightboxPrev.parentNode.replaceChild(newPrev, lightboxPrev);
+  newPrev.addEventListener('click', prevImage);
+
+  var newNext = lightboxNext.cloneNode(true);
+  lightboxNext.parentNode.replaceChild(newNext, lightboxNext);
+  newNext.addEventListener('click', nextImage);
+
+  lightbox.onclick = function (e) {
     if (e.target === lightbox) closeLightbox();
-  });
+  };
 
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-
-    switch (e.key) {
-      case 'Escape':
-        closeLightbox();
-        break;
-      case 'ArrowLeft':
-        prevImage();
-        break;
-      case 'ArrowRight':
-        nextImage();
-        break;
-    }
-  });
+  // Keyboard — use a named handler to avoid duplicates
+  if (!lightbox._keyHandler) {
+    lightbox._keyHandler = function (e) {
+      if (!lightbox.classList.contains('active')) return;
+      switch (e.key) {
+        case 'Escape': closeLightbox(); break;
+        case 'ArrowLeft': prevImage(); break;
+        case 'ArrowRight': nextImage(); break;
+      }
+    };
+    document.addEventListener('keydown', lightbox._keyHandler);
+  }
 
   // Touch swipe
-  let touchStartX = 0;
-
-  lightbox.addEventListener('touchstart', (e) => {
+  var touchStartX = 0;
+  lightbox.ontouchstart = function (e) {
     touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
-
-  lightbox.addEventListener('touchend', (e) => {
-    const diff = touchStartX - e.changedTouches[0].screenX;
+  };
+  lightbox.ontouchend = function (e) {
+    var diff = touchStartX - e.changedTouches[0].screenX;
     if (Math.abs(diff) > 50) {
       diff > 0 ? nextImage() : prevImage();
     }
-  }, { passive: true });
+  };
 }
 
 /* ----------------------------------------
    FAQ Accordion
    ---------------------------------------- */
 function initFAQ() {
-  const faqItems = document.querySelectorAll('.faq__item');
+  var faqItems = document.querySelectorAll('.faq__item');
   if (!faqItems.length) return;
 
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq__question');
+  faqItems.forEach(function (item) {
+    var question = item.querySelector('.faq__question');
     if (!question) return;
 
-    question.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-      faqItems.forEach(other => other.classList.remove('active'));
+    question.addEventListener('click', function () {
+      var isActive = item.classList.contains('active');
+      faqItems.forEach(function (other) { other.classList.remove('active'); });
       if (!isActive) {
         item.classList.add('active');
       }
@@ -200,17 +239,31 @@ function initFAQ() {
    Contact Page Carousel
    ---------------------------------------- */
 function initCarousel() {
-  const carousel = document.getElementById('contactCarousel');
+  var carousel = document.getElementById('contactCarousel');
   if (!carousel) return;
 
-  const images = carousel.querySelectorAll('img');
+  var images = carousel.querySelectorAll('img');
   if (images.length <= 1) return;
 
-  let currentSlide = 0;
+  var currentSlide = 0;
 
-  setInterval(() => {
+  if (_carouselInterval) clearInterval(_carouselInterval);
+
+  _carouselInterval = setInterval(function () {
     images[currentSlide].classList.remove('carousel-active');
     currentSlide = (currentSlide + 1) % images.length;
     images[currentSlide].classList.add('carousel-active');
   }, 4000);
+}
+
+/* ----------------------------------------
+   Contact Form Submit (moved from inline)
+   ---------------------------------------- */
+function handleSubmit(e) {
+  e.preventDefault();
+  var msg = (window.i18n && window.i18n.t('contact.form.successAlert'))
+    || 'Thank you for your inquiry! We will get back to you soon.';
+  alert(msg);
+  e.target.reset();
+  return false;
 }
