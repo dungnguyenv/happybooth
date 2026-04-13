@@ -92,5 +92,20 @@
   "contact.form.message": "Tin nhắn / Yêu cầu thêm",
   "contact.form.send": "Gửi yêu cầu",
   "contact.form.note": "Vui lòng kiểm tra hộp thư rác (spam) nếu không nhận được phản hồi trong 24h.",
-  "contact.form.successAlert": "Cảm ơn bạn đã quan tâm! Chúng tôi sẽ liên hệ lại với bạn trong thời gian sớm nhất."
+  "contact.form.successAlert": "Cảm ơn bạn đã quan tâm! Chúng tôi sẽ liên hệ lại với bạn trong thời gian sớm nhất.",
+  "meta.title.login": "Đăng nhập — Happy Booth",
+  "meta.title.admin": "Quản trị — Happy Booth",
+  "auth.login.title": "Đăng nhập",
+  "auth.login.subtitle": "Dành cho quản trị viên",
+  "auth.login.email": "Email",
+  "auth.login.password": "Mật khẩu",
+  "auth.login.submit": "Đăng nhập",
+  "auth.admin.title": "Bảng điều khiển",
+  "auth.admin.logout": "Đăng xuất",
+  "auth.admin.welcome": "Chào mừng, quản trị viên. Bảng điều khiển đang được xây dựng.",
+  "auth.error.emptyFields": "Vui lòng nhập email và mật khẩu.",
+  "auth.error.invalidCredentials": "Email hoặc mật khẩu không đúng.",
+  "auth.error.tooManyRequests": "Quá nhiều lần thử. Vui lòng thử lại sau.",
+  "auth.error.invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ.",
+  "auth.error.generic": "Đã xảy ra lỗi. Vui lòng thử lại."
 }

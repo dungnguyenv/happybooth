@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Playwright MCP
+.playwright-mcp/
+
+# Claude Code
+.claude/
+CLAUDE.md

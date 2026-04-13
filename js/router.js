@@ -18,6 +18,17 @@
         pageCache[href] = main.outerHTML;
       }
 
+      // Auth guard for direct page load
+      if (window.auth && (currentPage === 'admin' || currentPage === 'login')) {
+        window.auth.whenReady().then(function (user) {
+          if (currentPage === 'admin' && !user) {
+            window.location.replace('login.html');
+          } else if (currentPage === 'login' && user) {
+            window.location.replace('admin.html');
+          }
+        });
+      }
+
       // Content starts hidden (class="page-enter" in HTML).
       // Remove class after short delay to trigger slide-up fade-in.
       setTimeout(function () {
@@ -33,7 +44,8 @@
   function pageToHref(page) {
     var map = {
       home: 'index.html', about: 'about.html', portfolio: 'portfolio.html',
-      frame: 'frame.html', tips: 'tips.html', contact: 'contact.html'
+      frame: 'frame.html', tips: 'tips.html', contact: 'contact.html',
+      login: 'login.html', admin: 'admin.html'
     };
     return map[page] || null;
   }
@@ -75,6 +87,14 @@
   async function navigateTo(href, pushState) {
     var clean = href.split('/').pop() || 'index.html';
     var targetPage = hrefToPage(clean);
+
+    // Auth guard
+    if (window.auth) {
+      await window.auth.whenReady();
+      var guard = window.auth.guardRoute(targetPage);
+      if (guard === 'redirect-login') { navigateTo('login.html', true); return; }
+      if (guard === 'redirect-admin') { navigateTo('admin.html', true); return; }
+    }
 
     // Close mobile nav if open
     var hamburger = document.querySelector('.hamburger');

@@ -1627,3 +1627,81 @@ html.i18n-ready body {
     flex-direction: column;
   }
 }
+
+/* ========================================
+   Auth Pages (Login / Admin)
+   ======================================== */
+
+.auth-page {
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height) - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px var(--site-gutter);
+}
+
+.auth-page__inner {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.auth-page__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.auth-page__subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-bottom: 40px;
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.auth-form__error {
+  color: #b44;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 8px;
+}
+
+.auth-form__btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.admin-page {
+  margin-top: var(--header-height);
+  padding: 80px var(--site-gutter);
+  min-height: calc(100vh - var(--header-height) - 200px);
+}
+
+.admin-page__inner {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+}
+
+.admin-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.admin-page__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+}
+
+.admin-page__content {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+}
