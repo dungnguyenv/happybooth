@@ -2015,3 +2015,82 @@ html.i18n-ready body {
   font-size: 0.9rem;
   color: var(--color-text-light);
 }
+
+/* ========================================
+   Floating Contact Widget
+   ======================================== */
+.floating-contact {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.floating-contact__btn {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.floating-contact__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+}
+
+.floating-contact__btn svg {
+  width: 26px;
+  height: 26px;
+}
+
+.floating-contact__btn--phone { background: #25d366; }
+.floating-contact__btn--zalo { background: #0068ff; }
+.floating-contact__btn--facebook { background: #1877f2; }
+
+.floating-contact__btn--phone::before,
+.floating-contact__btn--phone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #25d366;
+  animation: hb-floating-pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.floating-contact__btn--phone::after {
+  animation-delay: 1s;
+}
+
+@keyframes hb-floating-pulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .floating-contact {
+    right: 14px;
+    bottom: 14px;
+    gap: 10px;
+  }
+
+  .floating-contact__btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .floating-contact__btn svg {
+    width: 22px;
+    height: 22px;
+  }
+}

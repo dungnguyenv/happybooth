@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // One-time inits (header/nav — permanent DOM)
   initMobileNav();
   initHeaderScroll();
+  initFloatingContact();
 
   // Per-page inits (content-specific)
   reinitPage();
@@ -75,6 +76,26 @@ function initMobileNav() {
       document.body.style.overflow = '';
     }
   });
+}
+
+/* ----------------------------------------
+   Floating Contact Widget (Phone / Zalo / Facebook)
+   ---------------------------------------- */
+function initFloatingContact() {
+  if (document.querySelector('.floating-contact')) return;
+
+  var phoneIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.65.57l-1.84 1.84a15.04 15.04 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.65L8.74 4.77A2 2 0 0 0 6.75 3H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89a1.99 1.99 0 0 0 2.07-2v-1.72c.01-1.02-.76-1.88-1.76-1.98z"/></svg>';
+  var zaloIcon = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3C8.27 3 2 8.27 2 14.78c0 3.66 1.86 6.92 4.78 9.07-.18 1.14-.86 3-2.21 4.69-.21.27-.06.66.27.71.31.05.65.06.99.04 2.93-.16 5.03-1.42 6.16-2.27 1.27.31 2.62.49 4.01.49C23.73 27.5 30 22.24 30 15.78 30 8.27 23.73 3 16 3z"/><text x="16" y="19" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="11" fill="#0068ff">Zalo</text></svg>';
+  var fbIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>';
+
+  var wrap = document.createElement('div');
+  wrap.className = 'floating-contact';
+  wrap.innerHTML =
+    '<a href="tel:0971842329" class="floating-contact__btn floating-contact__btn--phone" aria-label="Phone 0971842329">' + phoneIcon + '</a>' +
+    '<a href="https://zalo.me/971842329" target="_blank" rel="noopener" class="floating-contact__btn floating-contact__btn--zalo" aria-label="Zalo">' + zaloIcon + '</a>' +
+    '<a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener" class="floating-contact__btn floating-contact__btn--facebook" aria-label="Facebook">' + fbIcon + '</a>';
+
+  document.body.appendChild(wrap);
 }
 
 /* ----------------------------------------
