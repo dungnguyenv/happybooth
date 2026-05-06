@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — Happy Booth</title>
+  <title>My Account — Happy Booth</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="assets/SVG/Logo_web.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,16 +77,29 @@
     </span>
   </nav>
 
-  <main id="page-content" data-page="admin" data-title="Admin — Happy Booth" class="page-enter">
+  <main id="page-content" data-page="user-dashboard" data-title="My Account — Happy Booth" class="page-enter">
 
   <section class="admin-page">
     <div class="admin-page__inner">
       <div class="admin-page__header">
-        <h1 class="admin-page__title" data-i18n="auth.admin.title">Dashboard</h1>
-        <button id="logoutBtn" class="btn" data-i18n="auth.admin.logout">Sign Out</button>
+        <h1 class="admin-page__title" data-i18n="auth.userDashboard.title">My Account</h1>
+        <button id="userLogoutBtn" class="btn" data-i18n="auth.userDashboard.logout">Sign Out</button>
       </div>
-      <div class="admin-page__content">
-        <p data-i18n="auth.admin.welcome">Welcome, admin. This dashboard is under construction.</p>
+      <div class="admin-page__content user-dashboard__content">
+        <div class="user-dashboard__info">
+          <p class="user-dashboard__info-row">
+            <strong data-i18n="auth.userDashboard.nameLabel">Name:</strong>
+            <span id="userDisplayName"></span>
+          </p>
+          <p class="user-dashboard__info-row">
+            <strong data-i18n="auth.userDashboard.emailLabel">Email:</strong>
+            <span id="userEmail"></span>
+          </p>
+          <p class="user-dashboard__info-row">
+            <strong data-i18n="auth.userDashboard.phoneLabel">Phone:</strong>
+            <span id="userPhone"></span>
+          </p>
+        </div>
       </div>
     </div>
   </section>

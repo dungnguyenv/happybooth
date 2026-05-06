@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // One-time inits (header/nav — permanent DOM)
   initMobileNav();
   initHeaderScroll();
+  initAuthNav();
 
   // Per-page inits (content-specific)
   reinitPage();
@@ -29,7 +30,11 @@ function reinitPage() {
   initFAQ();
   initCarousel();
   initLoginForm();
+  initRegisterForm();
   initAdminPage();
+  initUserDashboard();
+  initFrameEditor();
+  initFrameCatalog();
 }
 
 function cleanup() {
@@ -42,6 +47,14 @@ function cleanup() {
   if (_scrollObserver) {
     _scrollObserver.disconnect();
     _scrollObserver = null;
+  }
+  // Clean up frame editor
+  if (window.HB_FrameEditor && window.HB_FrameEditor.cleanup) {
+    window.HB_FrameEditor.cleanup();
+  }
+  // Clean up frame catalog
+  if (window.HB_FrameCatalog && window.HB_FrameCatalog.cleanup) {
+    window.HB_FrameCatalog.cleanup();
   }
 }
 
@@ -91,6 +104,34 @@ function initHeaderScroll() {
       header.style.boxShadow = 'none';
     }
   }, { passive: true });
+}
+
+/* ----------------------------------------
+   Auth Nav (toggle Sign In/Up vs My Account)
+   ---------------------------------------- */
+function initAuthNav() {
+  if (!window.auth) return;
+  window.auth.whenReady().then(function () {
+    updateAuthNav();
+  });
+}
+
+function updateAuthNav() {
+  var isLoggedIn = window.auth && window.auth.isLoggedIn();
+  var isAdmin = window.auth && window.auth.isAdmin();
+
+  document.querySelectorAll('[data-auth-show]').forEach(function (el) {
+    var show = el.getAttribute('data-auth-show');
+    if (show === 'guest') {
+      el.style.display = isLoggedIn ? 'none' : '';
+    } else if (show === 'user') {
+      el.style.display = isLoggedIn ? '' : 'none';
+      // Admin links to admin.html, user links to user-dashboard.html
+      if (isLoggedIn && el.getAttribute('href')) {
+        el.setAttribute('href', isAdmin ? 'admin.html' : 'user-dashboard.html');
+      }
+    }
+  });
 }
 
 /* ----------------------------------------
@@ -296,7 +337,13 @@ function initLoginForm() {
     btn.textContent = '...';
 
     window.auth.login(email, password).then(function () {
-      window.location.href = 'admin.html';
+      return window.auth.fetchRole();
+    }).then(function (role) {
+      if (role === 'admin') {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'user-dashboard.html';
+      }
     }).catch(function (err) {
       btn.disabled = false;
       btn.textContent = (window.i18n && window.i18n.t('auth.login.submit')) || 'Sign In';
@@ -330,6 +377,136 @@ function getDefaultErrorMessage(code) {
     'auth/invalid-email': 'Please enter a valid email address.'
   };
   return map[code] || 'An error occurred. Please try again.';
+}
+
+/* ----------------------------------------
+   Register Form
+   ---------------------------------------- */
+function initRegisterForm() {
+  var form = document.getElementById('registerForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var displayName = document.getElementById('registerName').value.trim();
+    var phone = document.getElementById('registerPhone').value.trim();
+    var email = document.getElementById('registerEmail').value.trim();
+    var password = document.getElementById('registerPassword').value;
+    var errorEl = document.getElementById('registerError');
+
+    errorEl.style.display = 'none';
+    errorEl.textContent = '';
+
+    if (!displayName || !email || !password) {
+      showRegisterError(errorEl, 'auth.error.emptyFields', 'Please fill in all required fields.');
+      return;
+    }
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    window.auth.register(email, password, displayName, phone).then(function () {
+      window.location.href = 'user-dashboard.html';
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = (window.i18n && window.i18n.t('auth.register.submit')) || 'Register';
+
+      var msgKey = 'auth.error.generic';
+      if (err.code === 'auth/email-already-in-use') {
+        msgKey = 'auth.error.emailInUse';
+      } else if (err.code === 'auth/weak-password') {
+        msgKey = 'auth.error.weakPassword';
+      } else if (err.code === 'auth/invalid-email') {
+        msgKey = 'auth.error.invalidEmail';
+      }
+      showRegisterError(errorEl, msgKey, getDefaultRegisterError(err.code));
+    });
+  });
+}
+
+function showRegisterError(el, i18nKey, fallback) {
+  var msg = (window.i18n && window.i18n.t(i18nKey)) || fallback;
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function getDefaultRegisterError(code) {
+  var map = {
+    'auth/email-already-in-use': 'This email is already registered.',
+    'auth/weak-password': 'Password must be at least 6 characters.',
+    'auth/invalid-email': 'Please enter a valid email address.'
+  };
+  return map[code] || 'An error occurred. Please try again.';
+}
+
+/* ----------------------------------------
+   User Dashboard
+   ---------------------------------------- */
+function initUserDashboard() {
+  var dashboardContent = document.querySelector('.user-dashboard__content');
+  if (!dashboardContent) return;
+
+  function fillUserInfo() {
+    var doc = window.auth.getUserDoc();
+    if (!doc) return;
+    var nameEl = document.getElementById('userDisplayName');
+    var emailEl = document.getElementById('userEmail');
+    var phoneEl = document.getElementById('userPhone');
+    if (nameEl) nameEl.textContent = doc.displayName || '';
+    if (emailEl) emailEl.textContent = doc.email || '';
+    if (phoneEl) phoneEl.textContent = doc.phone || '';
+  }
+
+  // Wait for auth + role to be ready before filling
+  if (window.auth) {
+    window.auth.whenReady().then(fillUserInfo);
+  }
+
+  // Logout button
+  var logoutBtn = document.getElementById('userLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function () {
+      window.auth.logout().then(function () {
+        window.location.href = 'login.html';
+      });
+    });
+  }
+}
+
+/* ----------------------------------------
+   Frame Editor
+   ---------------------------------------- */
+function initFrameEditor() {
+  if (!document.getElementById('editorCanvas')) return;
+  if (window.HB_FrameEditor) {
+    window.HB_FrameEditor.init();
+    return;
+  }
+  // Dynamically load editor script (for SPA navigation from other pages)
+  var s = document.createElement('script');
+  s.src = 'js/frame-editor.js';
+  s.onload = function () {
+    if (window.HB_FrameEditor) window.HB_FrameEditor.init();
+  };
+  document.head.appendChild(s);
+}
+
+/* ----------------------------------------
+   Frame Catalog
+   ---------------------------------------- */
+function initFrameCatalog() {
+  if (!document.getElementById('frameCatalog')) return;
+  if (window.HB_FrameCatalog) {
+    window.HB_FrameCatalog.init();
+    return;
+  }
+  var s = document.createElement('script');
+  s.src = 'js/frame-catalog.js';
+  s.onload = function () {
+    if (window.HB_FrameCatalog) window.HB_FrameCatalog.init();
+  };
+  document.head.appendChild(s);
 }
 
 /* ----------------------------------------

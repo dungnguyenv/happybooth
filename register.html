@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — Happy Booth</title>
+  <title>Register — Happy Booth</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="assets/SVG/Logo_web.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,17 +77,38 @@
     </span>
   </nav>
 
-  <main id="page-content" data-page="admin" data-title="Admin — Happy Booth" class="page-enter">
+  <main id="page-content" data-page="register" data-title="Register — Happy Booth" class="page-enter">
 
-  <section class="admin-page">
-    <div class="admin-page__inner">
-      <div class="admin-page__header">
-        <h1 class="admin-page__title" data-i18n="auth.admin.title">Dashboard</h1>
-        <button id="logoutBtn" class="btn" data-i18n="auth.admin.logout">Sign Out</button>
-      </div>
-      <div class="admin-page__content">
-        <p data-i18n="auth.admin.welcome">Welcome, admin. This dashboard is under construction.</p>
-      </div>
+  <section class="auth-page">
+    <div class="auth-page__inner">
+      <h1 class="auth-page__title" data-i18n="auth.register.title">Register</h1>
+      <p class="auth-page__subtitle" data-i18n="auth.register.subtitle">Create your account</p>
+
+      <form id="registerForm" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="registerName" data-i18n="auth.register.name">Full Name</label>
+          <input type="text" id="registerName" name="displayName" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="registerPhone" data-i18n="auth.register.phone">Phone Number</label>
+          <input type="tel" id="registerPhone" name="phone" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="registerEmail" data-i18n="auth.register.email">Email</label>
+          <input type="email" id="registerEmail" name="email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="registerPassword" data-i18n="auth.register.password">Password</label>
+          <input type="password" id="registerPassword" name="password" required autocomplete="new-password">
+        </div>
+        <div id="registerError" class="auth-form__error" style="display:none;"></div>
+        <button type="submit" class="btn auth-form__btn" data-i18n="auth.register.submit">Register</button>
+      </form>
+
+      <p class="auth-page__link">
+        <span data-i18n="auth.register.hasAccount">Already have an account?</span>
+        <a href="login.html" data-i18n="auth.register.loginLink">Sign In</a>
+      </p>
     </div>
   </section>
 

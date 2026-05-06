@@ -13,6 +13,8 @@
   <script>if(localStorage.getItem('hb-lang')!=='en'){document.documentElement.classList.add('i18n-loading')}</script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 </head>
 <body>
 
@@ -37,6 +39,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.18 8.18 0 0 0 4.76 1.52V6.77a4.83 4.83 0 0 1-1-.08z"/></svg>
           </a>
         </span>
+        <span class="header__auth">
+          <a href="login.html" class="header__auth-link" data-i18n="common.nav.signIn" data-auth-show="guest">Sign In</a>
+
+          <a href="user-dashboard.html" class="header__auth-link" data-i18n="common.nav.myAccount" data-auth-show="user" style="display:none">My Account</a>
+        </span>
         <span class="lang-toggle">
           <button class="lang-toggle__btn active" data-lang="vi">VI</button>
           <span class="lang-toggle__divider">|</span>
@@ -60,6 +67,9 @@
     <a href="tips.html" data-i18n="common.nav.tips">Tips</a>
     <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
     <a href="https://www.tiktok.com/@happyboothvn" target="_blank" rel="noopener">TikTok</a>
+    <a href="login.html" data-i18n="common.nav.signIn" data-auth-show="guest">Sign In</a>
+
+    <a href="user-dashboard.html" data-i18n="common.nav.myAccount" data-auth-show="user" style="display:none">My Account</a>
     <span class="lang-toggle lang-toggle--mobile">
       <button class="lang-toggle__btn active" data-lang="en">EN</button>
       <span class="lang-toggle__divider">|</span>
@@ -75,156 +85,175 @@
     <p class="fade-in" data-i18n="frame.description">We invite you to explore our custom photobooth frame designs. From elegant minimalist layouts to fun and vibrant templates, our designs can be customized to match your event perfectly.</p>
   </section>
 
-  <!-- Wedding Galleries -->
-  <section class="section">
-    <div class="weddings-grid">
+  <!-- Frame Catalog -->
+  <section class="section frame-catalog" id="frameCatalog">
+    <h2 class="frame-catalog__title fade-in" data-i18n="catalog.title">Our Frame Templates</h2>
+    <p class="frame-catalog__desc fade-in" data-i18n="catalog.description">Browse our curated collection of photobooth frame designs. Click a set to explore individual frames.</p>
+    <div id="catalogLoading" class="frame-catalog__loading fade-in">
+      <p data-i18n="catalog.loading">Loading templates...</p>
+    </div>
+    <div id="catalogError" class="frame-catalog__error" style="display:none;">
+      <p data-i18n="catalog.error">Could not load templates. Please try again later.</p>
+    </div>
+    <div id="catalogGrid" class="frame-catalog__grid" style="display:none;"></div>
+  </section>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/18577a57-3f39-4005-9abb-3d07122e40d6/CS-355.jpg" alt="Caroline & Shane — Lake Como" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Caroline & Shane</div>
-          <div class="wedding-card__location">Lake Como</div>
-        </div>
-      </a>
+  <!-- Frame Editor -->
+  <section class="section frame-editor">
+    <h2 class="frame-editor__title fade-in" data-i18n="editor.title">Customize Your Frame</h2>
+    <p class="frame-editor__desc fade-in" data-i18n="editor.description.alt">Selected a template above? Or upload your own frame to customize.</p>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/798453e0-b4bc-4cba-95c0-5cc29352c38e/E_T-2+%281%29.jpg" alt="Elsie & Tim — Craggy Range" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Elsie & Tim</div>
-          <div class="wedding-card__location">Craggy Range</div>
-        </div>
-      </a>
+    <!-- Upload Zone -->
+    <div id="editorUploadZone" class="fe-upload fade-in">
+      <input type="file" id="editorFileInput" accept="image/*" hidden>
+      <div class="fe-upload__icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </div>
+      <p class="fe-upload__text" data-i18n="editor.upload.text">Drag &amp; drop or click to upload your frame</p>
+      <p class="fe-upload__hint" data-i18n="editor.upload.hint">Supports JPG, PNG</p>
+    </div>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/93939730-9cda-4b9a-9e7a-3d7c21125fa5/greeceDrone-7.jpg" alt="Monica & George — Ios, Greece" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Monica & George</div>
-          <div class="wedding-card__location">Ios, Greece</div>
-        </div>
-      </a>
+    <!-- Workspace (hidden until image uploaded) -->
+    <div id="editorWorkspace" class="fe-workspace" style="display: none;">
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/f38df512-3d61-45c8-8f32-974f62a60824/M%26B-6b+%281%29.jpg" alt="Michaela & Bevan — Waiheke" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Michaela & Bevan</div>
-          <div class="wedding-card__location">Waiheke</div>
+      <!-- Top: Canvas + Sidebar -->
+      <div class="fe-workspace__top">
+        <!-- Canvas with nav arrows -->
+        <div id="editorCanvasWrap" class="fe-canvas-wrap">
+          <button id="editorFramePrev" class="fe-canvas-nav fe-canvas-nav--prev" style="display:none" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <canvas id="editorCanvas"></canvas>
+          <button id="editorFrameNext" class="fe-canvas-nav fe-canvas-nav--next" style="display:none" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
-      </a>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/67159a23-6e7c-4c5d-ae31-e7e76e945e34/M%26O-57+%281%29.jpg" alt="Octavia & Mark — London, UK" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Octavia & Mark</div>
-          <div class="wedding-card__location">London, UK</div>
-        </div>
-      </a>
+        <!-- Sidebar Controls -->
+        <div class="fe-controls">
+          <button id="editorChangeImage" class="fe-btn fe-btn--outline" data-i18n="editor.changeImage">Change Image</button>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/10f9b115-bc19-47bc-a814-daefe854fd92/J%26E-96.jpg" alt="Josh & Ellie — Kawau Island" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Josh & Ellie</div>
-          <div class="wedding-card__location">Kawau Island</div>
-        </div>
-      </a>
+          <div class="fe-section">
+            <div class="fe-section__header">
+              <span data-i18n="editor.textsLabel">Text Layers</span>
+              <button id="editorAddText" class="fe-btn fe-btn--sm" data-i18n="editor.addText">+ Add Text</button>
+            </div>
+            <div id="editorTextList" class="fe-text-list">
+              <p class="fe-text-list__empty" data-i18n="editor.noTexts">Click '+ Add Text' to begin</p>
+            </div>
+          </div>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/eb583748-13c0-40d9-bf60-386366f52780/Z%26P-131.jpg" alt="Zoë & Tim — Auckland, NZ" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Zoë & Tim</div>
-          <div class="wedding-card__location">Auckland, NZ</div>
-        </div>
-      </a>
+          <div id="editorTextControls" class="fe-props disabled">
+            <label class="fe-label" data-i18n="editor.textLabel">Content</label>
+            <input type="text" id="editorTextInput" class="fe-input" placeholder="Enter name..." data-i18n-placeholder="editor.textPlaceholder">
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/32c1c1c6-f0a7-4751-ba6b-ab4d3962baa8/130A5363+%281%29.jpg" alt="Francesca & Tom — Tuscany, IT" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Francesca & Tom</div>
-          <div class="wedding-card__location">Tuscany, IT</div>
-        </div>
-      </a>
+            <label class="fe-label" data-i18n="editor.fontLabel">Font</label>
+            <select id="editorFontFamily" class="fe-select">
+              <option value="Dancing Script">Dancing Script</option>
+              <option value="Great Vibes">Great Vibes</option>
+              <option value="Alex Brush">Alex Brush</option>
+              <option value="Sacramento">Sacramento</option>
+              <option value="Pacifico">Pacifico</option>
+              <option value="Playfair Display">Playfair Display</option>
+              <option value="Cormorant Garamond">Cormorant Garamond</option>
+              <option value="Montserrat">Montserrat</option>
+            </select>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/5312a5dd-83aa-4254-bd2f-4e9a8e7ba22f/MT-53.jpg" alt="Maddie & Taylor — Winehouse" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Maddie & Taylor</div>
-          <div class="wedding-card__location">Winehouse</div>
-        </div>
-      </a>
+            <label class="fe-label">
+              <span data-i18n="editor.sizeLabel">Size</span>
+              <span id="editorSizeVal">50</span>
+            </label>
+            <input type="range" id="editorFontSize" class="fe-range" min="20" max="200" value="50">
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/932d72ce-2c1f-4a12-ac02-3526132b7b8a/O%26L-1150.jpg" alt="Olivia & Liam — UK" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Olivia & Liam</div>
-          <div class="wedding-card__location">UK</div>
-        </div>
-      </a>
+            <label class="fe-label" data-i18n="editor.colorLabel">Color</label>
+            <input type="color" id="editorTextColor" class="fe-color" value="#8B0000">
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/7b47a99f-277d-4060-933c-acb3f0774425/B%26TDrone-7+%281%29.jpg" alt="Brya & Tim — Cambridge, NZ" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Brya & Tim</div>
-          <div class="wedding-card__location">Cambridge, NZ</div>
-        </div>
-      </a>
+            <button id="editorRemoveText" class="fe-btn fe-btn--danger" disabled data-i18n="editor.removeText">Remove Selected Text</button>
+          </div>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/f682bda3-4b99-4419-999d-ab0fe06adc80/P%26L-7%2B%281%29.jpg" alt="Peter & Lucinda — The Pines" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Peter & Lucinda</div>
-          <div class="wedding-card__location">The Pines</div>
+          <button id="editorDownload" class="fe-btn fe-btn--primary" data-i18n="editor.download">Download PNG</button>
         </div>
-      </a>
+      </div>
 
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/917fdd81-1f8c-4ee7-af3c-c1ba318a03f5/CA-TJ-330.jpg" alt="Caitlin & Andrew — Auckland" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Caitlin & Andrew</div>
-          <div class="wedding-card__location">Auckland</div>
-        </div>
-      </a>
-
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/6e54dcc6-16ce-4bcd-87fd-17289ff4fd62/S%26L-414.jpg" alt="Sophie & Luke — Waiheke, NZ" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Sophie & Luke</div>
-          <div class="wedding-card__location">Waiheke, NZ</div>
-        </div>
-      </a>
-
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/a7a92110-aec2-4de7-968a-03a776a1daee/image-asset.jpeg" alt="Nikita & Matt — Auckland, NZ" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Nikita & Matt</div>
-          <div class="wedding-card__location">Auckland, NZ</div>
-        </div>
-      </a>
-
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/f561945b-6ff9-487f-a7f8-124803f4314f/A%26A%E2%80%94Wed-504.jpg" alt="Amy & Ash — Bay of Islands" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Amy & Ash</div>
-          <div class="wedding-card__location">Bay of Islands</div>
-        </div>
-      </a>
-
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/f74c6e90-a712-4da4-9f19-e194202210c0/ZP.jpg" alt="Alexandra & Jeremy — Kapiti" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Alexandra & Jeremy</div>
-          <div class="wedding-card__location">Kapiti</div>
-        </div>
-      </a>
-
-      <a class="wedding-card fade-in" href="#">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/2944827c-772a-4482-94f8-fa6dfa8d0ee6/S%26JWED-760+%281%29.jpg" alt="Sam & James — Queenstown" loading="lazy">
-        <div class="wedding-card__overlay">
-          <div class="wedding-card__couple">Sam & James</div>
-          <div class="wedding-card__location">Queenstown</div>
-        </div>
-      </a>
+      <!-- Bottom: Frame Switcher Strip -->
+      <div id="editorFrameStrip" class="fe-frame-strip" style="display: none;">
+        <p class="fe-frame-strip__label" data-i18n="editor.switchFrame">Other frames in this set:</p>
+        <div id="editorFrameStripList" class="fe-frame-strip__list"></div>
+      </div>
 
     </div>
   </section>
+
+  <!-- Frame Set Modal (view) -->
+  <div id="frameSetModal" class="fc-modal">
+    <div class="fc-modal__backdrop"></div>
+    <div class="fc-modal__dialog">
+      <button class="fc-modal__close" aria-label="Close">&times;</button>
+      <h3 class="fc-modal__title" id="modalTitle"></h3>
+      <p class="fc-modal__desc" id="modalDesc"></p>
+      <div class="fc-modal__grid" id="modalGrid"></div>
+    </div>
+  </div>
+
+  <!-- Admin CRUD Modal -->
+  <div id="adminFrameModal" class="fc-modal">
+    <div class="fc-modal__backdrop"></div>
+    <div class="fc-modal__dialog fc-modal__dialog--wide">
+      <button class="fc-modal__close fc-admin-close" aria-label="Close">&times;</button>
+      <h3 class="fc-modal__title" id="adminModalTitle" data-i18n="admin.frame.addTitle">Add Frame Set</h3>
+
+      <form id="adminFrameForm" class="fc-admin-form" novalidate>
+        <!-- Folder Selection -->
+        <div class="fc-admin-form__field">
+          <label class="fe-label" data-i18n="admin.frame.selectFolder">Select Folder</label>
+          <select id="adminFolder" class="fe-select">
+            <option value="" data-i18n="admin.frame.selectFolderPlaceholder">-- Choose a folder --</option>
+          </select>
+        </div>
+
+        <!-- Name -->
+        <div class="fc-admin-form__field">
+          <label class="fe-label" data-i18n="admin.frame.nameVi">Tên</label>
+          <input type="text" id="adminName" class="fe-input" required>
+        </div>
+
+        <!-- Description -->
+        <div class="fc-admin-form__field">
+          <label class="fe-label" data-i18n="admin.frame.descVi">Mô tả</label>
+          <textarea id="adminDesc" class="fe-input fc-admin-textarea" rows="2"></textarea>
+        </div>
+
+        <!-- Order -->
+        <div class="fc-admin-form__field fc-admin-form__field--small">
+          <label class="fe-label" data-i18n="admin.frame.order">Display Order</label>
+          <input type="number" id="adminOrder" class="fe-input" value="1" min="1">
+        </div>
+
+        <!-- Image Selection Grid -->
+        <div class="fc-admin-frames">
+          <div class="fc-admin-frames__header">
+            <label class="fe-label" data-i18n="admin.frame.selectImages">Select frames to display</label>
+            <p class="fc-admin-frames__hint" data-i18n="admin.frame.clickThumb">Click an image to set as thumbnail</p>
+          </div>
+          <div id="adminImageGrid" class="fc-admin-img-grid"></div>
+        </div>
+
+        <div id="adminFormError" class="auth-form__error" style="display:none;"></div>
+        <div id="adminFormProgress" class="fc-admin-progress" style="display:none;">
+          <p id="adminProgressText" data-i18n="admin.frame.saving">Saving...</p>
+        </div>
+
+        <div class="fc-admin-form__actions">
+          <button type="button" class="fe-btn fe-btn--outline" id="adminCancelBtn" data-i18n="admin.frame.cancel">Cancel</button>
+          <button type="submit" class="fe-btn fe-btn--primary" id="adminSaveBtn" data-i18n="admin.frame.save">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- CTA -->
   <section class="cta section fade-in">
@@ -260,6 +289,8 @@
 
   <script src="js/i18n.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/frame-editor.js"></script>
+  <script src="js/frame-catalog.js"></script>
   <script src="js/main.js"></script>
   <script src="js/router.js"></script>
 </body>
