@@ -112,6 +112,13 @@
       return;
     }
 
+    // Snapshot current page DOM (incl. async-loaded content like home gallery)
+    // before tearing it down, so the back-navigation cache is up-to-date.
+    if (currentPage) {
+      var currentHref = pageToHref(currentPage);
+      if (currentHref) pageCache[currentHref] = main.outerHTML;
+    }
+
     // Cleanup before swap
     if (window.HB && window.HB.cleanup) {
       window.HB.cleanup();

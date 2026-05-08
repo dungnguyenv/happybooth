@@ -147,8 +147,16 @@ function initScrollAnimations() {
    ---------------------------------------- */
 function initHomeGallery() {
   var track = document.getElementById('homeGallery');
-  if (!track || track.dataset.populated === '1') return;
-  track.dataset.populated = '1';
+  if (!track) return;
+
+  // Already populated (e.g. restored from SPA cache). Just rebind nav.
+  if (track.querySelector('.home-carousel__slide')) {
+    initHomeCarouselNav(track);
+    return;
+  }
+  // Population already in flight on this track instance.
+  if (track.dataset.populating === '1') return;
+  track.dataset.populating = '1';
 
   var basePath = track.dataset.imageBase || 'assets/images/home/';
   var ext = track.dataset.imageExt || 'jpg';
@@ -169,6 +177,7 @@ function initHomeGallery() {
       slide.appendChild(img);
       track.appendChild(slide);
     }
+    delete track.dataset.populating;
     initScrollAnimations();
     initLightbox();
     initHomeCarouselNav(track);
