@@ -1773,6 +1773,59 @@ em, .italic {
   color: var(--color-text-light);
 }
 
+.footer__contact {
+  margin: 12px 0 18px;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  letter-spacing: 0.03em;
+  line-height: 1.7;
+}
+
+/* SEO intro section — visible only when site is in Vietnamese mode */
+.seo-intro {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  text-align: left;
+}
+
+.seo-intro__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.seo-intro p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+.seo-intro a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+html[lang="en"] .seo-intro {
+  display: none;
+}
+
+.footer__contact p {
+  margin: 2px 0;
+}
+
+.footer__contact a {
+  color: var(--color-text-light);
+  text-decoration: none;
+}
+
+.footer__contact a:hover {
+  text-decoration: underline;
+}
+
 .footer__copyright {
   font-size: 0.7rem;
   color: var(--color-text-light);
