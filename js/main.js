@@ -26,6 +26,7 @@ window.HB = {
 
 function reinitPage() {
   initScrollAnimations();
+  initHomeGallery();
   initLightbox();
   initFAQ();
   initCarousel();
@@ -138,6 +139,50 @@ function initScrollAnimations() {
   });
 
   elements.forEach(function (el) { _scrollObserver.observe(el); });
+}
+
+/* ----------------------------------------
+   Home Gallery — auto-populated from numbered files
+   (e.g. assets/images/home/1.jpg, 2.jpg, ... — adds new files automatically)
+   ---------------------------------------- */
+function initHomeGallery() {
+  var grid = document.getElementById('homeGallery');
+  if (!grid || grid.dataset.populated === '1') return;
+  grid.dataset.populated = '1';
+
+  var basePath = grid.dataset.imageBase || 'assets/images/home/';
+  var ext = grid.dataset.imageExt || 'jpg';
+  var maxProbe = parseInt(grid.dataset.imageMax, 10) || 100;
+
+  var results = new Array(maxProbe + 1);
+  var pending = maxProbe;
+
+  function done() {
+    for (var i = 1; i <= maxProbe; i++) {
+      if (!results[i]) break;
+      var div = document.createElement('div');
+      div.className = 'gallery__item fade-in';
+      var img = document.createElement('img');
+      img.src = results[i];
+      img.alt = 'Happy Booth photobooth ' + i;
+      img.loading = 'lazy';
+      div.appendChild(img);
+      grid.appendChild(div);
+    }
+    initScrollAnimations();
+    initLightbox();
+  }
+
+  for (var i = 1; i <= maxProbe; i++) {
+    (function (idx) {
+      var url = basePath + idx + '.' + ext;
+      fetch(url, { method: 'HEAD' }).then(function (res) {
+        if (res.ok) results[idx] = url;
+      }).catch(function () {}).then(function () {
+        if (--pending === 0) done();
+      });
+    })(i);
+  }
 }
 
 /* ----------------------------------------

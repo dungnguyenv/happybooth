@@ -552,6 +552,13 @@ em, .italic {
   aspect-ratio: 3/4;
 }
 
+.gallery__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  padding: 0 var(--site-gutter);
+}
+
 /* ========================================
    Wedding Galleries Grid
    ======================================== */
