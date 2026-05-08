@@ -560,6 +560,130 @@ em, .italic {
 }
 
 /* ========================================
+   Home Carousel (horizontal scroll gallery)
+   ======================================== */
+
+.home-carousel {
+  padding: 0;
+}
+
+.home-carousel__container {
+  position: relative;
+}
+
+.home-carousel__viewport {
+  overflow: hidden;
+}
+
+.home-carousel__track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 6vw;
+}
+
+.home-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.home-carousel__slide {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  cursor: pointer;
+}
+
+.home-carousel__slide img {
+  height: 75vh;
+  max-height: 820px;
+  min-height: 480px;
+  width: auto;
+  max-width: none;
+  display: block;
+}
+
+.home-carousel__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  transition: background 0.2s ease, color 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.home-carousel__nav:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.home-carousel__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.home-carousel__nav:disabled:hover {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.home-carousel__nav svg {
+  width: 24px;
+  height: 24px;
+}
+
+.home-carousel__prev {
+  left: 24px;
+}
+
+.home-carousel__next {
+  right: 24px;
+}
+
+@media (max-width: 768px) {
+  .home-carousel__track {
+    gap: 8px;
+    padding: 0 4vw;
+  }
+
+  .home-carousel__slide img {
+    height: 60vh;
+    min-height: 360px;
+    max-height: 600px;
+  }
+
+  .home-carousel__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .home-carousel__nav svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .home-carousel__prev {
+    left: 8px;
+  }
+
+  .home-carousel__next {
+    right: 8px;
+  }
+}
+
+/* ========================================
    Wedding Galleries Grid
    ======================================== */
 
