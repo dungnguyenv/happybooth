@@ -579,11 +579,22 @@ em, .italic {
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding: 0 6vw;
+  cursor: grab;
+  user-select: none;
+}
+
+.home-carousel__track--dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.home-carousel__track--dragging img {
+  pointer-events: none;
 }
 
 .home-carousel__track::-webkit-scrollbar {
@@ -1140,6 +1151,13 @@ em, .italic {
   font-family: var(--font-serif);
   font-size: 1.2rem;
   font-weight: 300;
+}
+
+.cta__actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 /* ========================================

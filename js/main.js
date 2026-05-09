@@ -231,7 +231,73 @@ function initHomeCarouselNav(track) {
 
   window.addEventListener('resize', updateButtons);
 
+  initHomeCarouselDrag(track);
+
   updateButtons();
+}
+
+function initHomeCarouselDrag(track) {
+  var isDown = false;
+  var startX = 0;
+  var startScroll = 0;
+  var dragged = false;
+  var pendingScroll = null;
+  var rafId = 0;
+  var DRAG_THRESHOLD = 5;
+
+  function flushScroll() {
+    rafId = 0;
+    if (pendingScroll !== null) {
+      track.scrollLeft = pendingScroll;
+      pendingScroll = null;
+    }
+  }
+
+  track.addEventListener('mousedown', function (e) {
+    if (e.button !== 0) return;
+    isDown = true;
+    dragged = false;
+    startX = e.clientX;
+    startScroll = track.scrollLeft;
+    track.classList.add('home-carousel__track--dragging');
+    track.style.scrollSnapType = 'none';
+  });
+
+  document.addEventListener('mousemove', function (e) {
+    if (!isDown) return;
+    var delta = e.clientX - startX;
+    if (!dragged && Math.abs(delta) > DRAG_THRESHOLD) dragged = true;
+    if (!dragged) return;
+    e.preventDefault();
+    pendingScroll = startScroll - delta;
+    if (!rafId) rafId = requestAnimationFrame(flushScroll);
+  });
+
+  function endDrag() {
+    if (!isDown) return;
+    isDown = false;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      flushScroll();
+    }
+    track.classList.remove('home-carousel__track--dragging');
+    track.style.scrollSnapType = '';
+  }
+
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('mouseleave', endDrag);
+
+  track.addEventListener('click', function (e) {
+    if (dragged) {
+      e.stopPropagation();
+      e.preventDefault();
+      dragged = false;
+    }
+  }, true);
+
+  track.addEventListener('dragstart', function (e) {
+    e.preventDefault();
+  });
 }
 
 /* ----------------------------------------
