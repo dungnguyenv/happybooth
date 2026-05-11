@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>404 — Happy Booth</title>
+
+  <script>
+    (function () {
+      var aliases = {
+        '/baogia': '/price.html'
+      };
+      var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+      if (aliases[path]) {
+        window.location.replace(aliases[path] + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/assets/SVG/Logo_web.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--color-bg);
+    }
+    .not-found {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 4vw;
+    }
+    .not-found__brand {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 56px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--color-text);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity var(--transition-speed) ease;
+    }
+    .not-found__brand:hover { opacity: 1; }
+    .not-found__brand img { width: 26px; height: 26px; }
+    .not-found__code {
+      font-family: var(--font-serif);
+      font-size: clamp(7rem, 20vw, 15rem);
+      font-weight: 300;
+      line-height: 0.9;
+      margin: 0;
+      letter-spacing: 0.02em;
+      color: var(--color-text);
+    }
+    .not-found__title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      margin: 20px 0 24px;
+      color: var(--color-text-light);
+    }
+    .not-found__text {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      color: var(--color-text-light);
+    }
+    .not-found__actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .not-found__divider {
+      width: 60px;
+      height: 1px;
+      background: var(--color-border);
+      margin: 0 auto 28px;
+    }
+  </style>
+</head>
+<body>
+  <main class="not-found">
+    <a href="/" class="not-found__brand">
+      <img src="/assets/SVG/Logo_web.svg" alt="">
+      Happy Booth
+    </a>
+    <h1 class="not-found__code">404</h1>
+    <div class="not-found__divider"></div>
+    <p class="not-found__title"><em>Trang không tồn tại</em></p>
+    <p class="not-found__text">Có vẻ như đường dẫn bạn vừa truy cập không còn hoặc chưa bao giờ tồn tại. Mời bạn quay về trang chủ hoặc xem bảng giá dịch vụ.</p>
+    <div class="not-found__actions">
+      <a href="/" class="btn">Về trang chủ</a>
+      <a href="/price.html" class="btn">Xem báo giá</a>
+    </div>
+  </main>
+</body>
+</html>
