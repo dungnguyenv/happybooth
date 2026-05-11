@@ -1831,6 +1831,80 @@ html[lang="en"] .seo-intro {
   display: none;
 }
 
+/* SEO FAQ section — visible only when site is in Vietnamese mode */
+.seo-faq {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.seo-faq__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.seo-faq__item {
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 0;
+}
+
+.seo-faq__item summary {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 0;
+  list-style: none;
+  position: relative;
+  padding-right: 28px;
+  color: var(--color-text);
+  transition: color var(--transition-speed) ease;
+}
+
+.seo-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.seo-faq__item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  font-weight: 300;
+  transition: transform var(--transition-speed) ease;
+}
+
+.seo-faq__item[open] summary::after {
+  content: '−';
+}
+
+.seo-faq__item summary:hover {
+  color: var(--color-text-light);
+}
+
+.seo-faq__item p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-top: 12px;
+  margin-bottom: 4px;
+  padding-right: 28px;
+}
+
+.seo-faq__item a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+html[lang="en"] .seo-faq {
+  display: none;
+}
+
 .footer__contact p {
   margin: 2px 0;
 }
