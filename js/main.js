@@ -5,6 +5,8 @@
 
 var _scrollObserver = null;
 var _carouselInterval = null;
+var _lightboxImages = [];
+var _lightboxIndex = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
   // One-time inits (header/nav — permanent DOM)
@@ -28,6 +30,7 @@ function reinitPage() {
   initScrollAnimations();
   initHomeGallery();
   initLightbox();
+  initPortfolioLoadMore();
   initFAQ();
   initCarousel();
   initLoginForm();
@@ -303,6 +306,10 @@ function initHomeCarouselDrag(track) {
 /* ----------------------------------------
    Lightbox
    ---------------------------------------- */
+function getVisibleGalleryItems() {
+  return Array.from(document.querySelectorAll('.gallery__item:not(.gallery__item--hidden), .home-carousel__slide'));
+}
+
 function initLightbox() {
   var lightbox = document.getElementById('lightbox');
   if (!lightbox) return;
@@ -313,22 +320,20 @@ function initLightbox() {
   var lightboxNext = lightbox.querySelector('.lightbox__next');
   var lightboxCounter = lightbox.querySelector('.lightbox__counter');
 
-  var galleryItems = document.querySelectorAll('.gallery__item, .home-carousel__slide');
-  if (!galleryItems.length) return;
-
-  var currentIndex = 0;
-  var images = [];
-
-  galleryItems.forEach(function (item, index) {
-    var img = item.querySelector('img');
-    if (img) {
-      images.push(img.src);
-      item.addEventListener('click', function () { openLightbox(index); });
-    }
-  });
+  function updateLightbox() {
+    if (!_lightboxImages.length) return;
+    lightboxImg.src = _lightboxImages[_lightboxIndex];
+    lightboxCounter.textContent = (_lightboxIndex + 1) + ' / ' + _lightboxImages.length;
+  }
 
   function openLightbox(index) {
-    currentIndex = index;
+    var items = getVisibleGalleryItems();
+    _lightboxImages = items.map(function (item) {
+      var img = item.querySelector('img');
+      return img ? img.src : null;
+    }).filter(Boolean);
+    if (!_lightboxImages.length) return;
+    _lightboxIndex = Math.max(0, Math.min(index, _lightboxImages.length - 1));
     updateLightbox();
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -339,22 +344,31 @@ function initLightbox() {
     document.body.style.overflow = '';
   }
 
-  function updateLightbox() {
-    lightboxImg.src = images[currentIndex];
-    lightboxCounter.textContent = (currentIndex + 1) + ' / ' + images.length;
-  }
-
   function prevImage() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    if (!_lightboxImages.length) return;
+    _lightboxIndex = (_lightboxIndex - 1 + _lightboxImages.length) % _lightboxImages.length;
     updateLightbox();
   }
 
   function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
+    if (!_lightboxImages.length) return;
+    _lightboxIndex = (_lightboxIndex + 1) % _lightboxImages.length;
     updateLightbox();
   }
 
-  // Remove old listeners by cloning
+  // Delegated click — bind once on the persistent lightbox element so it survives SPA navigation
+  if (!lightbox._galleryClickHandler) {
+    lightbox._galleryClickHandler = function (e) {
+      var item = e.target.closest('.gallery__item, .home-carousel__slide');
+      if (!item || item.classList.contains('gallery__item--hidden')) return;
+      var items = getVisibleGalleryItems();
+      var idx = items.indexOf(item);
+      if (idx >= 0) openLightbox(idx);
+    };
+    document.addEventListener('click', lightbox._galleryClickHandler);
+  }
+
+  // Re-bind nav buttons by cloning to drop stale listeners
   var newClose = lightboxClose.cloneNode(true);
   lightboxClose.parentNode.replaceChild(newClose, lightboxClose);
   newClose.addEventListener('click', closeLightbox);
@@ -371,7 +385,6 @@ function initLightbox() {
     if (e.target === lightbox) closeLightbox();
   };
 
-  // Keyboard — use a named handler to avoid duplicates
   if (!lightbox._keyHandler) {
     lightbox._keyHandler = function (e) {
       if (!lightbox.classList.contains('active')) return;
@@ -384,7 +397,6 @@ function initLightbox() {
     document.addEventListener('keydown', lightbox._keyHandler);
   }
 
-  // Touch swipe
   var touchStartX = 0;
   lightbox.ontouchstart = function (e) {
     touchStartX = e.changedTouches[0].screenX;
@@ -395,6 +407,35 @@ function initLightbox() {
       diff > 0 ? nextImage() : prevImage();
     }
   };
+}
+
+/* ----------------------------------------
+   Portfolio "Load more" pagination
+   ---------------------------------------- */
+function initPortfolioLoadMore() {
+  var button = document.querySelector('.gallery__load-more');
+  if (!button) return;
+  if (button.dataset.populated) return;
+  button.dataset.populated = '1';
+
+  var wrapper = button.closest('.gallery__more');
+  var batchSize = 30;
+
+  function updateButtonState() {
+    var remaining = document.querySelectorAll('.gallery__item--hidden').length;
+    if (remaining === 0 && wrapper) wrapper.classList.add('is-done');
+  }
+
+  button.addEventListener('click', function () {
+    var hidden = document.querySelectorAll('.gallery__item--hidden');
+    Array.prototype.slice.call(hidden, 0, batchSize).forEach(function (item) {
+      item.classList.remove('gallery__item--hidden');
+    });
+    updateButtonState();
+  });
+
+  // Initial check in case page was loaded with no hidden items
+  updateButtonState();
 }
 
 /* ----------------------------------------

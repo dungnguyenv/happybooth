@@ -559,6 +559,14 @@ em, .italic {
   padding: 0 var(--site-gutter);
 }
 
+.gallery__more.is-done {
+  display: none;
+}
+
+.gallery__item--hidden {
+  display: none;
+}
+
 /* ========================================
    Home Carousel (horizontal scroll gallery)
    ======================================== */

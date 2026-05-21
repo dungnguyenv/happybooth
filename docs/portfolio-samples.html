@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Samples — Happy Booth Design Lookbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* DESIGN TOKENS — matching Happy Booth brand */
+:root {
+  --bg: #EDEDEC;
+  --bg-2: #f5f5f4;
+  --bg-dark: #1a1a1a;
+  --text: #1a1a1a;
+  --text-light: #555;
+  --text-mute: #888;
+  --border: #d8d8d8;
+  --accent: #2a2a2a;
+  --gold: #b8956a;
+  --serif: 'Cormorant Garamond','Georgia',serif;
+  --sans: 'Montserrat','Helvetica Neue',sans-serif;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-soft: cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--sans);
+  font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+
+/* LOOKBOOK HEADER */
+.lookbook-hero{
+  min-height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:80px 5vw 60px;position:relative;
+  background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+}
+.lookbook-hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle at 20% 30%,rgba(184,149,106,.08) 0%,transparent 40%),
+                   radial-gradient(circle at 80% 70%,rgba(42,42,42,.05) 0%,transparent 40%);
+  pointer-events:none;
+}
+.lookbook-hero__eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.lookbook-hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(48px,7vw,96px);line-height:1.05;margin-bottom:24px;letter-spacing:-.02em}
+.lookbook-hero h1 em{font-style:italic;color:var(--gold)}
+.lookbook-hero__sub{max-width:640px;font-size:16px;color:var(--text-light);margin-bottom:40px}
+.lookbook-hero__count{display:inline-flex;align-items:center;gap:12px;padding:10px 22px;border:1px solid var(--border);border-radius:999px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:rgba(255,255,255,.5)}
+.lookbook-hero__count strong{font-weight:600;color:var(--gold)}
+
+/* Floating TOC */
+.toc{position:fixed;top:50%;right:24px;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:8px;padding:14px 10px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:999px}
+.toc a{width:10px;height:10px;border-radius:50%;background:transparent;border:1px solid var(--text-light);position:relative;transition:all .3s var(--ease)}
+.toc a:hover{background:var(--gold);border-color:var(--gold);transform:scale(1.3)}
+.toc a span{position:absolute;right:24px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:11px;letter-spacing:.15em;text-transform:uppercase;background:var(--text);color:#fff;padding:6px 12px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .25s}
+.toc a:hover span{opacity:1}
+@media(max-width:900px){.toc{display:none}}
+
+/* SAMPLE WRAPPER */
+.sample{padding:100px 5vw 80px;border-bottom:1px solid var(--border);position:relative}
+.sample__header{max-width:900px;margin:0 auto 60px;text-align:center}
+.sample__num{display:inline-block;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--gold);margin-bottom:12px}
+.sample__num::before{content:"— ";color:var(--gold)}
+.sample__num::after{content:" —";color:var(--gold)}
+.sample h2{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5vw,56px);line-height:1.1;margin-bottom:18px;letter-spacing:-.01em}
+.sample h2 em{font-style:italic;color:var(--gold)}
+.sample__desc{font-size:15px;color:var(--text-light);max-width:600px;margin:0 auto 16px}
+.sample__tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.sample__tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);border-radius:999px;color:var(--text-light);background:var(--bg-2)}
+.sample__tag--pro{background:var(--text);color:#fff;border-color:var(--text)}
+.sample__demo{position:relative}
+
+/* 1. MASONRY PINTEREST */
+.s1-masonry{column-count:4;column-gap:14px}
+@media(max-width:1100px){.s1-masonry{column-count:3}}
+@media(max-width:700px){.s1-masonry{column-count:2}}
+.s1-masonry__item{break-inside:avoid;margin-bottom:14px;overflow:hidden;border-radius:4px;position:relative;background:#000;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.s1-masonry__item.in{opacity:1;transform:none}
+.s1-masonry__item img{width:100%;height:auto;transition:transform .8s var(--ease),filter .8s var(--ease)}
+.s1-masonry__item:hover img{transform:scale(1.05);filter:brightness(.7)}
+.s1-masonry__item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.6) 100%);opacity:0;transition:opacity .4s var(--ease)}
+.s1-masonry__item:hover::after{opacity:1}
+
+/* 2. BENTO EDITORIAL */
+.s2-bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:140px;gap:14px}
+.s2-bento__item{overflow:hidden;border-radius:6px;position:relative;background:#000;opacity:0;transform:scale(.96);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.s2-bento__item.in{opacity:1;transform:none}
+.s2-bento__item img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.s2-bento__item:hover img{transform:scale(1.08)}
+.s2-bento__item--xl{grid-column:span 3;grid-row:span 3}
+.s2-bento__item--l{grid-column:span 2;grid-row:span 2}
+.s2-bento__item--m{grid-column:span 2;grid-row:span 2}
+.s2-bento__item--s{grid-column:span 1;grid-row:span 2}
+.s2-bento__item--wide{grid-column:span 4;grid-row:span 1}
+.s2-bento__caption{position:absolute;left:20px;bottom:18px;color:#fff;z-index:2;opacity:0;transform:translateY(10px);transition:all .5s var(--ease)}
+.s2-bento__item--xl .s2-bento__caption{opacity:1;transform:none}
+.s2-bento__caption-eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;opacity:.8}
+.s2-bento__caption h3{font-family:var(--serif);font-size:28px;font-weight:300;margin-top:4px}
+.s2-bento__item:hover .s2-bento__caption{opacity:1;transform:none}
+.s2-bento__item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.65) 100%);opacity:.4;transition:opacity .4s var(--ease);pointer-events:none}
+.s2-bento__item:hover::after{opacity:.7}
+@media(max-width:900px){
+  .s2-bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px}
+  .s2-bento__item--xl{grid-column:span 2;grid-row:span 3}
+  .s2-bento__item--l,.s2-bento__item--m{grid-column:span 1;grid-row:span 2}
+  .s2-bento__item--wide{grid-column:span 2;grid-row:span 2}
+  .s2-bento__item--s{grid-column:span 1;grid-row:span 2}
+}
+
+/* 3. INFINITE MARQUEE */
+.s3-marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%)}
+.s3-marquee__row{display:flex;gap:18px;width:max-content;animation:s3-scroll 50s linear infinite;margin-bottom:18px}
+.s3-marquee__row--reverse{animation-direction:reverse;animation-duration:60s}
+.s3-marquee:hover .s3-marquee__row{animation-play-state:paused}
+.s3-marquee__item{flex:0 0 auto;width:280px;height:200px;overflow:hidden;border-radius:6px;position:relative}
+.s3-marquee__item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.s3-marquee__item:hover img{transform:scale(1.06)}
+@keyframes s3-scroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 9px))}}
+
+/* 4. POLAROID SCATTER */
+.s4-polaroid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:36px 24px;padding:30px 10px}
+.s4-polaroid__item{background:#fff;padding:12px 12px 48px;box-shadow:0 4px 20px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);transition:transform .5s var(--ease),box-shadow .5s var(--ease);position:relative;cursor:pointer;transform:rotate(var(--r,-2deg))}
+.s4-polaroid__item:nth-child(3n){--r:2.5deg}
+.s4-polaroid__item:nth-child(3n+1){--r:-3deg}
+.s4-polaroid__item:nth-child(4n){--r:1.5deg}
+.s4-polaroid__item:nth-child(5n){--r:-1.5deg}
+.s4-polaroid__item:hover{transform:rotate(0) translateY(-12px) scale(1.03);box-shadow:0 24px 50px rgba(0,0,0,.16),0 4px 10px rgba(0,0,0,.06);z-index:2}
+.s4-polaroid__item img{width:100%;aspect-ratio:1/1.05;object-fit:cover;filter:saturate(.95) contrast(1.02)}
+.s4-polaroid__caption{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--text-light)}
+
+/* 5. KEN BURNS CINEMATIC */
+.s5-cinematic{display:flex;flex-direction:column;gap:28px}
+.s5-cinematic__row{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.s5-cinematic__row:nth-child(even){direction:rtl}
+.s5-cinematic__row:nth-child(even) > *{direction:ltr}
+.s5-cinematic__media{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:4px;background:#000}
+.s5-cinematic__media img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 12s linear,opacity 1.4s var(--ease);opacity:0}
+.s5-cinematic__media.in img{transform:scale(1);opacity:1}
+.s5-cinematic__media.in.alt img{transform:scale(1) translateX(-3%)}
+.s5-cinematic__text{padding:20px}
+.s5-cinematic__num{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold);letter-spacing:.1em;margin-bottom:14px;opacity:0;transform:translateY(20px);transition:all .8s var(--ease) .2s}
+.s5-cinematic__row.in .s5-cinematic__num{opacity:1;transform:none}
+.s5-cinematic__text h3{font-family:var(--serif);font-weight:300;font-size:clamp(28px,4vw,44px);line-height:1.1;margin-bottom:18px;letter-spacing:-.01em;opacity:0;transform:translateY(20px);transition:all .8s var(--ease) .35s}
+.s5-cinematic__row.in .s5-cinematic__text h3{opacity:1;transform:none}
+.s5-cinematic__text h3 em{font-style:italic;color:var(--gold)}
+.s5-cinematic__text p{color:var(--text-light);font-size:15px;max-width:380px;opacity:0;transform:translateY(20px);transition:all .8s var(--ease) .5s}
+.s5-cinematic__row.in .s5-cinematic__text p{opacity:1;transform:none}
+@media(max-width:800px){
+  .s5-cinematic__row{grid-template-columns:1fr}
+  .s5-cinematic__row:nth-child(even){direction:ltr}
+}
+
+/* 6. FILTERABLE GRID */
+.s6-filter{display:flex;justify-content:center;gap:6px;margin-bottom:36px;flex-wrap:wrap}
+.s6-filter__btn{padding:10px 22px;border:1px solid var(--border);border-radius:999px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--text-light);transition:all .3s var(--ease)}
+.s6-filter__btn:hover{border-color:var(--text);color:var(--text)}
+.s6-filter__btn.active{background:var(--text);color:#fff;border-color:var(--text)}
+.s6-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.s6-grid__item{overflow:hidden;border-radius:4px;aspect-ratio:1;background:#000;position:relative;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.s6-grid__item.hide{opacity:0;transform:scale(.85);pointer-events:none;width:0;height:0;padding:0;margin:0;overflow:hidden}
+.s6-grid__item img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .5s var(--ease)}
+.s6-grid__item:hover img{transform:scale(1.1);filter:brightness(.65)}
+.s6-grid__badge{position:absolute;top:14px;left:14px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;background:rgba(255,255,255,.92);color:var(--text);padding:5px 11px;border-radius:999px;opacity:0;transform:translateY(-6px);transition:all .4s var(--ease)}
+.s6-grid__item:hover .s6-grid__badge{opacity:1;transform:none}
+.s6-grid__label{position:absolute;left:0;right:0;bottom:18px;text-align:center;color:#fff;font-family:var(--serif);font-size:22px;font-style:italic;opacity:0;transform:translateY(10px);transition:all .4s var(--ease) .05s;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.s6-grid__item:hover .s6-grid__label{opacity:1;transform:none}
+
+/* 7. 3D TILT + LIFT */
+.s7-tilt{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;perspective:1400px}
+.s7-tilt__item{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;transform-style:preserve-3d;transition:transform .4s var(--ease),box-shadow .4s var(--ease);cursor:pointer;background:#000}
+.s7-tilt__item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.s7-tilt__item:hover{box-shadow:0 30px 60px -20px rgba(0,0,0,.4),0 18px 36px -18px rgba(0,0,0,.3)}
+.s7-tilt__item:hover img{transform:scale(1.06)}
+.s7-tilt__shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);opacity:0;transition:opacity .3s}
+.s7-tilt__item:hover .s7-tilt__shine{opacity:1}
+.s7-tilt__meta{position:absolute;left:20px;right:20px;bottom:20px;color:#fff;transform:translateZ(40px)}
+.s7-tilt__meta-eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.s7-tilt__meta h3{font-family:var(--serif);font-size:24px;font-weight:300;font-style:italic}
+.s7-tilt__item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.75) 100%);pointer-events:none}
+
+/* 8. HOVER REVEAL */
+.s8-reveal{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--text)}
+.s8-reveal__item{position:relative;aspect-ratio:4/5;overflow:hidden;background:#000;cursor:pointer}
+.s8-reveal__item img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),filter .6s var(--ease);filter:grayscale(40%)}
+.s8-reveal__item:hover img{transform:scale(1.05);filter:grayscale(0)}
+.s8-reveal__overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;color:#fff;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.85) 100%);opacity:0;transition:opacity .5s var(--ease)}
+.s8-reveal__item:hover .s8-reveal__overlay{opacity:1}
+.s8-reveal__overlay-line{width:30px;height:1px;background:var(--gold);margin-bottom:14px;transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease) .1s}
+.s8-reveal__item:hover .s8-reveal__overlay-line{transform:scaleX(1)}
+.s8-reveal__overlay-eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px;opacity:0;transform:translateY(8px);transition:all .5s var(--ease) .2s}
+.s8-reveal__item:hover .s8-reveal__overlay-eyebrow{opacity:1;transform:none}
+.s8-reveal__overlay h3{font-family:var(--serif);font-size:32px;font-weight:300;font-style:italic;opacity:0;transform:translateY(8px);transition:all .5s var(--ease) .3s}
+.s8-reveal__item:hover .s8-reveal__overlay h3{opacity:1;transform:none}
+@media(max-width:700px){.s8-reveal{grid-template-columns:repeat(2,1fr)}}
+
+/* 9. COVERFLOW */
+.s9-coverflow{position:relative;height:520px;display:flex;align-items:center;justify-content:center;perspective:1600px;overflow:hidden}
+.s9-coverflow__track{position:relative;width:100%;height:420px;transform-style:preserve-3d}
+.s9-coverflow__slide{position:absolute;top:50%;left:50%;width:340px;height:420px;margin-left:-170px;margin-top:-210px;border-radius:8px;overflow:hidden;transition:transform .7s var(--ease),opacity .7s var(--ease),filter .7s var(--ease);box-shadow:0 30px 60px -20px rgba(0,0,0,.35);background:#000;cursor:pointer}
+.s9-coverflow__slide img{width:100%;height:100%;object-fit:cover}
+.s9-coverflow__nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;z-index:10;font-size:24px;color:var(--text);box-shadow:0 6px 24px rgba(0,0,0,.12);transition:all .3s var(--ease)}
+.s9-coverflow__nav:hover{background:var(--text);color:#fff;transform:translateY(-50%) scale(1.08)}
+.s9-coverflow__nav--prev{left:24px}
+.s9-coverflow__nav--next{right:24px}
+.s9-coverflow__dots{position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.s9-coverflow__dot{width:24px;height:2px;background:var(--border);transition:background .3s,width .3s}
+.s9-coverflow__dot.active{background:var(--text);width:40px}
+
+/* 10. SPOTLIGHT */
+.s10-spot{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:2px;background:#1a1a1a;padding:2px;border-radius:6px;overflow:hidden}
+.s10-spot__item{aspect-ratio:1;overflow:hidden;position:relative}
+.s10-spot__item img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) brightness(.55) contrast(.9);transition:filter .5s var(--ease),transform .5s var(--ease)}
+.s10-spot__item.lit img{filter:grayscale(0) brightness(1.05) contrast(1.05);transform:scale(1.04)}
+.s10-spot__cursor{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(184,149,106,.25) 0%,transparent 70%);pointer-events:none;mix-blend-mode:screen;transform:translate(-50%,-50%);left:50%;top:50%;opacity:0;transition:opacity .3s}
+.s10-spot:hover .s10-spot__cursor{opacity:1}
+.s10-spot__hint{text-align:center;margin-top:18px;font-family:var(--serif);font-style:italic;color:var(--text-light);font-size:15px}
+@media(max-width:900px){.s10-spot{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:500px){.s10-spot{grid-template-columns:repeat(3,1fr)}}
+
+/* 11. PHOTO STRIP — vertical photobooth printed strip */
+.s11-strips{display:flex;gap:38px;flex-wrap:wrap;justify-content:center;padding:30px 10px 50px}
+.s11-strip{background:#fff;padding:14px 14px 22px;box-shadow:0 8px 30px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.05);width:200px;transform:rotate(var(--r,-3deg));transition:transform .5s var(--ease),box-shadow .5s var(--ease);cursor:pointer;position:relative}
+.s11-strip:nth-child(2n){--r:2.5deg}
+.s11-strip:nth-child(3n){--r:-1.5deg}
+.s11-strip:nth-child(4n){--r:4deg}
+.s11-strip:hover{transform:rotate(0) translateY(-14px) scale(1.04);box-shadow:0 30px 60px rgba(0,0,0,.18),0 6px 14px rgba(0,0,0,.08);z-index:3}
+.s11-strip__photo{aspect-ratio:1;overflow:hidden;margin-bottom:8px;background:#000}
+.s11-strip__photo:last-of-type{margin-bottom:14px}
+.s11-strip__photo img{width:100%;height:100%;object-fit:cover}
+.s11-strip__brand{text-align:center;font-family:var(--serif);font-style:italic;font-size:13px;color:var(--text-light);letter-spacing:.05em}
+.s11-strip__brand strong{color:var(--gold);font-style:normal;font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:.25em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+/* 12. DIAGONAL MARQUEE */
+.s12-diag{position:relative;overflow:hidden;padding:80px 0;background:#1a1a1a;border-radius:8px;transform:skewY(-6deg);margin:30px 0}
+.s12-diag__inner{transform:skewY(6deg)}
+.s12-diag__row{display:flex;gap:18px;width:max-content;animation:s12-scroll 60s linear infinite;margin-bottom:20px}
+.s12-diag__row--rev{animation-direction:reverse;animation-duration:75s}
+.s12-diag:hover .s12-diag__row{animation-play-state:paused}
+.s12-diag__item{flex:0 0 auto;width:260px;height:170px;overflow:hidden;border-radius:6px;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.s12-diag__item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.s12-diag__item:hover img{transform:scale(1.08)}
+@keyframes s12-scroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 9px))}}
+
+/* 13. STACKED DECK */
+.s13-deck-wrap{display:flex;justify-content:center;align-items:center;flex-direction:column;gap:30px;padding:30px 10px}
+.s13-deck{position:relative;width:min(420px,90vw);height:560px}
+.s13-card{position:absolute;inset:0;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.25),0 4px 8px rgba(0,0,0,.1);cursor:grab;transition:transform .6s var(--ease),opacity .6s var(--ease);transform-origin:center 95%}
+.s13-card img{width:100%;height:100%;object-fit:cover}
+.s13-card__meta{position:absolute;left:24px;right:24px;bottom:24px;color:#fff;z-index:2}
+.s13-card__meta-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;opacity:.85;margin-bottom:8px}
+.s13-card__meta h3{font-family:var(--serif);font-size:32px;font-weight:300;font-style:italic;line-height:1.05}
+.s13-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.8) 100%);pointer-events:none}
+.s13-card.swiped{transform:translateX(120%) rotate(20deg);opacity:0;pointer-events:none}
+.s13-deck-controls{display:flex;gap:12px}
+.s13-deck-btn{padding:12px 28px;border:1px solid var(--border);border-radius:999px;background:#fff;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--text);transition:all .3s var(--ease)}
+.s13-deck-btn:hover{background:var(--text);color:#fff;border-color:var(--text)}
+.s13-deck-btn--primary{background:var(--gold);color:#fff;border-color:var(--gold)}
+.s13-deck-btn--primary:hover{background:#9a7b54;border-color:#9a7b54}
+
+/* 14. SNAP CAROUSEL */
+.s14-snap{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 10px 30px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.s14-snap::-webkit-scrollbar{height:6px}
+.s14-snap::-webkit-scrollbar-track{background:var(--border);border-radius:3px}
+.s14-snap::-webkit-scrollbar-thumb{background:var(--text);border-radius:3px}
+.s14-snap__item{flex:0 0 70%;max-width:760px;aspect-ratio:16/10;overflow:hidden;border-radius:8px;scroll-snap-align:center;position:relative;background:#000}
+.s14-snap__item img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.s14-snap__item:hover img{transform:scale(1.04)}
+.s14-snap__caption{position:absolute;left:24px;bottom:24px;color:#fff;z-index:2}
+.s14-snap__caption-eb{font-size:11px;letter-spacing:.3em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.s14-snap__caption h3{font-family:var(--serif);font-size:30px;font-weight:300;font-style:italic}
+.s14-snap__item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.7) 100%);pointer-events:none}
+.s14-snap-hint{text-align:center;font-family:var(--serif);font-style:italic;color:var(--text-light);font-size:14px;margin-top:8px}
+
+/* 15. STICKY STORYTELLING */
+.s15-story{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;position:relative}
+.s15-story__text{position:sticky;top:80px;align-self:start;padding:40px 0}
+.s15-story__num{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold);letter-spacing:.1em;margin-bottom:14px}
+.s15-story__text h3{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4.5vw,52px);line-height:1.05;margin-bottom:22px}
+.s15-story__text h3 em{color:var(--gold);font-style:italic}
+.s15-story__text p{color:var(--text-light);font-size:15px;max-width:380px;margin-bottom:14px}
+.s15-story__steps{margin-top:30px;display:flex;flex-direction:column;gap:14px}
+.s15-story__step{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--text-light);letter-spacing:.04em;opacity:.45;transition:opacity .5s var(--ease)}
+.s15-story__step.active{opacity:1;color:var(--text);font-weight:500}
+.s15-story__step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .5s var(--ease)}
+.s15-story__step.active .s15-story__step-dot{background:var(--gold)}
+.s15-story__images{display:flex;flex-direction:column;gap:14px}
+.s15-story__image{aspect-ratio:4/5;overflow:hidden;border-radius:6px;background:#000;opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.s15-story__image.in{opacity:1;transform:none}
+.s15-story__image img{width:100%;height:100%;object-fit:cover}
+@media(max-width:800px){
+  .s15-story{grid-template-columns:1fr;gap:30px}
+  .s15-story__text{position:static}
+}
+
+/* 16. HONEYCOMB */
+.s16-honey__item{width:140px;height:162px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);overflow:hidden;background:#000;transition:transform .5s var(--ease);position:relative;cursor:pointer}
+.s16-honey__item:hover{transform:scale(1.06);z-index:3}
+.s16-honey__item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.s16-honey__item:hover img{transform:scale(1.1)}
+.s16-honey__item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(184,149,106,.25) 100%);opacity:0;transition:opacity .4s}
+.s16-honey__item:hover::after{opacity:1}
+.s16-honey-rows{display:flex;flex-direction:column;align-items:center;padding:30px 0;background:linear-gradient(180deg,var(--bg-2),transparent);border-radius:8px}
+.s16-honey-row{display:flex;gap:12px;margin-top:-41px}
+.s16-honey-row:first-child{margin-top:0}
+
+/* 17. FLIP CARDS */
+.s17-flip{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;perspective:1500px}
+.s17-flip__item{aspect-ratio:3/4;transform-style:preserve-3d;transition:transform .8s var(--ease);position:relative;cursor:pointer}
+.s17-flip__item.flipped{transform:rotateY(180deg)}
+.s17-flip__face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.s17-flip__front{background:#000}
+.s17-flip__front img{width:100%;height:100%;object-fit:cover}
+.s17-flip__front-label{position:absolute;left:18px;bottom:18px;color:#fff;font-family:var(--serif);font-style:italic;font-size:20px;z-index:2}
+.s17-flip__front::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.6) 100%);pointer-events:none}
+.s17-flip__back{transform:rotateY(180deg);background:var(--text);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:30px;text-align:center}
+.s17-flip__back-eb{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.s17-flip__back h3{font-family:var(--serif);font-weight:300;font-style:italic;font-size:30px;line-height:1.1;margin-bottom:18px}
+.s17-flip__back-meta{display:flex;flex-direction:column;gap:10px;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:22px}
+.s17-flip__back-meta b{display:block;color:#fff;font-weight:500;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:2px}
+.s17-flip__hint{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding-top:18px;border-top:1px solid rgba(255,255,255,.15)}
+
+/* 18. FOCUS MODE */
+.s18-focus{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;position:relative}
+@media(max-width:700px){.s18-focus{grid-template-columns:repeat(2,1fr)}}
+.s18-focus__item{aspect-ratio:1;overflow:hidden;border-radius:4px;background:#000;cursor:pointer;position:relative;transition:filter .5s var(--ease),opacity .5s var(--ease),transform .5s var(--ease)}
+.s18-focus__item img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.s18-focus__item:hover img{transform:scale(1.05)}
+.s18-focus.has-active .s18-focus__item:not(.active){filter:blur(6px) brightness(.55);opacity:.6;transform:scale(.96)}
+.s18-focus__item.active{
+  grid-column:span 2;grid-row:span 2;
+  aspect-ratio:1;z-index:5;
+  box-shadow:0 30px 80px rgba(0,0,0,.3);
+}
+.s18-focus__item.active img{transform:scale(1)}
+.s18-focus__close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--text);display:none;align-items:center;justify-content:center;font-size:22px;z-index:6}
+.s18-focus__item.active .s18-focus__close{display:flex}
+.s18-focus__label{position:absolute;left:0;right:0;bottom:0;padding:30px;color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.85));opacity:0;transition:opacity .4s var(--ease)}
+.s18-focus__item.active .s18-focus__label{opacity:1}
+.s18-focus__label-eb{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.s18-focus__label h3{font-family:var(--serif);font-weight:300;font-style:italic;font-size:32px;line-height:1.1}
+
+/* 19. SCRAPBOOK */
+.s19-scrap{position:relative;height:780px;max-width:1100px;margin:0 auto;background:#f3ece0;background-image:repeating-linear-gradient(0deg,transparent 0,transparent 28px,rgba(184,149,106,.08) 28px,rgba(184,149,106,.08) 29px);border-radius:6px;box-shadow:inset 0 0 60px rgba(0,0,0,.04);overflow:hidden}
+.s19-scrap__title{position:absolute;top:34px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-style:italic;font-size:38px;color:var(--text);z-index:1;text-align:center}
+.s19-scrap__title small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-style:normal;margin-top:6px}
+.s19-scrap__photo{position:absolute;background:#fff;padding:10px 10px 36px;box-shadow:0 6px 24px rgba(0,0,0,.15),0 2px 4px rgba(0,0,0,.06);transition:transform .4s var(--ease),box-shadow .4s var(--ease);cursor:pointer}
+.s19-scrap__photo:hover{transform:rotate(0) scale(1.08) translateY(-6px) !important;box-shadow:0 20px 50px rgba(0,0,0,.22);z-index:10}
+.s19-scrap__photo img{display:block;width:100%;height:100%;object-fit:cover}
+.s19-scrap__photo-cap{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-family:var(--serif);font-style:italic;font-size:13px;color:var(--text-light)}
+.s19-scrap__tape{position:absolute;width:90px;height:24px;background:linear-gradient(135deg,rgba(184,149,106,.55),rgba(184,149,106,.3));top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);box-shadow:0 2px 4px rgba(0,0,0,.08)}
+.s19-scrap__tape::before,.s19-scrap__tape::after{content:"";position:absolute;top:0;bottom:0;width:6px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.4) 0,rgba(255,255,255,.4) 2px,transparent 2px,transparent 4px)}
+.s19-scrap__tape::before{left:0}.s19-scrap__tape::after{right:0}
+.s19-scrap__sticker{position:absolute;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--gold);transform:rotate(var(--r,-8deg));z-index:2}
+
+/* 20. NUMBER REVEAL */
+.s20-numbers{display:flex;flex-direction:column;gap:20px}
+.s20-num-row{display:grid;grid-template-columns:120px 1fr 280px;align-items:center;gap:30px;padding:24px 0;border-bottom:1px solid var(--border);position:relative;opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.s20-num-row.in{opacity:1;transform:none}
+.s20-num-row:last-child{border-bottom:0}
+.s20-num-row__num{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(60px,8vw,110px);line-height:1;color:var(--text);letter-spacing:-.04em}
+.s20-num-row__num span{color:var(--gold)}
+.s20-num-row__text h3{font-family:var(--serif);font-weight:300;font-size:clamp(22px,3vw,34px);line-height:1.1;margin-bottom:8px}
+.s20-num-row__text h3 em{font-style:italic;color:var(--gold)}
+.s20-num-row__text p{color:var(--text-light);font-size:14px;max-width:480px}
+.s20-num-row__img{width:280px;height:180px;overflow:hidden;border-radius:4px;background:#000;justify-self:end}
+.s20-num-row__img img{width:100%;height:100%;object-fit:cover;transform:scale(1.1);transition:transform 4s linear}
+.s20-num-row.in .s20-num-row__img img{transform:scale(1)}
+.s20-num-row__line{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 1.4s var(--ease) .4s}
+.s20-num-row.in .s20-num-row__line{transform:scaleX(1)}
+@media(max-width:800px){
+  .s20-num-row{grid-template-columns:80px 1fr;gap:20px}
+  .s20-num-row__img{display:none}
+}
+
+/* FOOTER */
+.lookbook-footer{text-align:center;padding:80px 5vw 60px;background:var(--text);color:var(--bg)}
+.lookbook-footer h2{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5vw,52px);margin-bottom:18px}
+.lookbook-footer h2 em{font-style:italic;color:var(--gold)}
+.lookbook-footer p{color:rgba(255,255,255,.65);max-width:520px;margin:0 auto 28px}
+.lookbook-footer__legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:900px;margin:40px auto 0;text-align:left}
+.legend-item{padding:18px;border:1px solid rgba(255,255,255,.12);border-radius:6px;background:rgba(255,255,255,.03)}
+.legend-item__num{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:14px;margin-bottom:6px}
+.legend-item__name{font-size:14px;font-weight:500;margin-bottom:4px}
+.legend-item__hint{font-size:12px;color:rgba(255,255,255,.5)}
+</style>
+</head>
+<body>
+
+<section class="lookbook-hero">
+  <div class="lookbook-hero__eyebrow">Happy Booth · Internal Design Lookbook</div>
+  <h1>Portfolio<br><em>Gallery Concepts</em></h1>
+  <p class="lookbook-hero__sub">
+    10 cách trình bày ảnh khác nhau cho trang Portfolio — từ phong cách editorial sang trọng đến hiệu ứng cinematic. Chọn phong cách bạn thấy phù hợp nhất với thương hiệu Happy Booth.
+  </p>
+  <div class="lookbook-hero__count">
+    <strong>20</strong> Concepts · <strong>110</strong> Photos · Vanilla CSS + JS
+  </div>
+</section>
+
+<nav class="toc" aria-label="Concept navigation">
+  <a href="#s1"><span>01 — Masonry</span></a>
+  <a href="#s2"><span>02 — Bento Editorial</span></a>
+  <a href="#s3"><span>03 — Marquee</span></a>
+  <a href="#s4"><span>04 — Polaroid</span></a>
+  <a href="#s5"><span>05 — Cinematic</span></a>
+  <a href="#s6"><span>06 — Filter</span></a>
+  <a href="#s7"><span>07 — 3D Tilt</span></a>
+  <a href="#s8"><span>08 — Hover Reveal</span></a>
+  <a href="#s9"><span>09 — Coverflow</span></a>
+  <a href="#s10"><span>10 — Spotlight</span></a>
+  <a href="#s11"><span>11 — Photo Strip</span></a>
+  <a href="#s12"><span>12 — Diagonal Marquee</span></a>
+  <a href="#s13"><span>13 — Stacked Deck</span></a>
+  <a href="#s14"><span>14 — Snap Carousel</span></a>
+  <a href="#s15"><span>15 — Sticky Story</span></a>
+  <a href="#s16"><span>16 — Honeycomb</span></a>
+  <a href="#s17"><span>17 — Flip Cards</span></a>
+  <a href="#s18"><span>18 — Focus Mode</span></a>
+  <a href="#s19"><span>19 — Scrapbook</span></a>
+  <a href="#s20"><span>20 — Numbers</span></a>
+</nav>
+
+<!-- 01 MASONRY -->
+<section class="sample" id="s1">
+  <div class="sample__header">
+    <div class="sample__num">01</div>
+    <h2>Masonry — <em>Pinterest layout</em></h2>
+    <p class="sample__desc">Bố cục cột với chiều cao ảnh tự nhiên, không bị crop ép tỉ lệ. Cảm giác phong phú, tự do — phù hợp khi muốn khoe sự đa dạng của portfolio. Hover làm tối ảnh nhẹ tạo chiều sâu.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Editorial</span>
+      <span class="sample__tag">Organic</span>
+      <span class="sample__tag sample__tag--pro">No crop</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s1-masonry" id="s1-masonry"></div>
+  </div>
+</section>
+
+<!-- 02 BENTO -->
+<section class="sample" id="s2">
+  <div class="sample__header">
+    <div class="sample__num">02</div>
+    <h2>Bento — <em>Magazine grid</em></h2>
+    <p class="sample__desc">Grid bất đối xứng kiểu tạp chí thời trang — có ảnh hero lớn, ảnh phụ và ảnh wide. Phù hợp để highlight các sự kiện đặc biệt. Tạo cảm giác curated, có chủ đích.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Curated</span>
+      <span class="sample__tag">Hierarchy</span>
+      <span class="sample__tag sample__tag--pro">Premium feel</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s2-bento" id="s2-bento"></div>
+  </div>
+</section>
+
+<!-- 03 MARQUEE -->
+<section class="sample" id="s3">
+  <div class="sample__header">
+    <div class="sample__num">03</div>
+    <h2>Marquee — <em>Infinite scroll</em></h2>
+    <p class="sample__desc">Hai hàng ảnh cuộn ngang vô tận theo chiều ngược nhau, tốc độ khác nhau. Cực kỳ ấn tượng, năng động — phù hợp đặt ở đầu trang như một "highlight reel". Hover để dừng cuộn.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Dynamic</span>
+      <span class="sample__tag">Motion</span>
+      <span class="sample__tag sample__tag--pro">Eye-catching</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s3-marquee">
+      <div class="s3-marquee__row" id="s3-row1"></div>
+      <div class="s3-marquee__row s3-marquee__row--reverse" id="s3-row2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 POLAROID -->
+<section class="sample" id="s4">
+  <div class="sample__header">
+    <div class="sample__num">04</div>
+    <h2>Polaroid — <em>Scattered memories</em></h2>
+    <p class="sample__desc">Phong cách polaroid xoay nhẹ, hover thì thẳng dậy và nâng lên. Cảm giác hoài niệm, vui tươi — đúng tinh thần photobooth. Hợp với layout có ít hơn ~30 ảnh featured.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Playful</span>
+      <span class="sample__tag">Nostalgic</span>
+      <span class="sample__tag sample__tag--pro">On-brand</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s4-polaroid" id="s4-polaroid"></div>
+  </div>
+</section>
+
+<!-- 05 CINEMATIC -->
+<section class="sample" id="s5">
+  <div class="sample__header">
+    <div class="sample__num">05</div>
+    <h2>Cinematic — <em>Storytelling layout</em></h2>
+    <p class="sample__desc">Layout zigzag xen kẽ giữa ảnh và text — ảnh tự zoom rất chậm khi vào view (hiệu ứng Ken Burns). Phù hợp khi muốn kể câu chuyện về từng dòng sự kiện hoặc highlight các loại tiệc khác nhau.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Storytelling</span>
+      <span class="sample__tag">Slow reveal</span>
+      <span class="sample__tag sample__tag--pro">High-end</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s5-cinematic" id="s5-cinematic"></div>
+  </div>
+</section>
+
+<!-- 06 FILTER -->
+<section class="sample" id="s6">
+  <div class="sample__header">
+    <div class="sample__num">06</div>
+    <h2>Filter — <em>Category sort</em></h2>
+    <p class="sample__desc">Cho khách lọc theo loại sự kiện: Wedding · Birthday · Corporate. Hiệu ứng morph mượt khi đổi tab. Hover hiện badge thể loại và tên sự kiện. Phù hợp khi portfolio đã đủ lớn và chia theo nhóm.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Functional</span>
+      <span class="sample__tag">UX</span>
+      <span class="sample__tag sample__tag--pro">Scalable</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s6-filter">
+      <button class="s6-filter__btn active" data-filter="all">All</button>
+      <button class="s6-filter__btn" data-filter="wedding">Wedding</button>
+      <button class="s6-filter__btn" data-filter="birthday">Birthday</button>
+      <button class="s6-filter__btn" data-filter="corporate">Corporate</button>
+    </div>
+    <div class="s6-grid" id="s6-grid"></div>
+  </div>
+</section>
+
+<!-- 07 TILT -->
+<section class="sample" id="s7">
+  <div class="sample__header">
+    <div class="sample__num">07</div>
+    <h2>3D Tilt — <em>Depth & shine</em></h2>
+    <p class="sample__desc">Mỗi card nghiêng theo cursor với perspective 3D thật, có ánh sáng chạy qua. Card tỉ lệ chân dung. Cảm giác premium, tech-forward — phù hợp với clientele cao cấp.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Interactive</span>
+      <span class="sample__tag">Modern</span>
+      <span class="sample__tag sample__tag--pro">Wow factor</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s7-tilt" id="s7-tilt"></div>
+  </div>
+</section>
+
+<!-- 08 REVEAL -->
+<section class="sample" id="s8">
+  <div class="sample__header">
+    <div class="sample__num">08</div>
+    <h2>Hover Reveal — <em>Editorial overlay</em></h2>
+    <p class="sample__desc">Ảnh grayscale nhẹ khi nghỉ, chuyển full color khi hover, kèm overlay text editorial xuất hiện theo trình tự. Sang trọng, có nhịp điệu — phong cách của các nhiếp ảnh gia high-end.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Editorial</span>
+      <span class="sample__tag">Refined</span>
+      <span class="sample__tag sample__tag--pro">High-end</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s8-reveal" id="s8-reveal"></div>
+  </div>
+</section>
+
+<!-- 09 COVERFLOW -->
+<section class="sample" id="s9">
+  <div class="sample__header">
+    <div class="sample__num">09</div>
+    <h2>Coverflow — <em>3D carousel</em></h2>
+    <p class="sample__desc">Carousel 3D kiểu iTunes — ảnh trung tâm rõ nét, hai bên xoay nhẹ theo phối cảnh. Phù hợp khi muốn showcase từng frame design hoặc featured shots với cảm giác presentation cao cấp.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Showcase</span>
+      <span class="sample__tag">Focus</span>
+      <span class="sample__tag sample__tag--pro">Cinematic</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s9-coverflow" id="s9-coverflow">
+      <button class="s9-coverflow__nav s9-coverflow__nav--prev" aria-label="Previous">‹</button>
+      <div class="s9-coverflow__track" id="s9-track"></div>
+      <button class="s9-coverflow__nav s9-coverflow__nav--next" aria-label="Next">›</button>
+      <div class="s9-coverflow__dots" id="s9-dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 SPOTLIGHT -->
+<section class="sample" id="s10">
+  <div class="sample__header">
+    <div class="sample__num">10</div>
+    <h2>Spotlight — <em>Cursor reveals</em></h2>
+    <p class="sample__desc">Toàn bộ mosaic ở chế độ grayscale tối, di chuột tới đâu ảnh ở đó hiện full màu sắc — như đang chiếu đèn pin. Rất độc đáo, gây tò mò. Phù hợp đặt một mảng nhỏ trên trang.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Unique</span>
+      <span class="sample__tag">Interactive</span>
+      <span class="sample__tag sample__tag--pro">Memorable</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s10-spot" id="s10-spot">
+      <div class="s10-spot__cursor"></div>
+    </div>
+    <p class="s10-spot__hint">↑ Di chuột vào để khám phá</p>
+  </div>
+</section>
+
+<!-- 11 PHOTO STRIP -->
+<section class="sample" id="s11">
+  <div class="sample__header">
+    <div class="sample__num">11</div>
+    <h2>Photo Strip — <em>Real photobooth print</em></h2>
+    <p class="sample__desc">Strip ảnh dọc đúng kiểu in ra từ máy photobooth — 4 ảnh xếp dọc + footer brand + ngày tháng. Cực kỳ "đúng chất" Happy Booth. Khách thấy ngay là sản phẩm thật của họ.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">On-brand</span>
+      <span class="sample__tag">Tactile</span>
+      <span class="sample__tag sample__tag--pro">Signature</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s11-strips" id="s11-strips"></div>
+  </div>
+</section>
+
+<!-- 12 DIAGONAL MARQUEE -->
+<section class="sample" id="s12">
+  <div class="sample__header">
+    <div class="sample__num">12</div>
+    <h2>Diagonal — <em>Skewed motion</em></h2>
+    <p class="sample__desc">Marquee được skew nghiêng 6° trên nền đen, hai hàng cuộn ngược chiều. Tạo cảm giác hơi cinematic, hiện đại — hợp đặt làm divider giữa các section lớn.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Bold</span>
+      <span class="sample__tag">Motion</span>
+      <span class="sample__tag sample__tag--pro">Cinematic</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s12-diag">
+      <div class="s12-diag__inner">
+        <div class="s12-diag__row" id="s12-row1"></div>
+        <div class="s12-diag__row s12-diag__row--rev" id="s12-row2"></div>
+        <div class="s12-diag__row" id="s12-row3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 STACKED DECK -->
+<section class="sample" id="s13">
+  <div class="sample__header">
+    <div class="sample__num">13</div>
+    <h2>Stacked Deck — <em>Swipeable cards</em></h2>
+    <p class="sample__desc">Một chồng ảnh xếp đè — nhấn nút Next để vuốt ảnh đầu sang một bên, ảnh dưới hiện lên. Phù hợp khi muốn dẫn dắt user xem từng ảnh featured với cảm giác chủ động.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Interactive</span>
+      <span class="sample__tag">Playful</span>
+      <span class="sample__tag sample__tag--pro">Engaging</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s13-deck-wrap">
+      <div class="s13-deck" id="s13-deck"></div>
+      <div class="s13-deck-controls">
+        <button class="s13-deck-btn" id="s13-reset">Reset deck</button>
+        <button class="s13-deck-btn s13-deck-btn--primary" id="s13-next">Next photo ›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 SNAP CAROUSEL -->
+<section class="sample" id="s14">
+  <div class="sample__header">
+    <div class="sample__num">14</div>
+    <h2>Snap Carousel — <em>Horizontal swipe</em></h2>
+    <p class="sample__desc">Ảnh wide cuộn ngang với scroll-snap, mỗi ảnh "snap" vào giữa. Mobile-first, vuốt cực mượt trên điện thoại. Phù hợp khi muốn show vài highlight shots lớn.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Mobile-first</span>
+      <span class="sample__tag">Native scroll</span>
+      <span class="sample__tag sample__tag--pro">Touch-friendly</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s14-snap" id="s14-snap"></div>
+    <p class="s14-snap-hint">← Vuốt ngang để xem thêm →</p>
+  </div>
+</section>
+
+<!-- 15 STICKY STORYTELLING -->
+<section class="sample" id="s15">
+  <div class="sample__header">
+    <div class="sample__num">15</div>
+    <h2>Sticky Story — <em>Scroll narrative</em></h2>
+    <p class="sample__desc">Text bên trái cố định trong khi cột ảnh bên phải cuộn — danh sách step bên trái sáng dần theo ảnh đang nhìn thấy. Cảm giác như đọc một bài long-form editorial.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Editorial</span>
+      <span class="sample__tag">Narrative</span>
+      <span class="sample__tag sample__tag--pro">Premium UX</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s15-story" id="s15-story">
+      <div class="s15-story__text">
+        <div class="s15-story__num">— Our Journey</div>
+        <h3>Mỗi sự kiện,<br><em>một câu chuyện</em></h3>
+        <p>Cuộn xuống để cùng Happy Booth đi qua các loại sự kiện chúng tôi đã đồng hành — từ đám cưới sang trọng đến sinh nhật ấm cúng.</p>
+        <div class="s15-story__steps" id="s15-steps"></div>
+      </div>
+      <div class="s15-story__images" id="s15-images"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 HONEYCOMB -->
+<section class="sample" id="s16">
+  <div class="sample__header">
+    <div class="sample__num">16</div>
+    <h2>Honeycomb — <em>Hexagonal mosaic</em></h2>
+    <p class="sample__desc">Lưới tổ ong với các hexagon đan xen lệch hàng. Geometric, modern — phá cách rất rõ rệt so với grid vuông quen thuộc. Hover phóng nhẹ và phủ ánh sáng vàng.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Geometric</span>
+      <span class="sample__tag">Unique</span>
+      <span class="sample__tag sample__tag--pro">Stand-out</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s16-honey-rows" id="s16-honey"></div>
+  </div>
+</section>
+
+<!-- 17 FLIP CARDS -->
+<section class="sample" id="s17">
+  <div class="sample__header">
+    <div class="sample__num">17</div>
+    <h2>Flip Cards — <em>Reveal details</em></h2>
+    <p class="sample__desc">Click để card lật 3D, mặt sau hiện thông tin sự kiện (loại, ngày, location, số khách). Vừa show ảnh đẹp vừa cung cấp data — rất hữu ích cho portfolio có metadata.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Informative</span>
+      <span class="sample__tag">3D</span>
+      <span class="sample__tag sample__tag--pro">Detailed</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s17-flip" id="s17-flip"></div>
+  </div>
+</section>
+
+<!-- 18 FOCUS MODE -->
+<section class="sample" id="s18">
+  <div class="sample__header">
+    <div class="sample__num">18</div>
+    <h2>Focus Mode — <em>Click to expand</em></h2>
+    <p class="sample__desc">Click vào ảnh nào, ảnh đó phóng to 2x2 trong grid và những ảnh xung quanh tự blur + tối lại để focus 100% vào ảnh được chọn. Click ✕ để thoát. Sang trọng, có chiều sâu.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Interactive</span>
+      <span class="sample__tag">Focus</span>
+      <span class="sample__tag sample__tag--pro">Premium</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s18-focus" id="s18-focus"></div>
+  </div>
+</section>
+
+<!-- 19 SCRAPBOOK -->
+<section class="sample" id="s19">
+  <div class="sample__header">
+    <div class="sample__num">19</div>
+    <h2>Scrapbook — <em>Memory collage</em></h2>
+    <p class="sample__desc">Trang sổ lưu niệm — ảnh dán xoay góc với băng dính washi tape, có tiêu đề handwritten và sticker. Cảm xúc, ấm áp, kỷ niệm. Đặt section nhỏ cuối trang để tạo cảm xúc.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Emotional</span>
+      <span class="sample__tag">Nostalgic</span>
+      <span class="sample__tag sample__tag--pro">Heartfelt</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s19-scrap" id="s19-scrap">
+      <div class="s19-scrap__title">— Our Memories —<small>Happy Booth · Since 2020</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 NUMBER REVEAL -->
+<section class="sample" id="s20">
+  <div class="sample__header">
+    <div class="sample__num">20</div>
+    <h2>Numbers — <em>Stats-driven layout</em></h2>
+    <p class="sample__desc">Mỗi hàng: số lớn (ví dụ "+200 đám cưới"), tiêu đề, mô tả và ảnh đại diện. Line vàng tự vẽ ở cuối hàng khi vào view. Phù hợp combo với hero hoặc đặt giữa portfolio để khoe thành tích.</p>
+    <div class="sample__tags">
+      <span class="sample__tag">Stats</span>
+      <span class="sample__tag">Editorial</span>
+      <span class="sample__tag sample__tag--pro">Persuasive</span>
+    </div>
+  </div>
+  <div class="sample__demo">
+    <div class="s20-numbers" id="s20-numbers"></div>
+  </div>
+</section>
+
+<footer class="lookbook-footer">
+  <h2>Bạn thích phong cách <em>nào nhất?</em></h2>
+  <p>Mỗi concept có thể được áp dụng độc lập hoặc kết hợp — ví dụ Marquee ở đầu trang + Bento ở giữa + Coverflow cho featured shots.</p>
+  <div class="lookbook-footer__legend" id="legend"></div>
+</footer>
+
+<script>
+/* All dynamic content built with safe DOM APIs (no innerHTML) */
+const IMG_PATH = '../assets/images/portfolio/';
+const range = (start,end) => Array.from({length:end-start+1},(_,i)=>start+i);
+
+function makeImg(n){
+  const img = document.createElement('img');
+  img.src = IMG_PATH + n + '.jpg';
+  img.alt = '';
+  img.loading = 'lazy';
+  return img;
+}
+function el(tag, className){
+  const e = document.createElement(tag);
+  if(className) e.className = className;
+  return e;
+}
+function setText(node, text){ node.textContent = text; return node; }
+
+/* 1. MASONRY */
+(function(){
+  const root = document.getElementById('s1-masonry');
+  range(50,85).forEach(n=>{
+    const item = el('div','s1-masonry__item');
+    item.appendChild(makeImg(n));
+    root.appendChild(item);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('in'), (i%6)*60);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.08, rootMargin:'0px 0px -10% 0px'});
+  root.querySelectorAll('.s1-masonry__item').forEach(el=>io.observe(el));
+})();
+
+/* 2. BENTO */
+(function(){
+  const root = document.getElementById('s2-bento');
+  const layout = [
+    {n:1, size:'xl', eyebrow:'Featured Event', title:'Wedding · Hà Nội'},
+    {n:2, size:'l'},
+    {n:3, size:'s'},
+    {n:4, size:'m'},
+    {n:5, size:'s'},
+    {n:6, size:'wide'},
+    {n:7, size:'m'},
+    {n:8, size:'l'},
+    {n:9, size:'m'},
+    {n:10, size:'s'},
+    {n:11, size:'s'},
+  ];
+  layout.forEach(cfg=>{
+    const item = el('div','s2-bento__item s2-bento__item--'+cfg.size);
+    item.appendChild(makeImg(cfg.n));
+    if(cfg.eyebrow){
+      const cap = el('div','s2-bento__caption');
+      const eb = el('div','s2-bento__caption-eyebrow');
+      setText(eb, cfg.eyebrow);
+      const h = el('h3');
+      setText(h, cfg.title);
+      cap.appendChild(eb);
+      cap.appendChild(h);
+      item.appendChild(cap);
+    }
+    root.appendChild(item);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('in'), i*70);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12});
+  root.querySelectorAll('.s2-bento__item').forEach(el=>io.observe(el));
+})();
+
+/* 3. MARQUEE — duplicate for seamless loop */
+(function(){
+  const fill = (id, nums) => {
+    const root = document.getElementById(id);
+    const build = ()=>{
+      nums.forEach(n=>{
+        const item = el('div','s3-marquee__item');
+        item.appendChild(makeImg(n));
+        root.appendChild(item);
+      });
+    };
+    build(); build();
+  };
+  fill('s3-row1', range(20,32));
+  fill('s3-row2', range(60,72));
+})();
+
+/* 4. POLAROID */
+(function(){
+  const captions = ['Hà Nội · 2025','Wedding · 2025','Birthday · 2024','Gala · 2025','Family · 2024','Year-End · 2025','Sweet 16 · 2024','Engagement · 2025','Anniversary · 2024'];
+  const root = document.getElementById('s4-polaroid');
+  range(86,103).forEach((n,i)=>{
+    const item = el('div','s4-polaroid__item');
+    item.appendChild(makeImg(n));
+    const cap = el('div','s4-polaroid__caption');
+    setText(cap, captions[i%captions.length]);
+    item.appendChild(cap);
+    root.appendChild(item);
+  });
+})();
+
+/* 5. CINEMATIC */
+(function(){
+  const root = document.getElementById('s5-cinematic');
+  const chapters = [
+    {n:12, alt:false, ch:'— Chapter 01', titleA:'Wedding', titleB:'Elegance', desc:'Những khoảnh khắc lung linh trong ngày trọng đại — Happy Booth đồng hành cùng hơn 200 đám cưới tại Hà Nội mỗi năm.'},
+    {n:15, alt:true, ch:'— Chapter 02', titleA:'Birthday', titleB:'Joy', desc:'Niềm vui rộn rã trong từng bữa tiệc sinh nhật — từ những bé yêu đến những buổi tiệc trưởng thành.'},
+    {n:22, alt:false, ch:'— Chapter 03', titleA:'Corporate', titleB:'Moments', desc:'Year-end party, gala dinner, hội nghị khách hàng — kết nối đồng nghiệp qua những bức ảnh đáng nhớ.'},
+  ];
+  chapters.forEach(c=>{
+    const row = el('div','s5-cinematic__row');
+    const media = el('div','s5-cinematic__media' + (c.alt?' alt':''));
+    media.appendChild(makeImg(c.n));
+    const text = el('div','s5-cinematic__text');
+    const num = el('div','s5-cinematic__num');
+    setText(num, c.ch);
+    const h = el('h3');
+    h.appendChild(document.createTextNode(c.titleA));
+    h.appendChild(document.createElement('br'));
+    const em = document.createElement('em');
+    setText(em, c.titleB);
+    h.appendChild(em);
+    const p = el('p');
+    setText(p, c.desc);
+    text.appendChild(num);
+    text.appendChild(h);
+    text.appendChild(p);
+    row.appendChild(media);
+    row.appendChild(text);
+    root.appendChild(row);
+  });
+  const ioMedia = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ioMedia.unobserve(e.target)}});
+  },{threshold:.35});
+  document.querySelectorAll('.s5-cinematic__media').forEach(el=>ioMedia.observe(el));
+  const ioRow = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ioRow.unobserve(e.target)}});
+  },{threshold:.25});
+  document.querySelectorAll('.s5-cinematic__row').forEach(el=>ioRow.observe(el));
+})();
+
+/* 6. FILTER */
+(function(){
+  const grid = document.getElementById('s6-grid');
+  const items = [
+    {n:1,cat:'wedding',label:'Trang & Minh'},
+    {n:2,cat:'wedding',label:'Garden Wedding'},
+    {n:3,cat:'birthday',label:"Linh's Birthday"},
+    {n:4,cat:'corporate',label:'Year-End Gala'},
+    {n:5,cat:'wedding',label:'Riverside Ceremony'},
+    {n:6,cat:'birthday',label:'Sweet 16'},
+    {n:7,cat:'corporate',label:'Tech Conference'},
+    {n:8,cat:'wedding',label:'Beach Wedding'},
+    {n:9,cat:'birthday',label:'1st Birthday'},
+    {n:10,cat:'corporate',label:'Product Launch'},
+    {n:11,cat:'wedding',label:'Mai & Hùng'},
+    {n:12,cat:'birthday',label:'Sweet Sixteen'},
+    {n:13,cat:'wedding',label:'Hanoi Wedding'},
+    {n:14,cat:'corporate',label:'Annual Dinner'},
+    {n:15,cat:'birthday',label:'Family Party'},
+    {n:16,cat:'wedding',label:'Garden Ceremony'},
+    {n:17,cat:'corporate',label:'Customer Day'},
+    {n:18,cat:'wedding',label:'Modern Wedding'},
+  ];
+  const cap = c => c.charAt(0).toUpperCase()+c.slice(1);
+  items.forEach(it=>{
+    const item = el('div','s6-grid__item');
+    item.dataset.cat = it.cat;
+    item.appendChild(makeImg(it.n));
+    const badge = el('div','s6-grid__badge');
+    setText(badge, cap(it.cat));
+    const label = el('div','s6-grid__label');
+    setText(label, it.label);
+    item.appendChild(badge);
+    item.appendChild(label);
+    grid.appendChild(item);
+  });
+  document.querySelectorAll('.s6-filter__btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.s6-filter__btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      grid.querySelectorAll('.s6-grid__item').forEach(item=>{
+        const match = f==='all' || item.dataset.cat===f;
+        item.classList.toggle('hide', !match);
+      });
+    });
+  });
+})();
+
+/* 7. TILT */
+(function(){
+  const root = document.getElementById('s7-tilt');
+  const cards = [
+    {n:30, eyebrow:'Wedding · 2025', title:'Trang & Minh'},
+    {n:31, eyebrow:'Birthday · 2025', title:"Linh's 30th"},
+    {n:32, eyebrow:'Corporate · 2025', title:'Year-End Gala'},
+    {n:33, eyebrow:'Wedding · 2025', title:'Mai & Hùng'},
+  ];
+  cards.forEach(c=>{
+    const card = el('div','s7-tilt__item');
+    card.appendChild(makeImg(c.n));
+    const shine = el('div','s7-tilt__shine');
+    const meta = el('div','s7-tilt__meta');
+    const eb = el('div','s7-tilt__meta-eyebrow');
+    setText(eb, c.eyebrow);
+    const h = el('h3');
+    setText(h, c.title);
+    meta.appendChild(eb);
+    meta.appendChild(h);
+    card.appendChild(shine);
+    card.appendChild(meta);
+    root.appendChild(card);
+  });
+  root.querySelectorAll('.s7-tilt__item').forEach(card=>{
+    let raf;
+    card.addEventListener('mousemove',(e)=>{
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width;
+      const py = (e.clientY - r.top)/r.height;
+      const rx = (py-.5)*-12;
+      const ry = (px-.5)*12;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(()=>{
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+        const shine = card.querySelector('.s7-tilt__shine');
+        if(shine) shine.style.transform = `translateX(${(px-.5)*40}%) translateY(${(py-.5)*40}%)`;
+      });
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform = '';
+      const shine = card.querySelector('.s7-tilt__shine');
+      if(shine) shine.style.transform = '';
+    });
+  });
+})();
+
+/* 8. REVEAL */
+(function(){
+  const root = document.getElementById('s8-reveal');
+  const items = [
+    {n:40, eyebrow:'Wedding · 2025', title:'Trang & Minh'},
+    {n:41, eyebrow:'Birthday · 2025', title:'Sweet Sixteen'},
+    {n:42, eyebrow:'Corporate · 2025', title:'Tech Conference'},
+    {n:43, eyebrow:'Wedding · 2024', title:'Garden Ceremony'},
+    {n:44, eyebrow:'Birthday · 2024', title:'Joyful Years'},
+    {n:45, eyebrow:'Gala · 2024', title:'Year-End Party'},
+  ];
+  items.forEach(it=>{
+    const item = el('div','s8-reveal__item');
+    item.appendChild(makeImg(it.n));
+    const ov = el('div','s8-reveal__overlay');
+    const line = el('div','s8-reveal__overlay-line');
+    const eb = el('div','s8-reveal__overlay-eyebrow');
+    setText(eb, it.eyebrow);
+    const h = el('h3');
+    setText(h, it.title);
+    ov.appendChild(line);
+    ov.appendChild(eb);
+    ov.appendChild(h);
+    item.appendChild(ov);
+    root.appendChild(item);
+  });
+})();
+
+/* 9. COVERFLOW */
+(function(){
+  const track = document.getElementById('s9-track');
+  const dotsEl = document.getElementById('s9-dots');
+  const nums = [25,26,27,28,29,30,31,32,33];
+  let active = Math.floor(nums.length/2);
+
+  nums.forEach((n,i)=>{
+    const slide = el('div','s9-coverflow__slide');
+    slide.appendChild(makeImg(n));
+    slide.addEventListener('click',()=>{active=i;layout()});
+    track.appendChild(slide);
+
+    const dot = el('button','s9-coverflow__dot');
+    dot.addEventListener('click',()=>{active=i;layout()});
+    dotsEl.appendChild(dot);
+  });
+
+  function layout(){
+    const slides = track.querySelectorAll('.s9-coverflow__slide');
+    slides.forEach((s,i)=>{
+      const d = i-active;
+      const abs = Math.abs(d);
+      const tx = d*180;
+      const ry = d*-25;
+      const scale = abs===0 ? 1 : Math.max(.7, 1-abs*.12);
+      const opacity = abs > 3 ? 0 : Math.max(.3, 1-abs*.25);
+      const z = -abs*100;
+      s.style.transform = `translateX(${tx}px) translateZ(${z}px) rotateY(${ry}deg) scale(${scale})`;
+      s.style.opacity = opacity;
+      s.style.zIndex = 100 - abs;
+      s.style.filter = abs===0 ? '' : `brightness(${1-abs*.15})`;
+    });
+    dotsEl.querySelectorAll('.s9-coverflow__dot').forEach((d,i)=>d.classList.toggle('active', i===active));
+  }
+  layout();
+  document.querySelector('.s9-coverflow__nav--prev').addEventListener('click',()=>{active=Math.max(0,active-1);layout()});
+  document.querySelector('.s9-coverflow__nav--next').addEventListener('click',()=>{active=Math.min(nums.length-1,active+1);layout()});
+})();
+
+/* 10. SPOTLIGHT */
+(function(){
+  const root = document.getElementById('s10-spot');
+  const cursor = root.querySelector('.s10-spot__cursor');
+  range(46,69).forEach(n=>{
+    const item = el('div','s10-spot__item');
+    item.appendChild(makeImg(n));
+    root.appendChild(item);
+  });
+  root.addEventListener('mousemove',(e)=>{
+    const r = root.getBoundingClientRect();
+    cursor.style.left = (e.clientX-r.left)+'px';
+    cursor.style.top = (e.clientY-r.top)+'px';
+    root.querySelectorAll('.s10-spot__item').forEach(item=>{
+      const ir = item.getBoundingClientRect();
+      const cx = ir.left + ir.width/2;
+      const cy = ir.top + ir.height/2;
+      const dx = e.clientX-cx;
+      const dy = e.clientY-cy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      item.classList.toggle('lit', dist < 140);
+    });
+  });
+  root.addEventListener('mouseleave',()=>{
+    root.querySelectorAll('.s10-spot__item.lit').forEach(el=>el.classList.remove('lit'));
+  });
+})();
+
+/* 11. PHOTO STRIP */
+(function(){
+  const root = document.getElementById('s11-strips');
+  const strips = [
+    {nums:[1,2,3,4], date:'05 · 2025'},
+    {nums:[5,6,7,8], date:'04 · 2025'},
+    {nums:[9,10,11,12], date:'03 · 2025'},
+    {nums:[13,14,15,16], date:'02 · 2025'},
+    {nums:[17,18,19,20], date:'01 · 2025'},
+  ];
+  strips.forEach(s=>{
+    const strip = el('div','s11-strip');
+    s.nums.forEach(n=>{
+      const photo = el('div','s11-strip__photo');
+      photo.appendChild(makeImg(n));
+      strip.appendChild(photo);
+    });
+    const brand = el('div','s11-strip__brand');
+    const tag = el('strong');
+    setText(tag,'Happy Booth');
+    const date = document.createElement('span');
+    setText(date, s.date);
+    brand.appendChild(tag);
+    brand.appendChild(date);
+    strip.appendChild(brand);
+    root.appendChild(strip);
+  });
+})();
+
+/* 12. DIAGONAL MARQUEE */
+(function(){
+  const fill = (id, nums) => {
+    const root = document.getElementById(id);
+    const build = () => {
+      nums.forEach(n=>{
+        const item = el('div','s12-diag__item');
+        item.appendChild(makeImg(n));
+        root.appendChild(item);
+      });
+    };
+    build(); build();
+  };
+  fill('s12-row1', range(70,80));
+  fill('s12-row2', range(85,95));
+  fill('s12-row3', range(100,110));
+})();
+
+/* 13. STACKED DECK */
+(function(){
+  const deck = document.getElementById('s13-deck');
+  const cards = [
+    {n:35, eyebrow:'Wedding · 2025', title:'Trang & Minh'},
+    {n:36, eyebrow:'Birthday · 2025', title:'Sweet Sixteen'},
+    {n:37, eyebrow:'Corporate · 2025', title:'Year-End Gala'},
+    {n:38, eyebrow:'Wedding · 2024', title:'Garden Ceremony'},
+    {n:39, eyebrow:'Engagement · 2025', title:'Forever & Always'},
+  ];
+  function buildDeck(){
+    deck.replaceChildren();
+    cards.forEach((c,i)=>{
+      const card = el('div','s13-card');
+      card.appendChild(makeImg(c.n));
+      const meta = el('div','s13-card__meta');
+      const eb = el('div','s13-card__meta-eyebrow');
+      setText(eb, c.eyebrow);
+      const h = el('h3');
+      setText(h, c.title);
+      meta.appendChild(eb);
+      meta.appendChild(h);
+      card.appendChild(meta);
+      const depth = cards.length - i - 1;
+      card.style.transform = `translateY(${depth*8}px) scale(${1 - depth*.04})`;
+      card.style.zIndex = i;
+      deck.appendChild(card);
+    });
+  }
+  buildDeck();
+  let top = cards.length - 1;
+  document.getElementById('s13-next').addEventListener('click',()=>{
+    const topCard = deck.children[top];
+    if(!topCard) return;
+    topCard.classList.add('swiped');
+    top--;
+    deck.querySelectorAll('.s13-card:not(.swiped)').forEach((c,idx,arr)=>{
+      const depth = arr.length - idx - 1;
+      c.style.transform = `translateY(${depth*8}px) scale(${1 - depth*.04})`;
+    });
+  });
+  document.getElementById('s13-reset').addEventListener('click',()=>{
+    buildDeck();
+    top = cards.length - 1;
+  });
+})();
+
+/* 14. SNAP CAROUSEL */
+(function(){
+  const root = document.getElementById('s14-snap');
+  const items = [
+    {n:1, eb:'Wedding · 2025', title:'Trang & Minh'},
+    {n:6, eb:'Birthday · 2025', title:"Linh's Birthday"},
+    {n:13, eb:'Corporate · 2025', title:'Tech Conference'},
+    {n:22, eb:'Wedding · 2024', title:'Garden Ceremony'},
+    {n:28, eb:'Gala · 2024', title:'Year-End Party'},
+  ];
+  items.forEach(it=>{
+    const item = el('div','s14-snap__item');
+    item.appendChild(makeImg(it.n));
+    const cap = el('div','s14-snap__caption');
+    const eb = el('div','s14-snap__caption-eb');
+    setText(eb, it.eb);
+    const h = el('h3');
+    setText(h, it.title);
+    cap.appendChild(eb);
+    cap.appendChild(h);
+    item.appendChild(cap);
+    root.appendChild(item);
+  });
+})();
+
+/* 15. STICKY STORYTELLING */
+(function(){
+  const stepsEl = document.getElementById('s15-steps');
+  const imgsEl = document.getElementById('s15-images');
+  const data = [
+    {n:50, step:'01 · Wedding · Sang trọng, lung linh'},
+    {n:55, step:'02 · Birthday · Ấm cúng, vui tươi'},
+    {n:60, step:'03 · Corporate · Chuyên nghiệp, hiện đại'},
+    {n:65, step:'04 · Engagement · Lãng mạn, nhẹ nhàng'},
+    {n:70, step:'05 · Family · Thân thương, gần gũi'},
+  ];
+  data.forEach((d,i)=>{
+    const stepWrap = el('div','s15-story__step');
+    stepWrap.dataset.idx = i;
+    const dot = el('div','s15-story__step-dot');
+    const label = document.createElement('span');
+    setText(label, d.step);
+    stepWrap.appendChild(dot);
+    stepWrap.appendChild(label);
+    stepsEl.appendChild(stepWrap);
+    const imgWrap = el('div','s15-story__image');
+    imgWrap.dataset.idx = i;
+    imgWrap.appendChild(makeImg(d.n));
+    imgsEl.appendChild(imgWrap);
+  });
+  const ioImg = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ioImg.unobserve(e.target)}});
+  },{threshold:.25});
+  imgsEl.querySelectorAll('.s15-story__image').forEach(el=>ioImg.observe(el));
+  const ioStep = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const idx = e.target.dataset.idx;
+        stepsEl.querySelectorAll('.s15-story__step').forEach(s=>s.classList.toggle('active', s.dataset.idx===idx));
+      }
+    });
+  },{threshold:.5, rootMargin:'-30% 0px -30% 0px'});
+  imgsEl.querySelectorAll('.s15-story__image').forEach(el=>ioStep.observe(el));
+})();
+
+/* 16. HONEYCOMB */
+(function(){
+  const root = document.getElementById('s16-honey');
+  const rowConfigs = [
+    {nums:range(75,80), offset:false},
+    {nums:range(80,84), offset:true},
+    {nums:range(84,89), offset:false},
+    {nums:range(89,93), offset:true},
+    {nums:range(93,98), offset:false},
+  ];
+  rowConfigs.forEach(cfg=>{
+    const row = el('div','s16-honey-row' + (cfg.offset?' s16-honey-row--offset':''));
+    cfg.nums.forEach(n=>{
+      const item = el('div','s16-honey__item');
+      item.appendChild(makeImg(n));
+      row.appendChild(item);
+    });
+    root.appendChild(row);
+  });
+})();
+
+/* 17. FLIP CARDS */
+(function(){
+  const root = document.getElementById('s17-flip');
+  const items = [
+    {n:25, label:'Wedding', type:'Wedding', date:'05 · 2025', loc:'Hà Nội', guests:'~250'},
+    {n:26, label:'Birthday', type:'Birthday', date:'04 · 2025', loc:'Hà Nội', guests:'~80'},
+    {n:27, label:'Corporate', type:'Year-End Gala', date:'12 · 2024', loc:'Hà Nội', guests:'~500'},
+    {n:28, label:'Engagement', type:'Engagement', date:'03 · 2025', loc:'Hà Nội', guests:'~120'},
+    {n:29, label:'Wedding', type:'Garden Wedding', date:'02 · 2025', loc:'Hà Nội', guests:'~180'},
+    {n:30, label:'Family', type:'Family Party', date:'01 · 2025', loc:'Hà Nội', guests:'~40'},
+  ];
+  items.forEach(it=>{
+    const card = el('div','s17-flip__item');
+    const front = el('div','s17-flip__face s17-flip__front');
+    front.appendChild(makeImg(it.n));
+    const flabel = el('div','s17-flip__front-label');
+    setText(flabel, it.label);
+    front.appendChild(flabel);
+    const back = el('div','s17-flip__face s17-flip__back');
+    const beb = el('div','s17-flip__back-eb');
+    setText(beb,'Event Details');
+    const bh = el('h3');
+    setText(bh, it.type);
+    const meta = el('div','s17-flip__back-meta');
+    [['Date',it.date],['Location',it.loc],['Guests',it.guests]].forEach(([k,v])=>{
+      const item = document.createElement('div');
+      const b = document.createElement('b');
+      setText(b, k);
+      const span = document.createElement('span');
+      setText(span, v);
+      item.appendChild(b);
+      item.appendChild(span);
+      meta.appendChild(item);
+    });
+    const hint = el('div','s17-flip__hint');
+    setText(hint,'← Click to flip back');
+    back.appendChild(beb);
+    back.appendChild(bh);
+    back.appendChild(meta);
+    back.appendChild(hint);
+    card.appendChild(front);
+    card.appendChild(back);
+    card.addEventListener('click',()=>card.classList.toggle('flipped'));
+    root.appendChild(card);
+  });
+})();
+
+/* 18. FOCUS MODE */
+(function(){
+  const root = document.getElementById('s18-focus');
+  const items = [
+    {n:40, eb:'Wedding · 2025', title:'Trang & Minh'},
+    {n:41, eb:'Birthday · 2025', title:'Sweet Sixteen'},
+    {n:42, eb:'Corporate · 2025', title:'Tech Conference'},
+    {n:43, eb:'Wedding · 2024', title:'Garden Ceremony'},
+    {n:44, eb:'Birthday · 2024', title:'Joyful Years'},
+    {n:45, eb:'Gala · 2024', title:'Year-End Party'},
+    {n:46, eb:'Wedding · 2024', title:'Modern Wedding'},
+    {n:47, eb:'Corporate · 2024', title:'Product Launch'},
+  ];
+  items.forEach(it=>{
+    const item = el('div','s18-focus__item');
+    item.appendChild(makeImg(it.n));
+    const close = el('button','s18-focus__close');
+    setText(close, '×');
+    const label = el('div','s18-focus__label');
+    const eb = el('div','s18-focus__label-eb');
+    setText(eb, it.eb);
+    const h = el('h3');
+    setText(h, it.title);
+    label.appendChild(eb);
+    label.appendChild(h);
+    item.appendChild(close);
+    item.appendChild(label);
+    item.addEventListener('click',(e)=>{
+      if(e.target.classList.contains('s18-focus__close')){
+        item.classList.remove('active');
+        root.classList.remove('has-active');
+        return;
+      }
+      root.querySelectorAll('.s18-focus__item').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+      root.classList.add('has-active');
+    });
+    root.appendChild(item);
+  });
+})();
+
+/* 19. SCRAPBOOK */
+(function(){
+  const root = document.getElementById('s19-scrap');
+  const photos = [
+    {n:1, x:'5%', y:'18%', w:200, h:240, cap:'Trang & Minh', tape:true},
+    {n:5, x:'26%', y:'30%', w:170, h:200, cap:'Hà Nội · 2024', tape:false},
+    {n:12, x:'48%', y:'20%', w:220, h:160, cap:'Wedding Day', tape:true},
+    {n:18, x:'72%', y:'24%', w:180, h:230, cap:'Sweet Moments', tape:false},
+    {n:25, x:'12%', y:'55%', w:180, h:140, cap:'Birthday', tape:false},
+    {n:30, x:'38%', y:'58%', w:200, h:200, cap:'Gala Night', tape:true},
+    {n:42, x:'63%', y:'60%', w:160, h:220, cap:'Forever', tape:false},
+    {n:55, x:'82%', y:'52%', w:140, h:170, cap:'2025', tape:true},
+  ];
+  const rotations = [-6,4,-3,8,5,-7,3,-4];
+  photos.forEach((p,i)=>{
+    const wrap = el('div','s19-scrap__photo');
+    wrap.style.left = p.x;
+    wrap.style.top = p.y;
+    wrap.style.width = p.w + 'px';
+    wrap.style.height = (p.h + 30) + 'px';
+    wrap.style.transform = `rotate(${rotations[i%rotations.length]}deg)`;
+    if(p.tape){
+      const tape = el('div','s19-scrap__tape');
+      wrap.appendChild(tape);
+    }
+    const imgBox = document.createElement('div');
+    imgBox.style.width = '100%';
+    imgBox.style.height = p.h + 'px';
+    imgBox.style.overflow = 'hidden';
+    imgBox.appendChild(makeImg(p.n));
+    wrap.appendChild(imgBox);
+    const cap = el('div','s19-scrap__photo-cap');
+    setText(cap, p.cap);
+    wrap.appendChild(cap);
+    root.appendChild(wrap);
+  });
+  // Stickers
+  const stickers = [
+    {text:'❤', x:'18%', y:'48%', r:-15, color:'#c25450'},
+    {text:'★ ★ ★', x:'58%', y:'12%', r:8, color:'#b8956a'},
+    {text:'thank you!', x:'72%', y:'90%', r:-8, color:'#3a3a3a'},
+  ];
+  stickers.forEach(s=>{
+    const sticker = el('div','s19-scrap__sticker');
+    sticker.style.left = s.x;
+    sticker.style.top = s.y;
+    sticker.style.setProperty('--r', s.r + 'deg');
+    sticker.style.color = s.color;
+    setText(sticker, s.text);
+    root.appendChild(sticker);
+  });
+})();
+
+/* 20. NUMBER REVEAL */
+(function(){
+  const root = document.getElementById('s20-numbers');
+  const rows = [
+    {num:'200', plus:'+', n:1, titleA:'Đám cưới', titleB:'đã đồng hành', desc:'Từ những lễ cưới sang trọng tại các khách sạn 5 sao đến đám cưới ngoài trời ấm cúng.'},
+    {num:'150', plus:'+', n:6, titleA:'Sinh nhật', titleB:'đáng nhớ', desc:'Từ bé yêu đến người trưởng thành — mỗi tuổi mới đều xứng đáng được lưu giữ.'},
+    {num:'80', plus:'+', n:13, titleA:'Sự kiện', titleB:'doanh nghiệp', desc:'Year-end party, gala dinner, hội nghị khách hàng — kết nối đồng nghiệp qua khoảnh khắc.'},
+    {num:'5', plus:'', n:22, titleA:'Năm', titleB:'kinh nghiệm', desc:'Đồng hành cùng các khách hàng Hà Nội từ những ngày đầu — không ngừng nâng cấp trải nghiệm.'},
+  ];
+  rows.forEach(r=>{
+    const row = el('div','s20-num-row');
+    const num = el('div','s20-num-row__num');
+    if(r.plus){
+      const span = document.createElement('span');
+      setText(span, r.plus);
+      num.appendChild(span);
+    }
+    num.appendChild(document.createTextNode(r.num));
+    const text = el('div','s20-num-row__text');
+    const h = el('h3');
+    h.appendChild(document.createTextNode(r.titleA + ' '));
+    const em = document.createElement('em');
+    setText(em, r.titleB);
+    h.appendChild(em);
+    const p = el('p');
+    setText(p, r.desc);
+    text.appendChild(h);
+    text.appendChild(p);
+    const imgBox = el('div','s20-num-row__img');
+    imgBox.appendChild(makeImg(r.n));
+    const line = el('div','s20-num-row__line');
+    row.appendChild(num);
+    row.appendChild(text);
+    row.appendChild(imgBox);
+    row.appendChild(line);
+    root.appendChild(row);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.25});
+  root.querySelectorAll('.s20-num-row').forEach(el=>io.observe(el));
+})();
+
+/* FOOTER LEGEND */
+(function(){
+  const legend = document.getElementById('legend');
+  const items = [
+    ['01','Masonry','Organic, no-crop. Hợp browse rộng.'],
+    ['02','Bento Editorial','Curated, hierarchy. Hợp featured.'],
+    ['03','Marquee','Dynamic. Hợp section đầu trang.'],
+    ['04','Polaroid','Playful. Đúng vibe photobooth.'],
+    ['05','Cinematic','Storytelling. Cho narrative.'],
+    ['06','Filter','Scalable. Cho portfolio lớn.'],
+    ['07','3D Tilt','Wow. Cho hero cards.'],
+    ['08','Hover Reveal','High-end editorial.'],
+    ['09','Coverflow','Presentation. Cho featured.'],
+    ['10','Spotlight','Memorable interaction.'],
+    ['11','Photo Strip','On-brand. Strip in thật.'],
+    ['12','Diagonal Marquee','Bold, cinematic divider.'],
+    ['13','Stacked Deck','Engaging swipe deck.'],
+    ['14','Snap Carousel','Mobile-first swipe.'],
+    ['15','Sticky Story','Premium narrative scroll.'],
+    ['16','Honeycomb','Geometric stand-out.'],
+    ['17','Flip Cards','Show event metadata.'],
+    ['18','Focus Mode','Click-to-expand premium.'],
+    ['19','Scrapbook','Emotional, kỷ niệm.'],
+    ['20','Numbers','Stats-driven persuasive.'],
+  ];
+  items.forEach(([num,name,hint])=>{
+    const card = el('div','legend-item');
+    const n = el('div','legend-item__num');
+    setText(n, num);
+    const nm = el('div','legend-item__name');
+    setText(nm, name);
+    const h = el('div','legend-item__hint');
+    setText(h, hint);
+    card.appendChild(n);
+    card.appendChild(nm);
+    card.appendChild(h);
+    legend.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>
