@@ -158,9 +158,11 @@ function initHomeGallery() {
     initHomeCarouselNav(track);
     return;
   }
-  // Population already in flight on this track instance.
-  if (track.dataset.populating === '1') return;
-  track.dataset.populating = '1';
+  // Population in flight on this specific track instance.
+  // Use a JS property (not dataset) so the flag doesn't survive outerHTML
+  // snapshot/restore — a freshly restored track must be allowed to repopulate.
+  if (track._hbPopulating) return;
+  track._hbPopulating = true;
 
   var basePath = track.dataset.imageBase || 'assets/images/home/';
   var ext = track.dataset.imageExt || 'jpg';
@@ -181,7 +183,7 @@ function initHomeGallery() {
       slide.appendChild(img);
       track.appendChild(slide);
     }
-    delete track.dataset.populating;
+    track._hbPopulating = false;
     initScrollAnimations();
     initLightbox();
     initHomeCarouselNav(track);
