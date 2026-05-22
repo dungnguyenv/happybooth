@@ -30,6 +30,7 @@ function reinitPage() {
   initScrollAnimations();
   initHomeGallery();
   initLightbox();
+  initMasonryColumns();
   initPortfolioLoadMore();
   initFAQ();
   initCarousel();
@@ -410,6 +411,141 @@ function initLightbox() {
 }
 
 /* ----------------------------------------
+   Portfolio Masonry — flex-based columns
+   - Visible items distributed by SHORTEST column (after images load, for balance)
+   - Hidden items in a pool outside the grid
+   - Load more pops from pool, places in currently shortest column
+   - Result: no reflow of existing items + balanced column heights
+   ---------------------------------------- */
+function getMasonryColumnCount() {
+  var w = window.innerWidth;
+  if (w <= 768) return 2;
+  if (w <= 1024) return 3;
+  return 4;
+}
+
+function findShortestColumnIdx(heights) {
+  var idx = 0;
+  for (var i = 1; i < heights.length; i++) {
+    if (heights[i] < heights[idx]) idx = i;
+  }
+  return idx;
+}
+
+function estimateItemHeight(item, colWidth) {
+  var img = item.querySelector('img');
+  if (img && img.naturalWidth > 0) {
+    return Math.round(colWidth * img.naturalHeight / img.naturalWidth);
+  }
+  // Fallback for unloaded images: assume 4:5 portrait (typical photobooth aspect)
+  return Math.round(colWidth * 1.25);
+}
+
+function rebalanceVisibleByHeight(grid) {
+  var cols = Array.prototype.slice.call(grid.querySelectorAll('.gallery__col'));
+  if (cols.length === 0) return;
+  var colWidth = cols[0].offsetWidth;
+
+  var visible = Array.prototype.slice.call(grid.querySelectorAll('.gallery__item:not(.gallery__item--hidden)'));
+  visible.sort(function (a, b) {
+    return parseInt(a.dataset.order, 10) - parseInt(b.dataset.order, 10);
+  });
+
+  var estHeights = cols.map(function () { return 0; });
+  visible.forEach(function (item) {
+    var idx = findShortestColumnIdx(estHeights);
+    cols[idx].appendChild(item);
+    estHeights[idx] += estimateItemHeight(item, colWidth);
+  });
+}
+
+function initMasonryColumns() {
+  var grid = document.querySelector('.gallery__grid');
+  if (!grid) return;
+
+  var targetCols = getMasonryColumnCount();
+  if (grid.dataset.colCount && parseInt(grid.dataset.colCount, 10) === targetCols) return;
+
+  // Collect all items from both grid (columns) and pool
+  var items = Array.prototype.slice.call(grid.querySelectorAll('.gallery__item'));
+  var pool = grid.parentNode.querySelector('.gallery__pool');
+  if (pool) {
+    Array.prototype.slice.call(pool.querySelectorAll('.gallery__item')).forEach(function (it) {
+      items.push(it);
+    });
+  }
+  if (items.length === 0) return;
+
+  // Assign data-order on first run so we can re-sort after a re-layout
+  if (!grid.dataset.colCount) {
+    items.forEach(function (it, idx) { it.dataset.order = String(idx); });
+  }
+  items.sort(function (a, b) {
+    return parseInt(a.dataset.order, 10) - parseInt(b.dataset.order, 10);
+  });
+
+  var visible = items.filter(function (it) { return !it.classList.contains('gallery__item--hidden'); });
+  var hidden = items.filter(function (it) { return it.classList.contains('gallery__item--hidden'); });
+
+  // Rebuild grid: clear and create N column divs
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+  var colDivs = [];
+  for (var i = 0; i < targetCols; i++) {
+    var col = document.createElement('div');
+    col.className = 'gallery__col';
+    grid.appendChild(col);
+    colDivs.push(col);
+  }
+
+  // Round-robin distribute VISIBLE items for fast first paint
+  visible.forEach(function (item, idx) {
+    colDivs[idx % targetCols].appendChild(item);
+  });
+
+  // Pool hidden items outside the grid (display:none container)
+  if (!pool) {
+    pool = document.createElement('div');
+    pool.className = 'gallery__pool';
+    pool.hidden = true;
+    grid.parentNode.insertBefore(pool, grid.nextSibling);
+  }
+  while (pool.firstChild) pool.removeChild(pool.firstChild);
+  hidden.forEach(function (it) { pool.appendChild(it); });
+
+  grid.dataset.colCount = String(targetCols);
+
+  // After visible images load, rebalance by ACTUAL heights (one-time settle)
+  var visibleImgs = Array.prototype.slice.call(grid.querySelectorAll('.gallery__item img'));
+  var pending = visibleImgs.filter(function (img) { return !img.complete; }).length;
+  var settle = function () { requestAnimationFrame(function () { rebalanceVisibleByHeight(grid); }); };
+  if (pending === 0) {
+    settle();
+  } else {
+    visibleImgs.forEach(function (img) {
+      if (img.complete) return;
+      var done = function () {
+        img.removeEventListener('load', done);
+        img.removeEventListener('error', done);
+        pending--;
+        if (pending === 0) settle();
+      };
+      img.addEventListener('load', done);
+      img.addEventListener('error', done);
+    });
+  }
+
+  // Attach resize handler once (singleton)
+  if (!initMasonryColumns._resizeBound) {
+    initMasonryColumns._resizeBound = true;
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initMasonryColumns, 200);
+    });
+  }
+}
+
+/* ----------------------------------------
    Portfolio "Load more" pagination
    ---------------------------------------- */
 function initPortfolioLoadMore() {
@@ -427,9 +563,25 @@ function initPortfolioLoadMore() {
   }
 
   button.addEventListener('click', function () {
-    var hidden = document.querySelectorAll('.gallery__item--hidden');
-    Array.prototype.slice.call(hidden, 0, batchSize).forEach(function (item) {
+    var grid = document.querySelector('.gallery__grid');
+    if (!grid) return;
+    var pool = grid.parentNode.querySelector('.gallery__pool');
+    if (!pool) return;
+    var cols = Array.prototype.slice.call(grid.querySelectorAll('.gallery__col'));
+    if (cols.length === 0) return;
+    var colWidth = cols[0].offsetWidth;
+
+    // Start from currently rendered heights so we extend existing balance
+    var estHeights = cols.map(function (c) { return c.offsetHeight; });
+    var toReveal = Array.prototype.slice.call(pool.children).slice(0, batchSize);
+
+    toReveal.forEach(function (item) {
+      var idx = findShortestColumnIdx(estHeights);
       item.classList.remove('gallery__item--hidden');
+      var img = item.querySelector('img');
+      if (img && img.loading === 'lazy') img.loading = 'eager';
+      cols[idx].appendChild(item);
+      estHeights[idx] += estimateItemHeight(item, colWidth);
     });
     updateButtonState();
   });
