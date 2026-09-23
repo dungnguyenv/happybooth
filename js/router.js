@@ -44,7 +44,7 @@
   function pageToHref(page) {
     var map = {
       home: 'index.html', about: 'about.html', portfolio: 'portfolio.html',
-      frame: 'frame.html', tips: 'tips.html', price: 'price.html',
+      frame: 'frame.html', price: 'price.html',
       contact: 'contact.html', login: 'login.html', admin: 'admin.html'
     };
     return map[page] || null;
@@ -235,7 +235,7 @@
   }
 
   function preloadPages() {
-    var pages = ['index.html', 'about.html', 'portfolio.html', 'frame.html', 'tips.html', 'price.html', 'contact.html'];
+    var pages = ['index.html', 'about.html', 'portfolio.html', 'frame.html', 'price.html', 'contact.html'];
     var idleCallback = window.requestIdleCallback || function (cb) { setTimeout(cb, 200); };
 
     idleCallback(function () {
