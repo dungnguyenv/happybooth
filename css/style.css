@@ -182,7 +182,7 @@ em, .italic {
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: clamp(1.25rem, 2.2vw, 2rem);
 }
 
 .header__nav a {
@@ -213,6 +213,12 @@ em, .italic {
 
 .header__nav a:hover {
   opacity: 1;
+}
+
+.header__social {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .header__social a {
