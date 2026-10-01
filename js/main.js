@@ -28,7 +28,9 @@ window.HB = {
 
 function reinitPage() {
   initScrollAnimations();
-  initHomeGallery();
+  initPhotoWall();
+  initVideoTabs();
+  initAutoplayVideos();
   initLightbox();
   initMasonryColumns();
   initPortfolioLoadMore();
@@ -146,163 +148,83 @@ function initScrollAnimations() {
 }
 
 /* ----------------------------------------
-   Home Gallery — auto-populated horizontal carousel
-   (e.g. assets/images/home/1.jpg, 2.jpg, ... — adds new files automatically)
+   Home — live photo wall
+   Each track is duplicated once so the CSS loop (translate -50%) is seamless.
+   dataset.cloned survives the router's outerHTML snapshot, so a restored
+   page is not cloned twice; the click binding is a JS property so it is
+   re-attached to every fresh DOM.
    ---------------------------------------- */
-function initHomeGallery() {
-  var track = document.getElementById('homeGallery');
-  if (!track) return;
+function initPhotoWall() {
+  var wall = document.querySelector('.wall');
+  if (!wall) return;
 
-  // Already populated (e.g. restored from SPA cache). Just rebind nav.
-  if (track.querySelector('.home-carousel__slide')) {
-    initHomeCarouselNav(track);
-    return;
-  }
-  // Population in flight on this specific track instance.
-  // Use a JS property (not dataset) so the flag doesn't survive outerHTML
-  // snapshot/restore — a freshly restored track must be allowed to repopulate.
-  if (track._hbPopulating) return;
-  track._hbPopulating = true;
+  wall.querySelectorAll('.wall__track').forEach(function (track) {
+    if (track.dataset.cloned) return;
+    track.dataset.cloned = '1';
+    Array.prototype.slice.call(track.children).forEach(function (node) {
+      var copy = node.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.querySelectorAll('img').forEach(function (img) { img.alt = ''; });
+      track.appendChild(copy);
+    });
+  });
 
-  var basePath = track.dataset.imageBase || 'assets/images/home/';
-  var ext = track.dataset.imageExt || 'jpg';
-  var maxProbe = parseInt(track.dataset.imageMax, 10) || 100;
-
-  var results = new Array(maxProbe + 1);
-  var pending = maxProbe;
-
-  function done() {
-    for (var i = 1; i <= maxProbe; i++) {
-      if (!results[i]) break;
-      var slide = document.createElement('div');
-      slide.className = 'home-carousel__slide';
-      var img = document.createElement('img');
-      img.src = results[i];
-      img.alt = 'Happy Booth photobooth ' + i;
-      img.loading = 'lazy';
-      slide.appendChild(img);
-      track.appendChild(slide);
-    }
-    track._hbPopulating = false;
-    initScrollAnimations();
-    initLightbox();
-    initHomeCarouselNav(track);
-  }
-
-  for (var i = 1; i <= maxProbe; i++) {
-    (function (idx) {
-      var url = basePath + idx + '.' + ext;
-      fetch(url, { method: 'HEAD' }).then(function (res) {
-        if (res.ok) results[idx] = url;
-      }).catch(function () {}).then(function () {
-        if (--pending === 0) done();
-      });
-    })(i);
-  }
+  var pause = wall.querySelector('.wall__pause');
+  if (!pause || pause._hbBound) return;
+  pause._hbBound = true;
+  pause.addEventListener('click', function () {
+    var paused = wall.classList.toggle('is-paused');
+    pause.setAttribute('aria-pressed', paused);
+    var key = paused ? 'home.wall.resume' : 'home.wall.pause';
+    pause.setAttribute('data-i18n', key);
+    pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Play' : 'Pause');
+  });
 }
 
-function initHomeCarouselNav(track) {
-  var container = track.closest('.home-carousel__container');
-  if (!container) return;
-  var prevBtn = container.querySelector('.home-carousel__prev');
-  var nextBtn = container.querySelector('.home-carousel__next');
-  if (!prevBtn || !nextBtn) return;
+/* ----------------------------------------
+   Home — video tabs (swap the big player by party type)
+   ---------------------------------------- */
+function initVideoTabs() {
+  var tabs = document.querySelectorAll('.video-tabs__tab');
+  if (!tabs.length) return;
+  var screen = document.querySelector('.video-screen');
+  var video = screen.querySelector('video');
+  var bg = screen.querySelector('.video-screen__bg');
+  var caps = document.querySelectorAll('.video-screen__cap');
 
-  function step() {
-    var firstSlide = track.querySelector('.home-carousel__slide');
-    if (!firstSlide) return track.clientWidth * 0.5;
-    return firstSlide.getBoundingClientRect().width + 12;
-  }
-
-  function updateButtons() {
-    var atStart = track.scrollLeft <= 2;
-    var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-    prevBtn.disabled = atStart;
-    nextBtn.disabled = atEnd;
-  }
-
-  prevBtn.onclick = function () {
-    track.scrollBy({ left: -step(), behavior: 'smooth' });
-  };
-  nextBtn.onclick = function () {
-    track.scrollBy({ left: step(), behavior: 'smooth' });
-  };
-  track.addEventListener('scroll', updateButtons, { passive: true });
-
-  track.querySelectorAll('img').forEach(function (img) {
-    if (img.complete && img.naturalWidth > 0) return;
-    img.addEventListener('load', updateButtons);
-    img.addEventListener('error', updateButtons);
+  tabs.forEach(function (tab) {
+    if (tab._hbBound) return;
+    tab._hbBound = true;
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.setAttribute('aria-pressed', t === tab); });
+      caps.forEach(function (c) { c.hidden = c.dataset.cap !== tab.dataset.video; });
+      video.poster = bg.src = tab.dataset.poster;
+      video.src = tab.dataset.src;
+      if (!prefersReducedMotion()) video.play().catch(function () {});
+    });
   });
-
-  window.addEventListener('resize', updateButtons);
-
-  initHomeCarouselDrag(track);
-
-  updateButtons();
 }
 
-function initHomeCarouselDrag(track) {
-  var isDown = false;
-  var startX = 0;
-  var startScroll = 0;
-  var dragged = false;
-  var pendingScroll = null;
-  var rafId = 0;
-  var DRAG_THRESHOLD = 5;
+/* ----------------------------------------
+   Autoplay videos — honour reduced motion, and kick playback after an
+   SPA swap (videos inserted via outerHTML don't always start on their own)
+   ---------------------------------------- */
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
-  function flushScroll() {
-    rafId = 0;
-    if (pendingScroll !== null) {
-      track.scrollLeft = pendingScroll;
-      pendingScroll = null;
+function initAutoplayVideos() {
+  var videos = document.querySelectorAll('#page-content video[autoplay]');
+  if (!videos.length) return;
+  var reduce = prefersReducedMotion();
+  videos.forEach(function (v) {
+    if (reduce) {
+      v.removeAttribute('autoplay');
+      v.pause();
+      return;
     }
-  }
-
-  track.addEventListener('mousedown', function (e) {
-    if (e.button !== 0) return;
-    isDown = true;
-    dragged = false;
-    startX = e.clientX;
-    startScroll = track.scrollLeft;
-    track.classList.add('home-carousel__track--dragging');
-    track.style.scrollSnapType = 'none';
-  });
-
-  document.addEventListener('mousemove', function (e) {
-    if (!isDown) return;
-    var delta = e.clientX - startX;
-    if (!dragged && Math.abs(delta) > DRAG_THRESHOLD) dragged = true;
-    if (!dragged) return;
-    e.preventDefault();
-    pendingScroll = startScroll - delta;
-    if (!rafId) rafId = requestAnimationFrame(flushScroll);
-  });
-
-  function endDrag() {
-    if (!isDown) return;
-    isDown = false;
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-      flushScroll();
-    }
-    track.classList.remove('home-carousel__track--dragging');
-    track.style.scrollSnapType = '';
-  }
-
-  document.addEventListener('mouseup', endDrag);
-  document.addEventListener('mouseleave', endDrag);
-
-  track.addEventListener('click', function (e) {
-    if (dragged) {
-      e.stopPropagation();
-      e.preventDefault();
-      dragged = false;
-    }
-  }, true);
-
-  track.addEventListener('dragstart', function (e) {
-    e.preventDefault();
+    v.muted = true;
+    v.play().catch(function () {});
   });
 }
 
@@ -310,7 +232,7 @@ function initHomeCarouselDrag(track) {
    Lightbox
    ---------------------------------------- */
 function getVisibleGalleryItems() {
-  return Array.from(document.querySelectorAll('.gallery__item:not(.gallery__item--hidden), .home-carousel__slide'));
+  return Array.from(document.querySelectorAll('.gallery__item:not(.gallery__item--hidden), .masonry__item'));
 }
 
 function initLightbox() {
@@ -362,7 +284,7 @@ function initLightbox() {
   // Delegated click — bind once on the persistent lightbox element so it survives SPA navigation
   if (!lightbox._galleryClickHandler) {
     lightbox._galleryClickHandler = function (e) {
-      var item = e.target.closest('.gallery__item, .home-carousel__slide');
+      var item = e.target.closest('.gallery__item, .masonry__item');
       if (!item || item.classList.contains('gallery__item--hidden')) return;
       var items = getVisibleGalleryItems();
       var idx = items.indexOf(item);

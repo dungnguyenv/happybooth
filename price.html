@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>if(localStorage.getItem('hb-lang')!=='en'){document.documentElement.classList.add('i18n-loading')}</script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -36,19 +36,19 @@
   <!-- Header -->
   <header class="header">
     <div class="header__inner">
-      <div class="header__logo">
-        <a href="index.html">
-          <img src="assets/SVG/Logo_web.svg" alt="Happy Booth" class="header__logo-img">
-          Happy Booth<span class="header__logo-suffix"> — Photobooth Event</span>
-        </a>
-      </div>
-      <nav class="header__nav">
+      <a class="header__logo" href="index.html">
+        <img src="assets/SVG/Logo_web.svg" alt="" class="header__logo-img" width="36" height="36">
+        <span>Happy Booth</span>
+      </a>
+      <nav class="header__nav" aria-label="Main">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
         <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
         <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
         <a href="price.html" class="active" data-i18n="common.nav.price">Price</a>
         <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+      </nav>
+      <div class="header__actions">
         <span class="header__social">
           <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener" aria-label="TikTok">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.18 8.18 0 0 0 4.76 1.52V6.77a4.83 4.83 0 0 1-1-.08z"/></svg>
@@ -62,7 +62,10 @@
           <span class="lang-toggle__divider">|</span>
           <button class="lang-toggle__btn" data-lang="en">EN</button>
         </span>
-      </nav>
+        <a class="header__tel" href="tel:+84971842329">0971 842 329</a>
+        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Get a quote</a>
+      </div>
+      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Call hotline</a>
       <button class="hamburger" aria-label="Toggle menu">
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
@@ -77,14 +80,15 @@
     <a href="about.html" data-i18n="common.nav.about">About</a>
     <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
     <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-    <a href="price.html" data-i18n="common.nav.price">Price</a>
+    <a href="price.html" class="active" data-i18n="common.nav.price">Price</a>
     <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
     <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
+    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Call 0971 842 329</a>
     <span class="lang-toggle lang-toggle--mobile">
-      <button class="lang-toggle__btn active" data-lang="en">EN</button>
+      <button class="lang-toggle__btn active" data-lang="vi">VI</button>
       <span class="lang-toggle__divider">|</span>
-      <button class="lang-toggle__btn" data-lang="vi">VI</button>
+      <button class="lang-toggle__btn" data-lang="en">EN</button>
     </span>
   </nav>
 
@@ -93,7 +97,7 @@
   <!-- Page Header -->
   <section class="page-header">
     <h1 class="fade-in" data-i18n="price.title">Pricing</h1>
-    <p class="fade-in" data-i18n="price.description">Transparent packages designed for every event — from intimate gatherings to large celebrations. Find the option that fits your moment.</p>
+    <p class="fade-in" data-i18n="price.description">Clear prices for every package, from small parties to full-day events. Not sure which one to pick? Call us for free advice.</p>
   </section>
 
   <!-- Pricing -->
@@ -103,26 +107,26 @@
       <!-- Hourly Packages -->
       <div class="pricing__group fade-in">
         <div class="pricing__series pricing__series--basic">
-          <span class="pricing__label" data-i18n="price.hourly.basicLabel">Basic Series · Booth 16''</span>
+          <span class="pricing__label" data-i18n="price.hourly.basicLabel">Basic series, 16'' booth</span>
           <div class="pricing__grid pricing__grid--basic">
             <!-- Basic -->
             <article class="pricing__card pricing__card--basic">
               <div class="pricing__card-head">
                 <h3 class="pricing__tier" data-i18n="price.basic.name">Basic</h3>
-                <p class="pricing__tagline" data-i18n="price.basic.tagline">Perfect for small, intimate gatherings</p>
+                <p class="pricing__tagline" data-i18n="price.basic.tagline">Just right for a small, cosy party</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">3.200.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.2h">/ 2 hours</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.includes">Includes:</p>
                 <ul class="pricing__features">
-                  <li data-i18n="price.f.unlimited">Unlimited shooting & instant prints</li>
-                  <li data-i18n="price.f.props">Props: Hashtag, glasses, headbands, photo sleeves</li>
-                  <li data-i18n="price.f.lights2">02 fill lights</li>
-                  <li data-i18n="price.f.staff2">02 on-site support staff</li>
+                  <li data-i18n="price.f.unlimited">Unlimited shooting and instant prints</li>
+                  <li data-i18n="price.f.props">Props: hashtag signs, glasses, headbands, photo sleeves</li>
+                  <li data-i18n="price.f.lights2">2 fill lights</li>
+                  <li data-i18n="price.f.staff2">2 staff on site</li>
                   <li data-i18n="price.f.frame">Custom frame design</li>
                   <li data-i18n="price.f.booth16">Basic Booth 16''</li>
                 </ul>
@@ -133,18 +137,18 @@
             <article class="pricing__card pricing__card--basic">
               <div class="pricing__card-head">
                 <h3 class="pricing__tier" data-i18n="price.happy1.name">Happy 1</h3>
-                <p class="pricing__tagline" data-i18n="price.happy1.tagline">A balanced choice with a keepsake</p>
+                <p class="pricing__tagline" data-i18n="price.happy1.tagline">An extra half hour and a scrapbook</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">4.000.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.2_5h">/ 2.5 hours</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.everythingBasic">Everything in Basic, plus:</p>
                 <ul class="pricing__features">
-                  <li data-i18n="price.f.scrapbook">Complimentary 01 Scrapbook</li>
-                  <li data-i18n="price.f.duration2_5">Extended 2.5-hour service</li>
+                  <li data-i18n="price.f.scrapbook">A free scrapbook</li>
+                  <li data-i18n="price.f.duration2_5">2.5 hours of service</li>
                 </ul>
               </div>
             </article>
@@ -153,19 +157,19 @@
             <article class="pricing__card pricing__card--basic">
               <div class="pricing__card-head">
                 <h3 class="pricing__tier" data-i18n="price.happy2.name">Happy 2</h3>
-                <p class="pricing__tagline" data-i18n="price.happy2.tagline">Full 3-hour experience with backdrops</p>
+                <p class="pricing__tagline" data-i18n="price.happy2.tagline">A full 3 hours, with a backdrop</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">4.700.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.3h">/ 3 hours</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.everythingHappy1">Everything in Happy 1, plus:</p>
                 <ul class="pricing__features">
                   <li data-i18n="price.f.backdrops">Basic backdrops (red, black, white, beige)</li>
-                  <li data-i18n="price.f.duration3">Full 3-hour service</li>
-                  <li data-i18n="price.f.extra1m">Extra hour: +1.500.000đ / hour</li>
+                  <li data-i18n="price.f.duration3">3 hours of service</li>
+                  <li data-i18n="price.f.extra1m">Extra hour: 1.500.000đ</li>
                 </ul>
               </div>
             </article>
@@ -173,29 +177,29 @@
         </div>
 
         <div class="pricing__series pricing__series--premium">
-          <span class="pricing__label" data-i18n="price.hourly.premiumLabel">Premium Series · Booth 24''</span>
+          <span class="pricing__label" data-i18n="price.hourly.premiumLabel">Premium series, 24'' booth</span>
           <div class="pricing__grid pricing__grid--premium">
             <!-- Premium 1 -->
             <article class="pricing__card pricing__card--premium">
               <div class="pricing__card-head">
                 <h3 class="pricing__tier" data-i18n="price.premium1.name">Premium 1</h3>
-                <p class="pricing__tagline" data-i18n="price.premium1.tagline">Upgraded 24'' booth experience</p>
+                <p class="pricing__tagline" data-i18n="price.premium1.tagline">The 24'' booth with a bigger screen</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">3.800.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.2h">/ 2 hours</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.includes">Includes:</p>
                 <ul class="pricing__features">
                   <li data-i18n="price.f.booth24">Premium Booth 24''</li>
-                  <li data-i18n="price.f.unlimited">Unlimited shooting & instant prints</li>
-                  <li data-i18n="price.f.props">Props: Hashtag, glasses, headbands, photo sleeves</li>
-                  <li data-i18n="price.f.staff2">02 on-site support staff</li>
+                  <li data-i18n="price.f.unlimited">Unlimited shooting and instant prints</li>
+                  <li data-i18n="price.f.props">Props: hashtag signs, glasses, headbands, photo sleeves</li>
+                  <li data-i18n="price.f.staff2">2 staff on site</li>
                   <li data-i18n="price.f.frame">Custom frame design</li>
                   <li data-i18n="price.f.backdrops">Basic backdrops (red, black, white, beige)</li>
-                  <li data-i18n="price.f.scrapbook">Complimentary 01 Scrapbook</li>
+                  <li data-i18n="price.f.scrapbook">A free scrapbook</li>
                 </ul>
               </div>
             </article>
@@ -204,19 +208,19 @@
             <article class="pricing__card pricing__card--premium">
               <div class="pricing__card-head">
                 <h3 class="pricing__tier" data-i18n="price.premium2.name">Premium 2</h3>
-                <p class="pricing__tagline" data-i18n="price.premium2.tagline">The flagship — luxury leather album included</p>
+                <p class="pricing__tagline" data-i18n="price.premium2.tagline">Our fullest package, with a leather album</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">5.600.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.3h">/ 3 hours</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.everythingPremium1">Everything in Premium 1, plus:</p>
                 <ul class="pricing__features">
-                  <li data-i18n="price.f.album">Premium leather Album (replaces Scrapbook)</li>
-                  <li data-i18n="price.f.duration3">Full 3-hour service</li>
-                  <li data-i18n="price.f.extra1_2m">Extra hour: +1.500.000đ / hour</li>
+                  <li data-i18n="price.f.album">A premium leather album (instead of the scrapbook)</li>
+                  <li data-i18n="price.f.duration3">3 hours of service</li>
+                  <li data-i18n="price.f.extra1_2m">Extra hour: 1.500.000đ</li>
                 </ul>
               </div>
             </article>
@@ -227,27 +231,27 @@
       <!-- Daily Packages -->
       <div class="pricing__group fade-in">
         <div class="pricing__series pricing__series--daily">
-          <span class="pricing__label" data-i18n="price.daily.label">Daily Rental — Full-day events</span>
+          <span class="pricing__label" data-i18n="price.daily.label">Daily rental</span>
           <div class="pricing__grid pricing__grid--daily">
             <!-- Basic Daily -->
             <article class="pricing__card pricing__card--basic">
               <div class="pricing__card-head">
-                <h3 class="pricing__tier" data-i18n="price.dayBasic.name">Basic — Daily</h3>
+                <h3 class="pricing__tier" data-i18n="price.dayBasic.name">Basic, daily</h3>
                 <p class="pricing__tagline" data-i18n="price.dayBasic.tagline">Booth 16'' for full-day events</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">6.000.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.day">/ day</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.includes">Includes:</p>
                 <ul class="pricing__features">
                   <li data-i18n="price.f.booth16">Basic Booth 16''</li>
-                  <li data-i18n="price.f.paper3k">Print paper: 3.200đ / photo</li>
-                  <li data-i18n="price.f.backdropChoice">Custom backdrop selection</li>
-                  <li data-i18n="price.f.props">Props & accessories included</li>
-                  <li data-i18n="price.f.staff2">02 on-site support staff</li>
+                  <li data-i18n="price.f.paper3k">Print paper: 3.200đ per photo</li>
+                  <li data-i18n="price.f.backdropChoice">Backdrop of your choice</li>
+                  <li data-i18n="price.f.props">Props: hashtag signs, glasses, headbands, photo sleeves</li>
+                  <li data-i18n="price.f.staff2">2 staff on site</li>
                   <li data-i18n="price.f.frame">Custom frame design</li>
                 </ul>
               </div>
@@ -256,22 +260,22 @@
             <!-- Premium Daily -->
             <article class="pricing__card pricing__card--premium">
               <div class="pricing__card-head">
-                <h3 class="pricing__tier" data-i18n="price.dayPremium.name">Premium — Daily</h3>
-                <p class="pricing__tagline" data-i18n="price.dayPremium.tagline">Booth 24'' for upscale events</p>
+                <h3 class="pricing__tier" data-i18n="price.dayPremium.name">Premium, daily</h3>
+                <p class="pricing__tagline" data-i18n="price.dayPremium.tagline">24'' booth for full-day events</p>
                 <div class="pricing__price">
                   <span class="pricing__amount">8.000.000<span class="pricing__currency">đ</span></span>
                   <span class="pricing__unit" data-i18n="price.unit.day">/ day</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.book">Book now</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.includes">Includes:</p>
                 <ul class="pricing__features">
                   <li data-i18n="price.f.booth24">Premium Booth 24''</li>
-                  <li data-i18n="price.f.paper3k">Print paper: 3.200đ / photo</li>
-                  <li data-i18n="price.f.backdropChoice">Custom backdrop selection</li>
-                  <li data-i18n="price.f.props">Props & accessories included</li>
-                  <li data-i18n="price.f.staff2">02 on-site support staff</li>
+                  <li data-i18n="price.f.paper3k">Print paper: 3.200đ per photo</li>
+                  <li data-i18n="price.f.backdropChoice">Backdrop of your choice</li>
+                  <li data-i18n="price.f.props">Props: hashtag signs, glasses, headbands, photo sleeves</li>
+                  <li data-i18n="price.f.staff2">2 staff on site</li>
                   <li data-i18n="price.f.frame">Custom frame design</li>
                 </ul>
               </div>
@@ -281,21 +285,21 @@
             <article class="pricing__card pricing__card--contact">
               <div class="pricing__card-head">
                 <h3 class="pricing__tier" data-i18n="price.multiDay.name">Multi-day</h3>
-                <p class="pricing__tagline" data-i18n="price.multiDay.tagline">Extended events — tailored quote</p>
+                <p class="pricing__tagline" data-i18n="price.multiDay.tagline">Events over several days, quoted separately</p>
                 <div class="pricing__price">
                   <span class="pricing__amount pricing__amount--text" data-i18n="price.multiDay.priceLabel">Contact us</span>
-                  <span class="pricing__unit" data-i18n="price.multiDay.unit">/ custom</span>
+                  <span class="pricing__unit" data-i18n="price.multiDay.unit">/ by schedule</span>
                 </div>
-                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.contact">Contact sales ↗</a>
+                <a href="contact.html" class="pricing__cta" data-i18n="price.cta.contact">Contact us</a>
               </div>
               <div class="pricing__card-body">
                 <p class="pricing__includes" data-i18n="price.includes">Includes:</p>
                 <ul class="pricing__features">
-                  <li data-i18n="price.f.customPkg">Customized package for your timeline</li>
-                  <li data-i18n="price.f.discount">Volume discount available</li>
-                  <li data-i18n="price.f.dedicatedTeam">Dedicated planning support</li>
-                  <li data-i18n="price.f.choiceBooth">Choice of Booth 16'' or 24''</li>
-                  <li data-i18n="price.f.flexible">Flexible setup & teardown</li>
+                  <li data-i18n="price.f.customPkg">A schedule built around your event</li>
+                  <li data-i18n="price.f.discount">Lower rates for longer bookings</li>
+                  <li data-i18n="price.f.dedicatedTeam">One person in charge of your event</li>
+                  <li data-i18n="price.f.choiceBooth">Choose the 16'' or 24'' booth</li>
+                  <li data-i18n="price.f.flexible">Setup and teardown on your timetable</li>
                 </ul>
               </div>
             </article>
@@ -303,7 +307,7 @@
         </div>
       </div>
 
-      <p class="pricing__note fade-in" data-i18n="price.note">All prices are inclusive. Final quote may vary by location and event-specific requirements. Please contact us for tailored consultation.</p>
+      <p class="pricing__note fade-in" data-i18n="price.note">Prices cover everything listed in each package. The final cost can change with the venue and any special requests, so contact us for an exact quote.</p>
     </div>
   </section>
 
@@ -328,14 +332,14 @@
         Để nhận <strong>báo giá thuê photobooth Hà Nội</strong> chi tiết theo nhu cầu, vui lòng gọi hotline
         <a href="tel:+84971842329"><strong>0971 842 329</strong></a> hoặc gửi email tới
         <a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a>.
-        Đội ngũ Happy Booth sẽ phản hồi trong vòng 30 phút trong giờ hành chính.
+        Đội ngũ Happy Booth sẽ phản hồi trong vòng 30 phút trong giờ làm việc (8:00–22:00 hằng ngày).
       </p>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="cta section fade-in">
-    <p data-i18n="price.cta.text">Have questions about our packages? We're happy to put together something just for you.</p>
+    <p data-i18n="price.cta.text">Not sure which package fits? Call or message us and we will help you choose.</p>
     <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Get In Touch</a>
   </section>
 
@@ -344,31 +348,42 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer__inner">
-      <nav class="footer__nav">
-        <a href="index.html" data-i18n="common.nav.home">Home</a>
-        <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-        <a href="price.html" data-i18n="common.nav.price">Price</a>
-        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
-        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-      </nav>
-      <div class="footer__brand-wrap" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
-        <img src="assets/SVG/Logo_web.svg" alt="Logo" class="footer__logo-img" style="height: 30px; width: auto;">
-        <p class="footer__brand" style="margin-bottom: 0;">Happy Booth</p>
+      <div class="footer__grid">
+        <div>
+          <a class="footer__brand" href="index.html"><img src="assets/SVG/Logo_web.svg" alt="" class="footer__logo-img" width="36" height="36">Happy Booth</a>
+          <p class="footer__tagline" data-i18n="common.footer.tagline">Instant-print photobooth rental in Hanoi.</p>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.contact">Contact</h3>
+          <ul class="footer__list">
+            <li><a href="tel:+84971842329">0971 842 329</a></li>
+            <li><a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></li>
+            <li data-i18n="common.footer.hours">8:00–22:00 every day</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.follow">Follow us</h3>
+          <ul class="footer__list">
+            <li><a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok @happybooth.vn</a></li>
+            <li><a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">facebook.com/happyboothvn</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.area">Service area</h3>
+          <p data-i18n="common.footer.areaText">Hanoi and the nearby provinces of Bac Ninh, Hung Yen, Hai Duong, Hai Phong and Vinh Phuc. We bring the booth and set it up on site.</p>
+        </div>
       </div>
-      <p class="footer__tagline" data-i18n="common.footer.tagline">Premium Photobooth Event Rental</p>
-      <p class="footer__divider">—</p>
-      <div class="footer__social">
-        <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">@happybooth.vn</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
+      <div class="footer__base">
+        <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2026 Happy Booth. Photobooth Event.</p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a href="index.html" data-i18n="common.nav.home">Home</a>
+          <a href="about.html" data-i18n="common.nav.about">About</a>
+          <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+          <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+          <a href="price.html" data-i18n="common.nav.price">Price</a>
+          <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        </nav>
       </div>
-      <div class="footer__contact">
-        <p>Hotline: <a href="tel:+84971842329">0971 842 329</a></p>
-        <p>Email: <a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></p>
-        <p>Địa chỉ: Hà Nội, Việt Nam</p>
-      </div>
-      <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2024 Happy Booth Ltd.</p>
     </div>
   </footer>
 
