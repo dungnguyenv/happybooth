@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>if(localStorage.getItem('hb-lang')!=='en'){document.documentElement.classList.add('i18n-loading')}</script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -36,19 +36,19 @@
   <!-- Header -->
   <header class="header">
     <div class="header__inner">
-      <div class="header__logo">
-        <a href="index.html">
-          <img src="assets/SVG/Logo_web.svg" alt="Happy Booth" class="header__logo-img">
-          Happy Booth<span class="header__logo-suffix"> — Photobooth Event</span>
-        </a>
-      </div>
-      <nav class="header__nav">
+      <a class="header__logo" href="index.html">
+        <img src="assets/SVG/Logo_web.svg" alt="" class="header__logo-img" width="36" height="36">
+        <span>Happy Booth</span>
+      </a>
+      <nav class="header__nav" aria-label="Main">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
         <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Portfolio</a>
         <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
         <a href="price.html" data-i18n="common.nav.price">Price</a>
         <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+      </nav>
+      <div class="header__actions">
         <span class="header__social">
           <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener" aria-label="TikTok">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.18 8.18 0 0 0 4.76 1.52V6.77a4.83 4.83 0 0 1-1-.08z"/></svg>
@@ -62,7 +62,10 @@
           <span class="lang-toggle__divider">|</span>
           <button class="lang-toggle__btn" data-lang="en">EN</button>
         </span>
-      </nav>
+        <a class="header__tel" href="tel:+84971842329">0971 842 329</a>
+        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Get a quote</a>
+      </div>
+      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Call hotline</a>
       <button class="hamburger" aria-label="Toggle menu">
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
@@ -75,16 +78,17 @@
   <nav class="mobile-nav">
     <a href="index.html" data-i18n="common.nav.home">Home</a>
     <a href="about.html" data-i18n="common.nav.about">About</a>
-    <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+    <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Portfolio</a>
     <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
     <a href="price.html" data-i18n="common.nav.price">Price</a>
     <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
     <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
+    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Call 0971 842 329</a>
     <span class="lang-toggle lang-toggle--mobile">
-      <button class="lang-toggle__btn active" data-lang="en">EN</button>
+      <button class="lang-toggle__btn active" data-lang="vi">VI</button>
       <span class="lang-toggle__divider">|</span>
-      <button class="lang-toggle__btn" data-lang="vi">VI</button>
+      <button class="lang-toggle__btn" data-lang="en">EN</button>
     </span>
   </nav>
 
@@ -93,7 +97,7 @@
   <!-- Page Header -->
   <section class="page-header">
     <h1 class="fade-in" data-i18n="portfolio.title">Portfolio</h1>
-    <p class="fade-in" data-i18n="portfolio.description">Welcome to our event photobooth portfolio, a collection of our favorite captures. We specialize in creating fun, engaging moments with our premium photobooths. Our goal is to bring smiles and high-quality prints to your weddings, birthdays, and parties.</p>
+    <p class="fade-in" data-i18n="portfolio.description">Real prints from parties Happy Booth has worked at: weddings, birthdays, company and school events. Click any photo to see it larger.</p>
   </section>
 
   <!-- Portfolio Gallery -->
@@ -211,7 +215,7 @@
       <div class="gallery__item gallery__item--hidden fade-in"><img src="assets/images/portfolio/1.jpg" alt="Happy Booth portfolio" loading="lazy"></div>
     </div>
     <div class="gallery__more fade-in">
-      <button type="button" class="btn gallery__load-more" data-i18n="portfolio.loadMore">Load more</button>
+      <button type="button" class="btn gallery__load-more" data-i18n="portfolio.loadMore">Load more photos</button>
     </div>
   </section>
 
@@ -222,13 +226,13 @@
       <p>
         Bộ sưu tập <strong>ảnh photobooth tại Hà Nội</strong> dưới đây ghi lại những khoảnh khắc thật
         từ các sự kiện Happy Booth đã đồng hành: <strong>đám cưới sang trọng</strong> tại các khách sạn,
-        trung tâm tiệc cưới hàng đầu Hà Nội; <strong>tiệc sinh nhật ấm cúng</strong> cho cá nhân và gia đình;
+        trung tâm tiệc cưới ở Hà Nội; <strong>tiệc sinh nhật ấm cúng</strong> cho cá nhân và gia đình;
         <strong>year-end party, gala dinner, hội nghị khách hàng</strong> của các doanh nghiệp lớn nhỏ.
       </p>
       <p>
         Mỗi sự kiện đều có <strong>khung ảnh photobooth thiết kế riêng</strong> phù hợp với chủ đề,
         màu sắc và thương hiệu của khách hàng. Từ phong cách tối giản, vintage, cổ điển đến hiện đại,
-        rực rỡ — đội ngũ thiết kế của Happy Booth luôn tạo ra layout độc đáo cho mỗi sự kiện tại Hà Nội.
+        rực rỡ, mỗi khung ảnh đều được Happy Booth thiết kế riêng cho từng sự kiện tại Hà Nội.
       </p>
       <p>
         Bạn muốn sự kiện sắp tới của mình có những bức ảnh đẹp như vậy? Liên hệ Happy Booth qua hotline
@@ -240,10 +244,10 @@
 
   <!-- CTA -->
   <section class="cta section fade-in">
-    <p data-i18n="portfolio.cta.text">Thank you so much for taking the time to look through our work — we loved sharing some of our favourites with you. Please do get in touch if you feel we're a right fit.</p>
+    <p data-i18n="portfolio.cta.text">Like a style you see here? Send it to us and we will design a frame just for your party.</p>
     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
       <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Get In Touch</a>
-      <a href="frame.html" class="btn" data-i18n="portfolio.cta.seeGalleries">See Frame Designs</a>
+      <a href="frame.html" class="btn" data-i18n="portfolio.cta.seeGalleries">See frame designs</a>
     </div>
   </section>
 
@@ -252,31 +256,42 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer__inner">
-      <nav class="footer__nav">
-        <a href="index.html" data-i18n="common.nav.home">Home</a>
-        <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-        <a href="price.html" data-i18n="common.nav.price">Price</a>
-        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
-        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-      </nav>
-      <div class="footer__brand-wrap" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
-        <img src="assets/SVG/Logo_web.svg" alt="Logo" class="footer__logo-img" style="height: 30px; width: auto;">
-        <p class="footer__brand" style="margin-bottom: 0;">Happy Booth</p>
+      <div class="footer__grid">
+        <div>
+          <a class="footer__brand" href="index.html"><img src="assets/SVG/Logo_web.svg" alt="" class="footer__logo-img" width="36" height="36">Happy Booth</a>
+          <p class="footer__tagline" data-i18n="common.footer.tagline">Instant-print photobooth rental in Hanoi.</p>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.contact">Contact</h3>
+          <ul class="footer__list">
+            <li><a href="tel:+84971842329">0971 842 329</a></li>
+            <li><a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></li>
+            <li data-i18n="common.footer.hours">8:00–22:00 every day</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.follow">Follow us</h3>
+          <ul class="footer__list">
+            <li><a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok @happybooth.vn</a></li>
+            <li><a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">facebook.com/happyboothvn</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.area">Service area</h3>
+          <p data-i18n="common.footer.areaText">Hanoi and the nearby provinces of Bac Ninh, Hung Yen, Hai Duong, Hai Phong and Vinh Phuc. We bring the booth and set it up on site.</p>
+        </div>
       </div>
-      <p class="footer__tagline" data-i18n="common.footer.tagline">Premium Photobooth Event Rental</p>
-      <p class="footer__divider">—</p>
-      <div class="footer__social">
-        <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">@happybooth.vn</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
+      <div class="footer__base">
+        <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2026 Happy Booth. Photobooth Event.</p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a href="index.html" data-i18n="common.nav.home">Home</a>
+          <a href="about.html" data-i18n="common.nav.about">About</a>
+          <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+          <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+          <a href="price.html" data-i18n="common.nav.price">Price</a>
+          <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        </nav>
       </div>
-      <div class="footer__contact">
-        <p>Hotline: <a href="tel:+84971842329">0971 842 329</a></p>
-        <p>Email: <a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></p>
-        <p>Địa chỉ: Hà Nội, Việt Nam</p>
-      </div>
-      <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2024 Happy Booth Ltd.</p>
     </div>
   </footer>
 

@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>if(localStorage.getItem('hb-lang')!=='en'){document.documentElement.classList.add('i18n-loading')}</script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -36,19 +36,19 @@
   <!-- Header -->
   <header class="header">
     <div class="header__inner">
-      <div class="header__logo">
-        <a href="index.html">
-          <img src="assets/SVG/Logo_web.svg" alt="Happy Booth" class="header__logo-img">
-          Happy Booth<span class="header__logo-suffix"> — Photobooth Event</span>
-        </a>
-      </div>
-      <nav class="header__nav">
+      <a class="header__logo" href="index.html">
+        <img src="assets/SVG/Logo_web.svg" alt="" class="header__logo-img" width="36" height="36">
+        <span>Happy Booth</span>
+      </a>
+      <nav class="header__nav" aria-label="Main">
         <a href="index.html" data-i18n="common.nav.home">Home</a>
         <a href="about.html" data-i18n="common.nav.about">About</a>
         <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
         <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
         <a href="price.html" data-i18n="common.nav.price">Price</a>
         <a href="contact.html" class="active" data-i18n="common.nav.contact">Contact</a>
+      </nav>
+      <div class="header__actions">
         <span class="header__social">
           <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener" aria-label="TikTok">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.18 8.18 0 0 0 4.76 1.52V6.77a4.83 4.83 0 0 1-1-.08z"/></svg>
@@ -62,7 +62,10 @@
           <span class="lang-toggle__divider">|</span>
           <button class="lang-toggle__btn" data-lang="en">EN</button>
         </span>
-      </nav>
+        <a class="header__tel" href="tel:+84971842329">0971 842 329</a>
+        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Get a quote</a>
+      </div>
+      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Call hotline</a>
       <button class="hamburger" aria-label="Toggle menu">
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
@@ -78,13 +81,14 @@
     <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
     <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
     <a href="price.html" data-i18n="common.nav.price">Price</a>
-    <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+    <a href="contact.html" class="active" data-i18n="common.nav.contact">Contact</a>
     <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
+    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Call 0971 842 329</a>
     <span class="lang-toggle lang-toggle--mobile">
-      <button class="lang-toggle__btn active" data-lang="en">EN</button>
+      <button class="lang-toggle__btn active" data-lang="vi">VI</button>
       <span class="lang-toggle__divider">|</span>
-      <button class="lang-toggle__btn" data-lang="vi">VI</button>
+      <button class="lang-toggle__btn" data-lang="en">EN</button>
     </span>
   </nav>
 
@@ -94,18 +98,18 @@
   <section class="contact-page">
     <div class="contact-page__inner">
       <div class="contact-page__left fade-in">
-        <h1 data-i18n="contact.title">Contact us.</h1>
+        <h1 data-i18n="contact.title">Book a booth</h1>
         <p class="contact-email"><a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></p>
         <div class="contact-page__location">
-          <p><strong data-i18n="contact.based">Based</strong></p>
-          <p data-i18n="contact.location.ukeu">We provide photobooth service in Hanoi and surrounding areas.</p>
-          <p data-i18n="contact.location.nz">We also support transporting equipment to other provinces (additional fees apply).</p>
+          <p><strong data-i18n="contact.based">Where we work</strong></p>
+          <p data-i18n="contact.location.ukeu">Hanoi and the nearby provinces: Bac Ninh, Hung Yen, Hai Duong, Hai Phong and Vinh Phuc.</p>
+          <p data-i18n="contact.location.nz">Other provinces too, with travel charged separately.</p>
         </div>
-        <p class="contact-page__closing" data-i18n="contact.closing">We can't wait to hear from you. HB</p>
+        <p class="contact-page__closing" data-i18n="contact.closing">Fill in the form below and we will get back to you with advice and a quote.</p>
       </div>
       <div class="contact-page__carousel fade-in" id="contactCarousel">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/18577a57-3f39-4005-9abb-3d07122e40d6/CS-355.jpg" alt="Wedding photography" class="carousel-active">
-        <img src="https://images.squarespace-cdn.com/content/v1/64b7ac170289a3571d83eeda/10f9b115-bc19-47bc-a814-daefe854fd92/J%26E-96.jpg" alt="Wedding photography">
+        <img src="assets/images/highlights/booth.jpg" width="800" height="1200" alt="Máy Happy Booth màu trắng tại tiệc cưới" class="carousel-active">
+        <img src="assets/images/highlights/p05.jpg" width="600" height="900" alt="Ảnh in sáu khung hình cô dâu và phù dâu">
       </div>
     </div>
   </section>
@@ -119,33 +123,33 @@
     </div>
 
     <div class="form-group">
-      <label for="fianceName" data-i18n="contact.form.fianceName">Co-Host Name</label>
+      <label for="fianceName" data-i18n="contact.form.fianceName">Co-host (optional)</label>
       <input type="text" id="fianceName" name="fianceName">
     </div>
 
     <div class="form-group">
-      <label for="eventDate" data-i18n="contact.form.eventDate">Event Date(s)</label>
+      <label for="eventDate" data-i18n="contact.form.eventDate">Event date</label>
       <input type="text" id="eventDate" name="eventDate" placeholder="DD/MM/YYYY" data-i18n-placeholder="contact.form.datePlaceholder">
     </div>
 
     <div class="form-group">
-      <label for="country" data-i18n="contact.form.country">Country / City of Event</label>
+      <label for="country" data-i18n="contact.form.country">Province / city</label>
       <input type="text" id="country" name="country">
     </div>
 
     <div class="form-group">
-      <label for="venue" data-i18n="contact.form.venue">Event Venue</label>
+      <label for="venue" data-i18n="contact.form.venue">Venue</label>
       <input type="text" id="venue" name="venue">
     </div>
 
     <div class="form-group">
       <label for="eventType" data-i18n="contact.form.eventType">Event Type</label>
       <select id="eventType" name="eventType">
-        <option value="" disabled selected data-i18n="contact.form.selectDefault">Select...</option>
+        <option value="" disabled selected data-i18n="contact.form.selectDefault">Choose one</option>
         <option value="full-wedding" data-i18n="contact.form.fullWedding">Wedding</option>
         <option value="elopement" data-i18n="contact.form.elopement">Birthday Party</option>
         <option value="couples-shoot" data-i18n="contact.form.couplesShoot">Corporate Event</option>
-        <option value="event-other" data-i18n="contact.form.eventOther">Other Private Event</option>
+        <option value="event-other" data-i18n="contact.form.eventOther">Other private party</option>
       </select>
     </div>
 
@@ -153,7 +157,7 @@
       <label data-i18n="contact.form.servicesLabel">Services Interested In</label>
       <div class="form-checkboxes">
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="standard-booth"> <span data-i18n="contact.form.photography">Standard Booth</span>
+          <input type="checkbox" name="services" value="standard-booth"> <span data-i18n="contact.form.photography">Photobooth with prints</span>
         </label>
         <label class="form-checkbox">
           <input type="checkbox" name="services" value="mirror-booth"> <span data-i18n="contact.form.videography">Mirror Booth</span>
@@ -165,7 +169,7 @@
           <input type="checkbox" name="services" value="audio-guestbook"> <span data-i18n="contact.form.filmRolls">Audio Guestbook</span>
         </label>
         <label class="form-checkbox">
-          <input type="checkbox" name="services" value="custom-backdrop"> <span data-i18n="contact.form.albums">Custom Backdrop</span>
+          <input type="checkbox" name="services" value="custom-backdrop"> <span data-i18n="contact.form.albums">Themed backdrop</span>
         </label>
       </div>
     </div>
@@ -176,27 +180,27 @@
     </div>
 
     <div class="form-group">
-      <label for="planner" data-i18n="contact.form.planner">Event Planner</label>
+      <label for="planner" data-i18n="contact.form.planner">Event planner (optional)</label>
       <input type="text" id="planner" name="planner">
     </div>
 
     <div class="form-group">
-      <label for="budget" data-i18n="contact.form.budget">Photobooth Budget</label>
+      <label for="budget" data-i18n="contact.form.budget">Budget</label>
       <input type="text" id="budget" name="budget">
     </div>
 
     <div class="form-group">
-      <label for="howHeard" data-i18n="contact.form.howHeard">How Did You Hear About Us?</label>
+      <label for="howHeard" data-i18n="contact.form.howHeard">How did you hear about us?</label>
       <input type="text" id="howHeard" name="howHeard">
     </div>
 
     <div class="form-group">
-      <label for="message" data-i18n="contact.form.message">Message</label>
+      <label for="message" data-i18n="contact.form.message">Anything else we should know?</label>
       <textarea id="message" name="message" rows="5"></textarea>
     </div>
 
-    <button type="submit" class="btn" data-i18n="contact.form.send">Send</button>
-    <p class="contact-form__note" data-i18n="contact.form.note">Please check your spam/junk folders for our reply.</p>
+    <button type="submit" class="btn" data-i18n="contact.form.send">Send request</button>
+    <p class="contact-form__note" data-i18n="contact.form.note">If you don't see our reply, please check your spam folder.</p>
   </form>
 
   <!-- SEO Content (Vietnamese — for search engines & Vietnamese visitors) -->
@@ -206,7 +210,7 @@
       <p>
         Bạn đang tìm dịch vụ <strong>thuê photobooth tại Hà Nội</strong> cho đám cưới, sinh nhật hay sự kiện
         công ty sắp tới? Happy Booth sẵn sàng tư vấn miễn phí và gửi báo giá chi tiết trong vòng
-        <strong>30 phút</strong> kể từ khi nhận yêu cầu. Hotline trực 24/7:
+        <strong>30 phút</strong> kể từ khi nhận yêu cầu. Hotline (8:00–22:00 hằng ngày):
         <a href="tel:+84971842329"><strong>0971 842 329</strong></a>.
       </p>
       <p>
@@ -233,31 +237,42 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer__inner">
-      <nav class="footer__nav">
-        <a href="index.html" data-i18n="common.nav.home">Home</a>
-        <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-        <a href="price.html" data-i18n="common.nav.price">Price</a>
-        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
-        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-      </nav>
-      <div class="footer__brand-wrap" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
-        <img src="assets/SVG/Logo_web.svg" alt="Logo" class="footer__logo-img" style="height: 30px; width: auto;">
-        <p class="footer__brand" style="margin-bottom: 0;">Happy Booth</p>
+      <div class="footer__grid">
+        <div>
+          <a class="footer__brand" href="index.html"><img src="assets/SVG/Logo_web.svg" alt="" class="footer__logo-img" width="36" height="36">Happy Booth</a>
+          <p class="footer__tagline" data-i18n="common.footer.tagline">Instant-print photobooth rental in Hanoi.</p>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.contact">Contact</h3>
+          <ul class="footer__list">
+            <li><a href="tel:+84971842329">0971 842 329</a></li>
+            <li><a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></li>
+            <li data-i18n="common.footer.hours">8:00–22:00 every day</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.follow">Follow us</h3>
+          <ul class="footer__list">
+            <li><a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok @happybooth.vn</a></li>
+            <li><a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">facebook.com/happyboothvn</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading" data-i18n="common.footer.area">Service area</h3>
+          <p data-i18n="common.footer.areaText">Hanoi and the nearby provinces of Bac Ninh, Hung Yen, Hai Duong, Hai Phong and Vinh Phuc. We bring the booth and set it up on site.</p>
+        </div>
       </div>
-      <p class="footer__tagline" data-i18n="common.footer.tagline">Premium Photobooth Event Rental</p>
-      <p class="footer__divider">—</p>
-      <div class="footer__social">
-        <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">@happybooth.vn</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
+      <div class="footer__base">
+        <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2026 Happy Booth. Photobooth Event.</p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a href="index.html" data-i18n="common.nav.home">Home</a>
+          <a href="about.html" data-i18n="common.nav.about">About</a>
+          <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
+          <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
+          <a href="price.html" data-i18n="common.nav.price">Price</a>
+          <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        </nav>
       </div>
-      <div class="footer__contact">
-        <p>Hotline: <a href="tel:+84971842329">0971 842 329</a></p>
-        <p>Email: <a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></p>
-        <p>Địa chỉ: Hà Nội, Việt Nam</p>
-      </div>
-      <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2024 Happy Booth Ltd.</p>
     </div>
   </footer>
 
