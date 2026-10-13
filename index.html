@@ -250,15 +250,54 @@
   <!-- Hero + live photo wall -->
   <section class="home-hero">
     <div class="home-hero__copy">
-      <h1 class="home-hero__title" data-i18n-html="home.hero.title">Snap it, print it,<br> take it&nbsp;home.</h1>
-      <p class="home-hero__sub" data-i18n="home.hero.sub">Each print takes just 8–12 seconds, and guests can print as many as they like. Your frame carries your names and date, designed free of charge.</p>
+      <div class="home-hero__switch" role="group" aria-label="Chọn thông điệp">
+        <button type="button" data-hero-target="business" aria-pressed="true" data-i18n="home.hero.businessLabel">Corporate events</button>
+        <button type="button" data-hero-target="wedding" aria-pressed="false" data-i18n="home.hero.weddingLabel">Weddings</button>
+        <button class="home-hero__rotation" type="button" data-hero-pause aria-pressed="false" data-i18n="home.hero.pause">Pause</button>
+      </div>
+      <h1 class="home-hero__title home-hero__message-grid">
+        <span data-hero-message="business" aria-hidden="false" data-i18n-html="home.hero.title">Connect your guests.<br>Bring your brand to life.</span>
+        <span data-hero-message="wedding" aria-hidden="true" data-i18n-html="home.hero.weddingTitle">Your wedding day.<br>Memories to keep.</span>
+      </h1>
+      <div class="home-hero__sub home-hero__message-grid">
+        <p data-hero-message="business" aria-hidden="false" data-i18n="home.hero.sub">Photobooth experiences for corporate events, brand launches and conferences. Custom photo frames reflect your brand identity, with professional on-site support to capture meaningful connections.</p>
+        <p data-hero-message="wedding" aria-hidden="true" data-i18n="home.hero.weddingSub">A wedding photobooth with photo frames tailored to your style as a couple. A space for family and friends to share a moment and take home a keepsake of your special day.</p>
+      </div>
       <div class="home-hero__cta">
         <a class="btn btn--pink" href="contact.html" data-i18n="common.cta.getQuote">Get a quote</a>
         <a class="text-link" href="tel:+84971842329" data-i18n="common.cta.callNumber">Call 0971 842 329</a>
       </div>
-      <p class="home-hero__where" data-i18n="home.hero.where">Weddings, birthdays and company events in Hanoi</p>
+      <p class="home-hero__where"><span class="home-hero__message-grid">
+        <span data-hero-message="business" aria-hidden="false" data-i18n="home.hero.where">Supporting businesses and event organisers</span>
+        <span data-hero-message="wedding" aria-hidden="true" data-i18n="home.hero.weddingWhere">By your side on your wedding day</span>
+      </span></p>
     </div>
-    <div class="wall" role="region" aria-label="Ảnh in thật từ các tiệc gần đây">
+    <div class="wall" data-hero-wall="business" role="region" aria-label="Ảnh in tại các sự kiện Happy Booth đã phục vụ">
+      <div class="wall__col"><div class="wall__track">
+        <div class="wall__item"><img src="assets/images/highlights/business/20261002_141559_201.webp" width="600" height="900" loading="eager" alt="Ảnh in tập thể NOTE GROUP với khung nhận diện thương hiệu mới"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260325_105539_914.webp" width="600" height="900" loading="eager" alt="Ảnh in sự kiện kỷ niệm 95 năm với khung xanh"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260718_165737_211.webp" width="600" height="900" loading="lazy" alt="Ảnh in sự kiện NextGen Ecom với khung tím và hai ô ảnh"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260530_075131_896_2x.webp" width="600" height="900" loading="lazy" alt="Ảnh in sự kiện HAMI 2026 với khung xanh"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260816_182612_498_2x.webp" width="600" height="900" loading="lazy" alt="Ảnh in khách mời tại sự kiện với khung cam rực rỡ"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260511_181201_799_2x.webp" width="600" height="900" loading="lazy" alt="Ảnh in khách mời tại sự kiện với khung hoa tông xanh"></div>
+      </div></div>
+      <div class="wall__col"><div class="wall__track">
+        <div class="wall__item"><img src="assets/images/highlights/business/20260626_141958_787.webp" width="600" height="900" loading="eager" alt="Ảnh in sự kiện HAMI với khung xanh navy"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260922_152806_527.webp" width="600" height="900" loading="eager" alt="Ảnh in sự kiện Happy Hour với khung đỏ"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260619_185518_673.webp" width="600" height="900" loading="lazy" alt="Ảnh in khách mời tại sự kiện với khung xanh nhạt"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260527_124348_530_2x.webp" width="600" height="900" loading="lazy" alt="Ảnh in khách mời tại sự kiện với khung đỏ"></div>
+        <div class="wall__item wall__pair"><img src="assets/images/highlights/msig/msig-02.webp" width="400" height="1200" loading="lazy" alt="Khách mời chụp ảnh với khung thương hiệu MSIG, ảnh 02"><img src="assets/images/highlights/msig/msig-09.webp" width="400" height="1200" loading="lazy" alt="Khách mời chụp ảnh với khung thương hiệu MSIG, ảnh 09"></div>
+      </div></div>
+      <div class="wall__col"><div class="wall__track">
+        <div class="wall__item"><img src="assets/images/highlights/business/20260624_201549_211.webp" width="600" height="900" loading="eager" alt="Ảnh in nhóm khách mời với khung cam và bốn ô ảnh"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20261002_135052_720.webp" width="600" height="900" loading="eager" alt="Ảnh in khách mời NOTE GROUP với khung nhận diện thương hiệu mới"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260527_190239_506_2x.webp" width="600" height="900" loading="lazy" alt="Ảnh in sự kiện Once Upon a Night với khung tím"></div>
+        <div class="wall__item"><img src="assets/images/highlights/business/20260718_161233_461_2x.webp" width="600" height="900" loading="lazy" alt="Dải ảnh in sự kiện NextGen Ecom với khung tím"></div>
+        <div class="wall__item wall__pair"><img src="assets/images/highlights/msig/msig-04.webp" width="400" height="1200" loading="lazy" alt="Khách mời chụp ảnh với khung thương hiệu MSIG, ảnh 04"><img src="assets/images/highlights/msig/msig-18.webp" width="400" height="1200" loading="lazy" alt="Khách mời chụp ảnh với khung thương hiệu MSIG, ảnh 18"></div>
+      </div></div>
+      <button class="wall__pause" type="button" aria-pressed="false" data-i18n="home.wall.pause">Pause</button>
+    </div>
+    <div class="wall" data-hero-wall="wedding" role="region" aria-label="Ảnh in tại các tiệc cưới Happy Booth" hidden>
       <div class="wall__col"><div class="wall__track">
         <div class="wall__item"><img src="assets/images/highlights/p01.jpg" width="600" height="900" alt="Ảnh in cưới Thế Mạnh và Anh Thư, bốn khung hình nhóm bạn"></div>
         <div class="wall__item wall__pair"><img src="assets/images/highlights/s01.jpg" width="400" height="1200" alt="Dải ảnh hai cô gái, cưới Thu Anh và Duy Khánh"><img src="assets/images/highlights/s02.jpg" width="400" height="1200" alt="Dải ảnh cô dâu và bạn bè, cưới Phi Long và Giáp Thảo"></div>
@@ -270,7 +309,7 @@
       <div class="wall__col"><div class="wall__track">
         <div class="wall__item"><img src="assets/images/highlights/p04.jpg" width="600" height="900" alt="Ảnh in chú rể và bạn bè, cưới Phi Long và Giáp Thảo"></div>
         <div class="wall__item"><img src="assets/images/highlights/p10.jpg" width="600" height="900" alt="Ảnh in cô dâu và khách mời cầm bảng Cô Dâu"></div>
-        <div class="wall__item wall__pair"><img src="assets/images/highlights/s05.jpg" width="400" height="1200" alt="Dải ảnh học sinh sự kiện Elyria"><img src="assets/images/highlights/s06.jpg" width="400" height="1200" alt="Dải ảnh nhóm bạn sự kiện Elyria"></div>
+        <div class="wall__item"><img src="assets/images/highlights/p08.jpg" width="900" height="600" alt="Ảnh in cô dâu cùng gia đình mặc áo dài, cưới Vũ Long và Như Quỳnh"></div>
         <div class="wall__item"><img src="assets/images/highlights/p15.jpg" width="600" height="900" alt="Ảnh in gia đình tại Lễ Vu Quy Ánh Vinh và Hoàng Long"></div>
         <div class="wall__item"><img src="assets/images/highlights/l01.jpg" width="900" height="600" alt="Ảnh in cô dâu và gia đình trước phông hoa hồng, cưới Vân Anh và Tuấn Vũ"></div>
         <div class="wall__item"><img src="assets/images/highlights/p19.jpg" width="600" height="900" alt="Ảnh in cặp đôi cầm bảng chúc mừng, cưới Hà Thu và Anh Đức"></div>
@@ -278,7 +317,7 @@
       <div class="wall__col"><div class="wall__track">
         <div class="wall__item"><img src="assets/images/highlights/p02.jpg" width="600" height="900" alt="Ảnh in cô dâu và khách mời, cưới Phi Long và Giáp Thảo"></div>
         <div class="wall__item"><img src="assets/images/highlights/p09.jpg" width="600" height="900" alt="Ảnh in cô dâu và bạn bè cầm bảng Cô Dâu, cưới Vũ Long và Như Quỳnh"></div>
-        <div class="wall__item wall__pair"><img src="assets/images/highlights/s03.jpg" width="400" height="1200" alt="Dải ảnh sự kiện Dệt Mới Sắc Xưa"><img src="assets/images/highlights/s04.jpg" width="400" height="1200" alt="Dải ảnh học sinh sự kiện Dệt Mới Sắc Xưa"></div>
+        <div class="wall__item"><img src="assets/images/highlights/p12.jpg" width="600" height="900" alt="Ảnh in bốn khung hình, cưới Hữu Long và Hoài An"></div>
         <div class="wall__item"><img src="assets/images/highlights/p16.jpg" width="900" height="600" alt="Ảnh in khách mời tại Lễ Vu Quy Ánh Vinh và Hoàng Long"></div>
         <div class="wall__item"><img src="assets/images/highlights/p11.jpg" width="900" height="600" alt="Ảnh in nhóm bạn, cưới Hữu Long và Hoài An"></div>
       </div></div>
@@ -286,44 +325,91 @@
     </div>
   </section>
 
-  <!-- Real videos (demo clips — replace files in assets/videos/) -->
+  <!-- Add completed jobs as .recent-job articles with data-job-date="YYYY-MM-DD".
+       The homepage keeps the three newest jobs. No placeholder jobs are shown. -->
+  <section class="home-section recent-jobs" aria-label="Happy Booth — Dự án đã thực hiện">
+    <div class="wrap recent-jobs__list" data-recent-jobs>
+      <article class="recent-job" data-job-date="2026-10-02" aria-labelledby="note-group-title">
+        <div class="recent-job__visual">
+          <button class="recent-job__photo recent-job__cover" type="button" aria-label="Xem góc photobooth tại sự kiện NOTE GROUP" data-full="assets/images/jobs/note-group/photobooth.webp">
+            <img src="assets/images/jobs/note-group/photobooth.webp" width="1600" height="1200" loading="lazy" alt="Khách mời chụp ảnh tại photobooth Happy Booth trong lễ ra mắt nhận diện NOTE GROUP">
+          </button>
+          <img class="recent-job__print" src="assets/images/jobs/note-group/group-print-thumb.webp" width="480" height="720" loading="lazy" alt="Ảnh in lấy liền với khung nhận diện mới của NOTE GROUP">
+        </div>
+        <div class="recent-job__copy">
+          <p class="recent-job__partner">Happy Booth <span aria-hidden="true">×</span> NOTE GROUP</p>
+          <div class="recent-job__meta"><span data-i18n="home.jobs.note.category">Corporate event</span><span aria-hidden="true">·</span><time datetime="2026-10-02">02.10.2026</time></div>
+          <h2 id="note-group-title" class="recent-job__title" data-i18n="home.jobs.note.title">Happy Booth joins NOTE GROUP for its new brand identity launch</h2>
+          <p class="recent-job__intro" data-i18n="home.jobs.note.intro">A new look, a new chapter. Happy Booth captured the smiles at NOTE GROUP’s brand launch with instant prints in the brand’s own colours.</p>
+        </div>
+        <details class="recent-job__details">
+          <summary class="recent-job__toggle">
+            <span class="recent-job__open-label" data-i18n="home.jobs.note.open">Story & photos</span>
+            <span class="recent-job__close-label" data-i18n="home.jobs.note.close">Collapse story</span>
+            <span class="recent-job__toggle-icon" aria-hidden="true">+</span>
+          </summary>
+          <div class="recent-job__body">
+            <div class="recent-job__story">
+              <h3 data-i18n="home.jobs.note.storyTitle">NOTE GROUP unveils its new brand identity</h3>
+              <p data-i18n="home.jobs.note.p1">NOTE GROUP officially unveiled its new brand identity, marking a new chapter after four years of growth and development.</p><p data-i18n="home.jobs.note.p2">The ceremony introduced the new look alongside NOTE GROUP’s direction for its next phase, covering both its brand image and delivery capabilities: consulting, planning, installation, operation and maintenance of advertising locations.</p><p data-i18n="home.jobs.note.p3">In a formal and emotional atmosphere, the reveal brought pride to the NOTE GROUP team and renewed their shared hopes and determination for the journey ahead.</p><p data-i18n="home.jobs.note.p4">With the message “BUILDING THE FUTURE”, NOTE GROUP reaffirmed its direction based on four core values: Credibility – Professionalism – Efficiency – Pioneering vision, improving service quality and supporting the growth of its clients and partners.</p><p data-i18n="home.jobs.note.p5">Happy Booth accompanied the celebration with a photobooth and custom photo frames featuring NOTE GROUP’s new identity. Every instant print gave guests a keepsake from this milestone.</p><p data-i18n="home.jobs.note.p6">Look back at the moments from the ceremony and join NOTE GROUP in continuing its journey of BUILDING THE FUTURE!</p>
+            </div>
+            <div class="recent-job__album">
+              <h3 data-i18n="home.jobs.note.gallery">Moments from the event</h3>
+              <p class="recent-job__album-hint" data-i18n="home.jobs.note.galleryHint">Select a photo to view it larger.</p>
+              <div class="recent-job__gallery">
+              <button class="recent-job__photo" type="button" aria-label="Khách mời chụp ảnh tại photobooth Happy Booth trong sự kiện NOTE GROUP" data-full="assets/images/jobs/note-group/photobooth.webp">
+                <img src="assets/images/jobs/note-group/photobooth-thumb.webp" width="1600" height="1200" loading="lazy" alt="Khách mời chụp ảnh tại photobooth Happy Booth trong sự kiện NOTE GROUP">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Giới thiệu nhận diện thương hiệu mới của NOTE GROUP tại buổi lễ" data-full="assets/images/jobs/note-group/brand-launch.webp">
+                <img src="assets/images/jobs/note-group/brand-launch-thumb.webp" width="1600" height="1066" loading="lazy" alt="Giới thiệu nhận diện thương hiệu mới của NOTE GROUP tại buổi lễ">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Khoảnh khắc chúc mừng tại lễ ra mắt nhận diện thương hiệu NOTE GROUP" data-full="assets/images/jobs/note-group/celebration.webp">
+                <img src="assets/images/jobs/note-group/celebration-thumb.webp" width="1600" height="1066" loading="lazy" alt="Khoảnh khắc chúc mừng tại lễ ra mắt nhận diện thương hiệu NOTE GROUP">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Khách mời xem những tấm ảnh in lấy liền tại sự kiện" data-full="assets/images/jobs/note-group/printed-memories.webp">
+                <img src="assets/images/jobs/note-group/printed-memories-thumb.webp" width="1350" height="1800" loading="lazy" alt="Khách mời xem những tấm ảnh in lấy liền tại sự kiện">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Máy Happy Booth và góc chụp ảnh tại lễ ra mắt NOTE GROUP" data-full="assets/images/jobs/note-group/booth-setup.webp">
+                <img src="assets/images/jobs/note-group/booth-setup-thumb.webp" width="1099" height="1800" loading="lazy" alt="Máy Happy Booth và góc chụp ảnh tại lễ ra mắt NOTE GROUP">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Khách mời cầm ảnh in và phụ kiện mang nhận diện NOTE GROUP" data-full="assets/images/jobs/note-group/guests.webp">
+                <img src="assets/images/jobs/note-group/guests-thumb.webp" width="1350" height="1800" loading="lazy" alt="Khách mời cầm ảnh in và phụ kiện mang nhận diện NOTE GROUP">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Ảnh in tập thể NOTE GROUP với khung Diện mạo mới, Kiến tạo tương lai ngày 02/10/2026" data-full="assets/images/jobs/note-group/group-print.webp">
+                <img src="assets/images/jobs/note-group/group-print-thumb.webp" width="1200" height="1800" loading="lazy" alt="Ảnh in tập thể NOTE GROUP với khung Diện mạo mới, Kiến tạo tương lai ngày 02/10/2026">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Ảnh in nhóm khách mời với khung ảnh riêng của NOTE GROUP" data-full="assets/images/jobs/note-group/guest-print.webp">
+                <img src="assets/images/jobs/note-group/guest-print-thumb.webp" width="1200" height="1800" loading="lazy" alt="Ảnh in nhóm khách mời với khung ảnh riêng của NOTE GROUP">
+              </button>
+              <button class="recent-job__photo" type="button" aria-label="Dải ảnh in lấy liền mang màu sắc và logo NOTE GROUP" data-full="assets/images/jobs/note-group/photo-strips.webp">
+                <img src="assets/images/jobs/note-group/photo-strips-thumb.webp" width="1200" height="1800" loading="lazy" alt="Dải ảnh in lấy liền mang màu sắc và logo NOTE GROUP">
+              </button>
+              </div>
+            </div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- Event videos — one collection, without category filters. -->
   <section class="home-section" id="video">
     <div class="wrap">
       <div class="section-head">
         <h2 data-i18n="home.video.title">Real videos</h2>
-        <p data-i18n="home.video.text">Filmed at real parties: guests strike a pose, the printer slides out the photo, everyone leaves with one. Pick a party type to watch.</p>
-      </div>
-      <div class="video-tabs" role="group" aria-label="Party type">
-        <button class="video-tabs__tab" type="button" aria-pressed="true" data-video="wedding" data-src="assets/videos/showreel.mp4" data-poster="assets/videos/showreel.jpg" data-i18n="home.video.tab.wedding">Weddings</button>
-        <button class="video-tabs__tab" type="button" aria-pressed="false" data-video="birthday" data-src="assets/videos/reel-3.mp4" data-poster="assets/videos/reel-3.jpg" data-i18n="home.video.tab.birthday">Birthdays</button>
-        <button class="video-tabs__tab" type="button" aria-pressed="false" data-video="corporate" data-src="assets/videos/reel-1.mp4" data-poster="assets/videos/reel-1.jpg" data-i18n="home.video.tab.corporate">Corporate</button>
-        <button class="video-tabs__tab" type="button" aria-pressed="false" data-video="mirror" data-src="assets/videos/reel-2.mp4" data-poster="assets/videos/reel-2.jpg" data-i18n="home.video.tab.mirror">Mirror &amp; 360</button>
+        <p data-i18n="home.video.text">Explore the Happy Booth experience through moments from our events, from the photobooth setup to the connections it creates between guests.</p>
       </div>
       <div class="video-screen">
         <img class="video-screen__bg" src="assets/videos/showreel.jpg" alt="" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="assets/videos/showreel.jpg" aria-label="Video thực tế từ Happy Booth"><source src="assets/videos/showreel.mp4" type="video/mp4"></video>
+        <video controls autoplay muted loop playsinline preload="metadata" poster="assets/videos/showreel.jpg" aria-label="Video tổng hợp trải nghiệm Happy Booth"><source src="assets/videos/showreel.mp4" type="video/mp4"></video>
       </div>
-      <div class="video-screen__foot">
-        <div aria-live="polite">
-          <p class="video-screen__cap" data-cap="wedding" data-i18n="home.video.cap.wedding">Every wedding gets its own frame, printed with the couple's names and wedding date.</p>
-          <p class="video-screen__cap" data-cap="birthday" data-i18n="home.video.cap.birthday" hidden>The whole group squeezes into one shot, and everyone takes a print home.</p>
-          <p class="video-screen__cap" data-cap="corporate" data-i18n="home.video.cap.corporate" hidden>Setup, test run, printing: two Happy Booth staff take care of all of it.</p>
-          <p class="video-screen__cap" data-cap="mirror" data-i18n="home.video.cap.mirror" hidden>Mirror booth and 360 video booth come with our premium packages.</p>
-        </div>
-        <a class="text-link" href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener" data-i18n="home.video.tiktok">Watch our TikTok @happybooth.vn</a>
+      <p class="video-screen__foot" data-i18n="home.video.caption">A look at Happy Booth in action: a dedicated photo space, custom frames and on-site guest support.</p>
+      <div class="reels__list">
+        <figure class="reel"><video controls autoplay muted loop playsinline preload="metadata" poster="assets/videos/reel-1.jpg" aria-label="Không gian photobooth tại sự kiện"><source src="assets/videos/reel-1.mp4" type="video/mp4"></video><figcaption data-i18n="home.reels.cap1">The photobooth experience at an event</figcaption></figure>
+        <figure class="reel"><video controls autoplay muted loop playsinline preload="metadata" poster="assets/videos/reel-2.jpg" aria-label="Khoảnh khắc kết nối của khách mời"><source src="assets/videos/reel-2.mp4" type="video/mp4"></video><figcaption data-i18n="home.reels.cap2">Moments that bring guests together</figcaption></figure>
+        <figure class="reel"><video controls autoplay muted loop playsinline preload="metadata" poster="assets/videos/reel-3.jpg" aria-label="Trải nghiệm chụp ảnh cùng Happy Booth"><source src="assets/videos/reel-3.mp4" type="video/mp4"></video><figcaption data-i18n="home.reels.cap3">Capturing memories with Happy Booth</figcaption></figure>
       </div>
-      <div class="reels">
-        <div class="reels__intro">
-          <h3 data-i18n="home.reels.title">Short clips from TikTok</h3>
-          <p data-i18n="home.reels.text">We film a few short clips at every party so you can see what it really feels like.</p>
-          <a class="text-link" href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener" data-i18n="home.reels.follow">Follow @happybooth.vn</a>
-        </div>
-        <div class="reels__list">
-          <figure class="reel"><video autoplay muted loop playsinline preload="metadata" poster="assets/videos/reel-1.jpg"><source src="assets/videos/reel-1.mp4" type="video/mp4"></video><figcaption data-i18n="home.reels.cap1">Booth barely set up and guests are already in</figcaption></figure>
-          <figure class="reel"><video autoplay muted loop playsinline preload="metadata" poster="assets/videos/reel-2.jpg"><source src="assets/videos/reel-2.mp4" type="video/mp4"></video><figcaption data-i18n="home.reels.cap2">Both families in one frame</figcaption></figure>
-          <figure class="reel"><video autoplay muted loop playsinline preload="metadata" poster="assets/videos/reel-3.jpg"><source src="assets/videos/reel-3.mp4" type="video/mp4"></video><figcaption data-i18n="home.reels.cap3">The bridesmaids at a garden wedding</figcaption></figure>
-        </div>
-      </div>
+      <div class="home-more"><a class="text-link" href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener" data-i18n="home.video.tiktok">Watch more on TikTok @happybooth.vn</a></div>
     </div>
   </section>
 

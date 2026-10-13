@@ -5,6 +5,7 @@
 
 var _scrollObserver = null;
 var _carouselInterval = null;
+var _heroMessageCleanup = null;
 var _lightboxImages = [];
 var _lightboxIndex = 0;
 
@@ -28,10 +29,12 @@ window.HB = {
 
 function reinitPage() {
   initScrollAnimations();
+  initHeroMessages();
   initPhotoWall();
-  initVideoTabs();
   initAutoplayVideos();
+  initRecentJobs();
   initLightbox();
+  initFrameGallery();
   initMasonryColumns();
   initPortfolioLoadMore();
   initFAQ();
@@ -41,6 +44,10 @@ function reinitPage() {
 }
 
 function cleanup() {
+  if (_heroMessageCleanup) {
+    _heroMessageCleanup();
+    _heroMessageCleanup = null;
+  }
   // Clean up carousel interval
   if (_carouselInterval) {
     clearInterval(_carouselInterval);
@@ -148,59 +155,96 @@ function initScrollAnimations() {
 }
 
 /* ----------------------------------------
-   Home — live photo wall
-   Each track is duplicated once so the CSS loop (translate -50%) is seamless.
-   dataset.cloned survives the router's outerHTML snapshot, so a restored
-   page is not cloned twice; the click binding is a JS property so it is
-   re-attached to every fresh DOM.
+   Home — synchronized messages and photo walls
    ---------------------------------------- */
-function initPhotoWall() {
-  var wall = document.querySelector('.wall');
-  if (!wall) return;
+function initHeroMessages() {
+  if (_heroMessageCleanup) {
+    _heroMessageCleanup();
+    _heroMessageCleanup = null;
+  }
+  var hero = document.querySelector('.home-hero__copy');
+  if (!hero) return;
+  var buttons = Array.from(hero.querySelectorAll('[data-hero-target]'));
+  var messages = Array.from(hero.querySelectorAll('[data-hero-message]'));
+  var walls = Array.from(document.querySelectorAll('[data-hero-wall]'));
+  var pause = hero.querySelector('[data-hero-pause]');
+  if (buttons.length < 2 || !pause) return;
+  var active = Math.max(0, buttons.findIndex(function (button) {
+    return button.getAttribute('aria-pressed') === 'true';
+  }));
+  var paused = pause.getAttribute('aria-pressed') === 'true' || prefersReducedMotion();
+  var hovered = false;
 
-  wall.querySelectorAll('.wall__track').forEach(function (track) {
-    if (track.dataset.cloned) return;
-    track.dataset.cloned = '1';
-    Array.prototype.slice.call(track.children).forEach(function (node) {
-      var copy = node.cloneNode(true);
-      copy.setAttribute('aria-hidden', 'true');
-      copy.querySelectorAll('img').forEach(function (img) { img.alt = ''; });
-      track.appendChild(copy);
+  function show(index) {
+    active = index;
+    var target = buttons[index].dataset.heroTarget;
+    messages.forEach(function (message) {
+      message.setAttribute('aria-hidden', String(message.dataset.heroMessage !== target));
     });
-  });
-
-  var pause = wall.querySelector('.wall__pause');
-  if (!pause || pause._hbBound) return;
-  pause._hbBound = true;
-  pause.addEventListener('click', function () {
-    var paused = wall.classList.toggle('is-paused');
-    pause.setAttribute('aria-pressed', paused);
-    var key = paused ? 'home.wall.resume' : 'home.wall.pause';
+    buttons.forEach(function (button, i) {
+      button.setAttribute('aria-pressed', String(i === index));
+    });
+    walls.forEach(function (wall) {
+      wall.hidden = wall.dataset.heroWall !== target;
+    });
+  }
+  function setPaused(value) {
+    paused = value;
+    var key = paused ? 'home.hero.resume' : 'home.hero.pause';
+    pause.setAttribute('aria-pressed', String(paused));
     pause.setAttribute('data-i18n', key);
     pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Play' : 'Pause');
-  });
+  }
+  function click(e) {
+    var button = e.target.closest('[data-hero-target]');
+    if (button && hero.contains(button)) {
+      show(buttons.indexOf(button));
+      setPaused(true);
+    } else if (e.target.closest('[data-hero-pause]')) {
+      setPaused(!paused);
+    }
+  }
+  function enter() { hovered = true; }
+  function leave() { hovered = false; }
+  hero.addEventListener('click', click);
+  hero.addEventListener('pointerenter', enter);
+  hero.addEventListener('pointerleave', leave);
+  show(active);
+  setPaused(paused);
+  var interval = setInterval(function () {
+    if (paused || hovered || document.hidden || hero.contains(document.activeElement)) return;
+    show((active + 1) % buttons.length);
+  }, 8000);
+  _heroMessageCleanup = function () {
+    clearInterval(interval);
+    hero.removeEventListener('click', click);
+    hero.removeEventListener('pointerenter', enter);
+    hero.removeEventListener('pointerleave', leave);
+  };
 }
 
-/* ----------------------------------------
-   Home — video tabs (swap the big player by party type)
-   ---------------------------------------- */
-function initVideoTabs() {
-  var tabs = document.querySelectorAll('.video-tabs__tab');
-  if (!tabs.length) return;
-  var screen = document.querySelector('.video-screen');
-  var video = screen.querySelector('video');
-  var bg = screen.querySelector('.video-screen__bg');
-  var caps = document.querySelectorAll('.video-screen__cap');
-
-  tabs.forEach(function (tab) {
-    if (tab._hbBound) return;
-    tab._hbBound = true;
-    tab.addEventListener('click', function () {
-      tabs.forEach(function (t) { t.setAttribute('aria-pressed', t === tab); });
-      caps.forEach(function (c) { c.hidden = c.dataset.cap !== tab.dataset.video; });
-      video.poster = bg.src = tab.dataset.poster;
-      video.src = tab.dataset.src;
-      if (!prefersReducedMotion()) video.play().catch(function () {});
+// Clone each track only once; data-cloned survives the router's DOM snapshots.
+function initPhotoWall() {
+  document.querySelectorAll('.wall').forEach(function (wall) {
+    wall.querySelectorAll('.wall__track').forEach(function (track) {
+      if (track.dataset.cloned) return;
+      track.dataset.cloned = '1';
+      Array.prototype.slice.call(track.children).forEach(function (node) {
+        var copy = node.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        copy.querySelectorAll('img').forEach(function (img) { img.alt = ''; });
+        track.appendChild(copy);
+      });
+    });
+    var pause = wall.querySelector('.wall__pause');
+    if (!pause || pause._hbBound) return;
+    pause._hbBound = true;
+    pause.addEventListener('click', function () {
+      var paused = wall.classList.toggle('is-paused');
+      pause.setAttribute('aria-pressed', paused);
+      var key = paused ? 'home.wall.resume' : 'home.wall.pause';
+      pause.setAttribute('data-i18n', key);
+      pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Play' : 'Pause');
     });
   });
 }
@@ -229,9 +273,57 @@ function initAutoplayVideos() {
 }
 
 /* ----------------------------------------
+   Completed jobs — newest first, up to three
+   ---------------------------------------- */
+function initRecentJobs() {
+  var list = document.querySelector('[data-recent-jobs]');
+  if (!list) return;
+  var jobs = Array.from(list.querySelectorAll('.recent-job'));
+  jobs.sort(function (a, b) {
+    return (b.dataset.jobDate || '').localeCompare(a.dataset.jobDate || '');
+  });
+  jobs.forEach(function (job, index) {
+    job.hidden = index >= 3;
+    list.appendChild(job);
+  });
+  list.dataset.jobCount = String(Math.min(jobs.length, 3));
+  list.closest('.recent-jobs').hidden = jobs.length === 0;
+}
+
+/* ----------------------------------------
    Lightbox
    ---------------------------------------- */
-function getVisibleGalleryItems() {
+function initFrameGallery() {
+  var gallery = document.querySelector('[data-frame-gallery]');
+  if (!gallery) return;
+  var dialog = gallery.querySelector('.frame-modal');
+  if (!dialog || gallery._hbFrameBound) return;
+  gallery._hbFrameBound = true;
+  // A cached SPA snapshot may contain the dialog's old open attribute.
+  if (dialog.open) dialog.close();
+  gallery.addEventListener('click', function (e) {
+    var preview = e.target.closest('[data-frame-preview]');
+    if (!preview || !gallery.contains(preview)) return;
+    var card = preview.closest('.frame-card');
+    var image = preview.querySelector('img');
+    var modalImage = dialog.querySelector('.frame-modal__image');
+    modalImage.src = preview.dataset.framePreview;
+    modalImage.alt = image.alt;
+    dialog.querySelector('.frame-modal__title').textContent = card.querySelector('h2').textContent;
+    dialog.querySelector('.frame-modal__source').href = card.querySelector('.frame-card__source').href;
+    dialog.showModal();
+  });
+  dialog.querySelector('[data-frame-close]').addEventListener('click', function () { dialog.close(); });
+  dialog.addEventListener('click', function (e) {
+    if (e.target === dialog) dialog.close();
+  });
+}
+
+function getVisibleGalleryItems(origin) {
+  var job = origin && origin.closest('.recent-job');
+  if (job) {
+    return Array.from(job.querySelectorAll('.recent-job__gallery .recent-job__photo'));
+  }
   return Array.from(document.querySelectorAll('.gallery__item:not(.gallery__item--hidden), .masonry__item'));
 }
 
@@ -244,29 +336,43 @@ function initLightbox() {
   var lightboxPrev = lightbox.querySelector('.lightbox__prev');
   var lightboxNext = lightbox.querySelector('.lightbox__next');
   var lightboxCounter = lightbox.querySelector('.lightbox__counter');
+  var returnFocus = null;
+  var previousOverflow = '';
+  var lightboxAlts = [];
+  lightbox.setAttribute('role', 'dialog');
+  lightbox.setAttribute('aria-modal', 'true');
+  lightbox.setAttribute('aria-label', 'Photo viewer');
 
   function updateLightbox() {
     if (!_lightboxImages.length) return;
     lightboxImg.src = _lightboxImages[_lightboxIndex];
+    lightboxImg.alt = lightboxAlts[_lightboxIndex] || '';
     lightboxCounter.textContent = (_lightboxIndex + 1) + ' / ' + _lightboxImages.length;
   }
 
-  function openLightbox(index) {
-    var items = getVisibleGalleryItems();
+  function openLightbox(index, items, origin) {
     _lightboxImages = items.map(function (item) {
       var img = item.querySelector('img');
-      return img ? img.src : null;
+      return item.dataset.full || (img ? img.src : null);
     }).filter(Boolean);
+    lightboxAlts = items.map(function (item) {
+      var img = item.querySelector('img');
+      return img ? img.alt : '';
+    });
     if (!_lightboxImages.length) return;
     _lightboxIndex = Math.max(0, Math.min(index, _lightboxImages.length - 1));
     updateLightbox();
     lightbox.classList.add('active');
+    returnFocus = origin || document.activeElement;
+    previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    lightbox.querySelector('.lightbox__close').focus();
   }
 
   function closeLightbox() {
     lightbox.classList.remove('active');
-    document.body.style.overflow = '';
+    document.body.style.overflow = previousOverflow;
+    if (returnFocus && returnFocus.isConnected) returnFocus.focus();
   }
 
   function prevImage() {
@@ -281,14 +387,23 @@ function initLightbox() {
     updateLightbox();
   }
 
-  // Delegated click — bind once on the persistent lightbox element so it survives SPA navigation
-  if (!lightbox._galleryClickHandler) {
+  // Refresh delegated handlers after an SPA swap to keep focus state in sync.
+  if (lightbox._galleryClickHandler) {
+    document.removeEventListener('click', lightbox._galleryClickHandler);
+  }
+  {
     lightbox._galleryClickHandler = function (e) {
-      var item = e.target.closest('.gallery__item, .masonry__item');
+      var item = e.target.closest('.gallery__item, .masonry__item, .recent-job__photo');
       if (!item || item.classList.contains('gallery__item--hidden')) return;
-      var items = getVisibleGalleryItems();
+      var items = getVisibleGalleryItems(item);
+      // The cover also appears as the first photo in each job's album.
+      if (item.classList.contains('recent-job__cover')) {
+        var coverIndex = items.findIndex(function (photo) { return photo.dataset.full === item.dataset.full; });
+        if (coverIndex >= 0) openLightbox(coverIndex, items, item);
+        return;
+      }
       var idx = items.indexOf(item);
-      if (idx >= 0) openLightbox(idx);
+      if (idx >= 0) openLightbox(idx, items, item);
     };
     document.addEventListener('click', lightbox._galleryClickHandler);
   }
@@ -310,13 +425,23 @@ function initLightbox() {
     if (e.target === lightbox) closeLightbox();
   };
 
-  if (!lightbox._keyHandler) {
+  if (lightbox._keyHandler) {
+    document.removeEventListener('keydown', lightbox._keyHandler);
+  }
+  {
     lightbox._keyHandler = function (e) {
       if (!lightbox.classList.contains('active')) return;
       switch (e.key) {
         case 'Escape': closeLightbox(); break;
         case 'ArrowLeft': prevImage(); break;
         case 'ArrowRight': nextImage(); break;
+        case 'Tab':
+          var controls = Array.from(lightbox.querySelectorAll('button'));
+          var first = controls[0];
+          var last = controls[controls.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          break;
       }
     };
     document.addEventListener('keydown', lightbox._keyHandler);

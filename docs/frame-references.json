@@ -1,0 +1,101 @@
+[
+  {
+    "id": "classic-monochrome",
+    "vi": "Đen trắng tối giản",
+    "en": "Classic monochrome",
+    "category": "wedding",
+    "format": "2 × 6",
+    "source": "https://www.etsy.com/listing/1322603355/minimalistic-simple-classic-2x6-photo",
+    "image": "https://i.etsystatic.com/37233701/r/il/311257/4287330777/il_1140xN.4287330777_el7v.jpg",
+    "width": 960,
+    "height": 768
+  },
+  {
+    "id": "pastel-strips",
+    "vi": "Pastel thanh lịch",
+    "en": "Elegant pastels",
+    "category": "wedding",
+    "format": "2 × 6",
+    "source": "https://www.etsy.com/listing/1591987582/minimalist-photo-strip-photo-booth",
+    "image": "https://i.etsystatic.com/48014473/r/il/a8956a/5482989870/il_570xN.5482989870_29ii.jpg",
+    "width": 570,
+    "height": 428
+  },
+  {
+    "id": "blue-floral",
+    "vi": "Hoa xanh lãng mạn",
+    "en": "Blue florals",
+    "category": "wedding",
+    "format": "2 × 6",
+    "source": "https://www.etsy.com/listing/1399103600/elegant-white-blue-rose-floral-wedding",
+    "image": "https://i.etsystatic.com/37524793/r/il/1350d7/4608824750/il_1140xN.4608824750_sxes.jpg",
+    "width": 960,
+    "height": 960
+  },
+  {
+    "id": "greenery",
+    "vi": "Sắc xanh thiên nhiên",
+    "en": "Botanical greenery",
+    "category": "wedding",
+    "format": "2 × 6",
+    "source": "https://www.etsy.com/listing/1795019583/green-floral-wedding-photobooth-template",
+    "image": "https://i.etsystatic.com/53822498/r/il/652e98/6275751328/il_794xN.6275751328_nd0c.jpg",
+    "width": 794,
+    "height": 666
+  },
+  {
+    "id": "sage-watercolor",
+    "vi": "Sage watercolor",
+    "en": "Sage watercolor",
+    "category": "wedding",
+    "format": "2 × 6 · 4 × 6",
+    "source": "https://www.etsy.com/listing/1685055685/minimalist-photo-booth-strip-canva",
+    "image": "https://i.etsystatic.com/43595236/r/il/4fbc41/5791415980/il_1080xN.5791415980_29ap.jpg",
+    "width": 960,
+    "height": 960
+  },
+  {
+    "id": "polaroid-layouts",
+    "vi": "Bố cục Polaroid",
+    "en": "Polaroid layouts",
+    "category": "wedding",
+    "format": "Nhiều bố cục",
+    "source": "https://www.etsy.com/au/listing/4492557196/wedding-photo-booth-strip-template",
+    "image": "https://i.etsystatic.com/62441660/r/il/171c87/7986101147/il_1080xN.7986101147_cuad.jpg",
+    "width": 960,
+    "height": 960
+  },
+  {
+    "id": "navy-gold",
+    "vi": "Navy & gold",
+    "en": "Navy & gold",
+    "category": "business",
+    "format": "2 × 6",
+    "source": "https://www.etsy.com/listing/1636634081/navy-blue-gold-watercolor-photobooth",
+    "image": "https://i.etsystatic.com/48249983/r/il/f45ec2/5647249609/il_1140xN.5647249609_1690.jpg",
+    "width": 960,
+    "height": 960
+  },
+  {
+    "id": "staff-gathering",
+    "vi": "Gala doanh nghiệp",
+    "en": "Corporate gala",
+    "category": "business",
+    "format": "Ảnh dọc",
+    "source": "https://www.photocorner.id/id/template-premium-1/regal-blue-and-gold-event-photobooth-template?pgid=lxsrkf8k-6a7352_4dfec7e2abf84e4c860a20e3b933cb48mv2.jpg",
+    "image": "https://static.wixstatic.com/media/6a7352_4dfec7e2abf84e4c860a20e3b933cb48~mv2.jpg/v1/fit/w_600%2Ch_1292%2Cq_90/6a7352_4dfec7e2abf84e4c860a20e3b933cb48~mv2.jpg",
+    "width": 320,
+    "height": 960
+  },
+  {
+    "id": "golden-gala",
+    "vi": "Đen vàng sang trọng",
+    "en": "Black & gold gala",
+    "category": "business",
+    "format": "2 × 6",
+    "source": "https://www.etsy.com/listing/4424632922/holiday-gala-photobooth-template-2x6",
+    "image": "https://i.etsystatic.com/60498100/r/il/154ad3/7557707223/il_794xN.7557707223_j5wv.jpg",
+    "width": 794,
+    "height": 794
+  }
+]
