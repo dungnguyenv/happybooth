@@ -105,7 +105,7 @@ function initFloatingContact() {
   var wrap = document.createElement('div');
   wrap.className = 'floating-contact';
   wrap.innerHTML =
-    '<a href="tel:0971842329" class="floating-contact__btn floating-contact__btn--phone" aria-label="Phone 0971842329">' + phoneIcon + '</a>' +
+    '<a href="tel:0971842329" class="floating-contact__btn floating-contact__btn--phone" aria-label="Gọi 0971842329" data-i18n-aria-label="common.a11y.callPhone">' + phoneIcon + '</a>' +
     '<a href="https://zalo.me/971842329" target="_blank" rel="noopener" class="floating-contact__btn floating-contact__btn--zalo" aria-label="Zalo">' + zaloIcon + '</a>' +
     '<a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener" class="floating-contact__btn floating-contact__btn--facebook" aria-label="Facebook">' + fbIcon + '</a>';
 
@@ -139,6 +139,11 @@ function initScrollAnimations() {
     _scrollObserver.disconnect();
   }
 
+  if (!window.IntersectionObserver || prefersReducedMotion()) {
+    elements.forEach(function (el) { el.classList.add('visible'); });
+    return;
+  }
+
   _scrollObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -151,7 +156,10 @@ function initScrollAnimations() {
     rootMargin: '0px 0px -50px 0px'
   });
 
-  elements.forEach(function (el) { _scrollObserver.observe(el); });
+  elements.forEach(function (el) {
+    el.classList.add('hb-animate');
+    _scrollObserver.observe(el);
+  });
 }
 
 /* ----------------------------------------
@@ -193,7 +201,7 @@ function initHeroMessages() {
     var key = paused ? 'home.hero.resume' : 'home.hero.pause';
     pause.setAttribute('aria-pressed', String(paused));
     pause.setAttribute('data-i18n', key);
-    pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Play' : 'Pause');
+    pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Chạy tiếp' : 'Tạm dừng');
   }
   function click(e) {
     var button = e.target.closest('[data-hero-target]');
@@ -244,7 +252,7 @@ function initPhotoWall() {
       pause.setAttribute('aria-pressed', paused);
       var key = paused ? 'home.wall.resume' : 'home.wall.pause';
       pause.setAttribute('data-i18n', key);
-      pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Play' : 'Pause');
+      pause.textContent = (window.i18n && window.i18n.t(key)) || (paused ? 'Chạy tiếp' : 'Tạm dừng');
     });
   });
 }
@@ -320,6 +328,8 @@ function initFrameGallery() {
 }
 
 function getVisibleGalleryItems(origin) {
+  var album = origin && origin.closest('[data-project-album]');
+  if (album) return Array.from(album.querySelectorAll('.recent-job__photo'));
   var job = origin && origin.closest('.recent-job');
   if (job) {
     return Array.from(job.querySelectorAll('.recent-job__gallery .recent-job__photo'));
@@ -329,7 +339,12 @@ function getVisibleGalleryItems(origin) {
 
 function initLightbox() {
   var lightbox = document.getElementById('lightbox');
-  if (!lightbox) return;
+  // Public pages share this permanent viewer, including when navigation starts
+  // on a page that has no gallery of its own.
+  if (!lightbox) {
+    document.body.insertAdjacentHTML('beforeend', '<div class="lightbox" id="lightbox"><button class="lightbox__close" aria-label="Đóng ảnh" data-i18n-aria-label="common.a11y.closePhoto">&times;</button><button class="lightbox__nav lightbox__prev" aria-label="Ảnh trước" data-i18n-aria-label="common.a11y.previousPhoto">&#8249;</button><img class="lightbox__image" alt=""><button class="lightbox__nav lightbox__next" aria-label="Ảnh tiếp theo" data-i18n-aria-label="common.a11y.nextPhoto">&#8250;</button><div class="lightbox__counter"></div></div>');
+    lightbox = document.getElementById('lightbox');
+  }
 
   var lightboxImg = lightbox.querySelector('.lightbox__image');
   var lightboxClose = lightbox.querySelector('.lightbox__close');
@@ -341,7 +356,9 @@ function initLightbox() {
   var lightboxAlts = [];
   lightbox.setAttribute('role', 'dialog');
   lightbox.setAttribute('aria-modal', 'true');
-  lightbox.setAttribute('aria-label', 'Photo viewer');
+  lightbox.setAttribute('data-i18n-aria-label', 'common.a11y.photoViewer');
+  lightbox.setAttribute('aria-label', (window.i18n && window.i18n.t('common.a11y.photoViewer')) || 'Trình xem ảnh');
+  if (window.i18n) window.i18n.apply(lightbox);
 
   function updateLightbox() {
     if (!_lightboxImages.length) return;

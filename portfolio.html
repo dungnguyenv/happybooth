@@ -27,7 +27,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>if(localStorage.getItem('hb-lang')!=='en'){document.documentElement.classList.add('i18n-loading')}</script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
@@ -40,13 +39,13 @@
         <img src="assets/SVG/Logo_web.svg" alt="" class="header__logo-img" width="36" height="36">
         <span>Happy Booth</span>
       </a>
-      <nav class="header__nav" aria-label="Main">
-        <a href="index.html" data-i18n="common.nav.home">Home</a>
-        <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Portfolio</a>
-        <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-        <a href="price.html" data-i18n="common.nav.price">Price</a>
-        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+      <nav class="header__nav" aria-label="Điều hướng chính" data-i18n-aria-label="common.a11y.mainNav">
+        <a href="index.html" data-i18n="common.nav.home">Trang chủ</a>
+        <a href="about.html" data-i18n="common.nav.about">Dự án</a>
+        <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Bộ sưu tập</a>
+        <a href="frame.html" data-i18n="common.nav.frame">Khung ảnh</a>
+        <a href="price.html" data-i18n="common.nav.price">Bảng giá</a>
+        <a href="contact.html" data-i18n="common.nav.contact">Liên hệ</a>
       </nav>
       <div class="header__actions">
         <span class="header__social">
@@ -63,10 +62,10 @@
           <button class="lang-toggle__btn" data-lang="en">EN</button>
         </span>
         <a class="header__tel" href="tel:+84971842329">0971 842 329</a>
-        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Get a quote</a>
+        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Nhận báo giá</a>
       </div>
-      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Call hotline</a>
-      <button class="hamburger" aria-label="Toggle menu">
+      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Gọi hotline</a>
+      <button class="hamburger" aria-label="Mở hoặc đóng menu" data-i18n-aria-label="common.a11y.toggleMenu">
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
@@ -76,15 +75,15 @@
 
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
-    <a href="index.html" data-i18n="common.nav.home">Home</a>
-    <a href="about.html" data-i18n="common.nav.about">About</a>
-    <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Portfolio</a>
-    <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-    <a href="price.html" data-i18n="common.nav.price">Price</a>
-    <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+    <a href="index.html" data-i18n="common.nav.home">Trang chủ</a>
+    <a href="about.html" data-i18n="common.nav.about">Dự án</a>
+    <a href="portfolio.html" class="active" data-i18n="common.nav.portfolio">Bộ sưu tập</a>
+    <a href="frame.html" data-i18n="common.nav.frame">Khung ảnh</a>
+    <a href="price.html" data-i18n="common.nav.price">Bảng giá</a>
+    <a href="contact.html" data-i18n="common.nav.contact">Liên hệ</a>
     <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
-    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Call 0971 842 329</a>
+    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Gọi 0971 842 329</a>
     <span class="lang-toggle lang-toggle--mobile">
       <button class="lang-toggle__btn active" data-lang="vi">VI</button>
       <span class="lang-toggle__divider">|</span>
@@ -92,12 +91,12 @@
     </span>
   </nav>
 
-  <main id="page-content" data-page="portfolio" data-title="Portfolio — Happy Booth — Photobooth Event" class="page-enter">
+  <main id="page-content" data-page="portfolio" data-title="Portfolio Photobooth Hà Nội — Happy Booth | Đám cưới, Sinh nhật, Sự kiện">
 
   <!-- Page Header -->
   <section class="page-header">
-    <h1 class="fade-in" data-i18n="portfolio.title">Portfolio</h1>
-    <p class="fade-in" data-i18n="portfolio.description">Real prints from parties Happy Booth has worked at: weddings, birthdays, company and school events. Click any photo to see it larger.</p>
+    <h1 class="fade-in" data-i18n="portfolio.title">Bộ sưu tập</h1>
+    <p class="fade-in" data-i18n="portfolio.description">Ảnh in thật từ các tiệc Happy Booth đã phục vụ: đám cưới, sinh nhật, sự kiện công ty và trường học. Bấm vào ảnh bất kỳ để xem lớn hơn.</p>
   </section>
 
   <!-- Portfolio Gallery -->
@@ -215,7 +214,7 @@
       <div class="gallery__item gallery__item--hidden fade-in"><img src="assets/images/portfolio/1.jpg" alt="Happy Booth portfolio" loading="lazy"></div>
     </div>
     <div class="gallery__more fade-in">
-      <button type="button" class="btn gallery__load-more" data-i18n="portfolio.loadMore">Load more photos</button>
+      <button type="button" class="btn gallery__load-more" data-i18n="portfolio.loadMore">Xem thêm ảnh</button>
     </div>
   </section>
 
@@ -244,10 +243,10 @@
 
   <!-- CTA -->
   <section class="cta section fade-in">
-    <p data-i18n="portfolio.cta.text">Like a style you see here? Send it to us and we will design a frame just for your party.</p>
+    <p data-i18n="portfolio.cta.text">Thích phong cách nào, bạn cứ gửi ảnh cho chúng tôi. Khung ảnh cho tiệc của bạn sẽ được thiết kế riêng.</p>
     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-      <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Get In Touch</a>
-      <a href="frame.html" class="btn" data-i18n="portfolio.cta.seeGalleries">See frame designs</a>
+      <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Liên hệ ngay</a>
+      <a href="frame.html" class="btn" data-i18n="portfolio.cta.seeGalleries">Xem mẫu khung ảnh</a>
     </div>
   </section>
 
@@ -259,37 +258,37 @@
       <div class="footer__grid">
         <div>
           <a class="footer__brand" href="index.html"><img src="assets/SVG/Logo_web.svg" alt="" class="footer__logo-img" width="36" height="36">Happy Booth</a>
-          <p class="footer__tagline" data-i18n="common.footer.tagline">Instant-print photobooth rental in Hanoi.</p>
+          <p class="footer__tagline" data-i18n="common.footer.tagline">Cho thuê photobooth chụp ảnh lấy liền tại Hà Nội.</p>
         </div>
         <div>
-          <h3 class="footer__heading" data-i18n="common.footer.contact">Contact</h3>
+          <h3 class="footer__heading" data-i18n="common.footer.contact">Liên hệ</h3>
           <ul class="footer__list">
             <li><a href="tel:+84971842329">0971 842 329</a></li>
             <li><a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></li>
-            <li data-i18n="common.footer.hours">8:00–22:00 every day</li>
+            <li data-i18n="common.footer.hours">8:00–22:00 hằng ngày</li>
           </ul>
         </div>
         <div>
-          <h3 class="footer__heading" data-i18n="common.footer.follow">Follow us</h3>
+          <h3 class="footer__heading" data-i18n="common.footer.follow">Theo dõi</h3>
           <ul class="footer__list">
             <li><a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok @happybooth.vn</a></li>
             <li><a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">facebook.com/happyboothvn</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="footer__heading" data-i18n="common.footer.area">Service area</h3>
-          <p data-i18n="common.footer.areaText">Hanoi and the nearby provinces of Bac Ninh, Hung Yen, Hai Duong, Hai Phong and Vinh Phuc. We bring the booth and set it up on site.</p>
+          <h3 class="footer__heading" data-i18n="common.footer.area">Khu vực phục vụ</h3>
+          <p data-i18n="common.footer.areaText">Hà Nội và các tỉnh Bắc Ninh, Hưng Yên, Hải Dương, Hải Phòng, Vĩnh Phúc. Có hỗ trợ chở máy và lắp đặt tận nơi.</p>
         </div>
       </div>
       <div class="footer__base">
-        <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2026 Happy Booth. Photobooth Event.</p>
-        <nav class="footer__nav" aria-label="Footer">
-          <a href="index.html" data-i18n="common.nav.home">Home</a>
-          <a href="about.html" data-i18n="common.nav.about">About</a>
-          <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-          <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-          <a href="price.html" data-i18n="common.nav.price">Price</a>
-          <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        <p class="footer__copyright" data-i18n="common.footer.copyright">© 2026 Happy Booth. Photobooth Event.</p>
+        <nav class="footer__nav" aria-label="Điều hướng cuối trang" data-i18n-aria-label="common.a11y.footerNav">
+          <a href="index.html" data-i18n="common.nav.home">Trang chủ</a>
+          <a href="about.html" data-i18n="common.nav.about">Dự án</a>
+          <a href="portfolio.html" data-i18n="common.nav.portfolio">Bộ sưu tập</a>
+          <a href="frame.html" data-i18n="common.nav.frame">Khung ảnh</a>
+          <a href="price.html" data-i18n="common.nav.price">Bảng giá</a>
+          <a href="contact.html" data-i18n="common.nav.contact">Liên hệ</a>
         </nav>
       </div>
     </div>
@@ -297,10 +296,10 @@
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
-    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
-    <button class="lightbox__nav lightbox__prev" aria-label="Previous image">&#8249;</button>
+    <button class="lightbox__close" aria-label="Đóng ảnh" data-i18n-aria-label="common.a11y.closePhoto">&times;</button>
+    <button class="lightbox__nav lightbox__prev" aria-label="Ảnh trước" data-i18n-aria-label="common.a11y.previousPhoto">&#8249;</button>
     <img class="lightbox__image" src="" alt="">
-    <button class="lightbox__nav lightbox__next" aria-label="Next image">&#8250;</button>
+    <button class="lightbox__nav lightbox__next" aria-label="Ảnh tiếp theo" data-i18n-aria-label="common.a11y.nextPhoto">&#8250;</button>
     <div class="lightbox__counter"></div>
   </div>
 

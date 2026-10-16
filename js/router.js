@@ -7,6 +7,24 @@
   var TRANSITION_MS = 400;
   var pageCache = {};
   var currentPage = null;
+  var navigationId = 0;
+  var seoSelector = 'meta[name="description"], meta[name="keywords"], meta[name="author"], meta[name="robots"], meta[name="googlebot"], meta[property^="og:"], meta[property^="article:"], meta[name^="twitter:"], link[rel="canonical"], script[type="application/ld+json"]';
+
+  function snapshot(doc, main) {
+    return {
+      html: main.outerHTML,
+      title: doc.title,
+      seo: Array.from(doc.head.querySelectorAll(seoSelector)).map(function (node) {
+        return node.outerHTML;
+      }).join('\n')
+    };
+  }
+
+  function syncSEO(page) {
+    document.head.querySelectorAll(seoSelector).forEach(function (node) { node.remove(); });
+    document.head.insertAdjacentHTML('beforeend', page.seo);
+    document.title = page.title;
+  }
 
   function init() {
     var main = document.getElementById('page-content');
@@ -15,7 +33,7 @@
       // Cache before animations add .visible classes
       var href = pageToHref(currentPage);
       if (href) {
-        pageCache[href] = main.outerHTML;
+        pageCache[href] = snapshot(document, main);
       }
 
       // Auth guard for direct page load
@@ -29,11 +47,7 @@
         });
       }
 
-      // Content starts hidden (class="page-enter" in HTML).
-      // Remove class after short delay to trigger slide-up fade-in.
-      setTimeout(function () {
-        main.classList.remove('page-enter');
-      }, 80);
+      // Static HTML is already visible. Only SPA navigation adds page-enter.
     }
 
     interceptLinks();
@@ -45,7 +59,8 @@
     var map = {
       home: 'index.html', about: 'about.html', portfolio: 'portfolio.html',
       frame: 'frame.html', price: 'price.html',
-      contact: 'contact.html', login: 'login.html', admin: 'admin.html'
+      contact: 'contact.html', login: 'login.html', admin: 'admin.html',
+      'du-an-note-group': 'du-an-note-group.html'
     };
     return map[page] || null;
   }
@@ -85,12 +100,17 @@
   }
 
   async function navigateTo(href, pushState) {
+    var requestId = ++navigationId;
     var clean = href.split('/').pop() || 'index.html';
     var targetPage = hrefToPage(clean);
 
+    if (window.i18n && window.i18n.ready) await window.i18n.ready;
+    if (requestId !== navigationId) return;
+
     // Auth guard
-    if (window.auth) {
+    if (window.auth && (targetPage === 'admin' || targetPage === 'login')) {
       await window.auth.whenReady();
+      if (requestId !== navigationId) return;
       var guard = window.auth.guardRoute(targetPage);
       if (guard === 'redirect-login') { navigateTo('login.html', true); return; }
       if (guard === 'redirect-admin') { navigateTo('admin.html', true); return; }
@@ -116,7 +136,7 @@
     // before tearing it down, so the back-navigation cache is up-to-date.
     if (currentPage) {
       var currentHref = pageToHref(currentPage);
-      if (currentHref) pageCache[currentHref] = main.outerHTML;
+      if (currentHref) pageCache[currentHref] = snapshot(document, main);
     }
 
     // Cleanup before swap
@@ -129,17 +149,20 @@
 
     // Wait for transition
     await sleep(TRANSITION_MS);
+    if (requestId !== navigationId) return;
 
     // Fetch or use cache
-    var html = pageCache[clean];
-    if (!html) {
+    var page = pageCache[clean];
+    if (!page) {
       try {
         var resp = await fetch(clean);
+        if (requestId !== navigationId) return;
         if (!resp.ok) {
           window.location.href = clean;
           return;
         }
-        html = await resp.text();
+        var html = await resp.text();
+        if (requestId !== navigationId) return;
         // Extract <main> from full HTML
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
@@ -148,24 +171,22 @@
           window.location.href = clean;
           return;
         }
-        html = newMain.outerHTML;
-        pageCache[clean] = html;
+        page = snapshot(doc, newMain);
+        pageCache[clean] = page;
       } catch (err) {
+        if (requestId !== navigationId) return;
         window.location.href = clean;
         return;
       }
     }
 
     // Swap content
-    main.outerHTML = html;
+    main.outerHTML = page.html;
+    syncSEO(page);
 
     // Re-query the new main element
     var newMainEl = document.getElementById('page-content');
     currentPage = targetPage;
-
-    // Update page title
-    var title = newMainEl.getAttribute('data-title');
-    if (title) document.title = title;
 
     // Apply i18n translations instantly (already cached in memory)
     if (window.i18n && window.i18n.apply) {
@@ -173,7 +194,7 @@
     }
 
     // Update meta title for i18n
-    if (window.i18n && window.i18n.currentLang() !== 'en') {
+    if (window.i18n) {
       var titleKey = 'meta.title.' + targetPage;
       var translatedTitle = window.i18n.t(titleKey);
       if (translatedTitle) document.title = translatedTitle;
@@ -214,6 +235,7 @@
 
   function updateActiveNav(href) {
     var clean = href.split('/').pop() || 'index.html';
+    if (clean === 'du-an-note-group.html') clean = 'about.html';
     // Update desktop nav
     document.querySelectorAll('.header__nav a[href]').forEach(function (a) {
       var linkHref = a.getAttribute('href');
@@ -248,7 +270,8 @@
           var doc = parser.parseFromString(html, 'text/html');
           var main = doc.getElementById('page-content');
           if (main) {
-            pageCache[page] = main.outerHTML;
+            // Do not replace a more recent navigation snapshot with a late preload.
+            if (!pageCache[page]) pageCache[page] = snapshot(doc, main);
           }
         }).catch(function () {
           // Silently fail — will fallback to normal navigation
