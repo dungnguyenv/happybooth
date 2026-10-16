@@ -27,7 +27,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>if(localStorage.getItem('hb-lang')!=='en'){document.documentElement.classList.add('i18n-loading')}</script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
@@ -40,13 +39,13 @@
         <img src="assets/SVG/Logo_web.svg" alt="" class="header__logo-img" width="36" height="36">
         <span>Happy Booth</span>
       </a>
-      <nav class="header__nav" aria-label="Main">
-        <a href="index.html" data-i18n="common.nav.home">Home</a>
-        <a href="about.html" data-i18n="common.nav.about">About</a>
-        <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-        <a href="frame.html" class="active" data-i18n="common.nav.frame">Frame</a>
-        <a href="price.html" data-i18n="common.nav.price">Price</a>
-        <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+      <nav class="header__nav" aria-label="Điều hướng chính" data-i18n-aria-label="common.a11y.mainNav">
+        <a href="index.html" data-i18n="common.nav.home">Trang chủ</a>
+        <a href="about.html" data-i18n="common.nav.about">Dự án</a>
+        <a href="portfolio.html" data-i18n="common.nav.portfolio">Bộ sưu tập</a>
+        <a href="frame.html" class="active" data-i18n="common.nav.frame">Khung ảnh</a>
+        <a href="price.html" data-i18n="common.nav.price">Bảng giá</a>
+        <a href="contact.html" data-i18n="common.nav.contact">Liên hệ</a>
       </nav>
       <div class="header__actions">
         <span class="header__social">
@@ -63,10 +62,10 @@
           <button class="lang-toggle__btn" data-lang="en">EN</button>
         </span>
         <a class="header__tel" href="tel:+84971842329">0971 842 329</a>
-        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Get a quote</a>
+        <a class="btn btn--pink btn--sm" href="contact.html" data-i18n="common.cta.getQuote">Nhận báo giá</a>
       </div>
-      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Call hotline</a>
-      <button class="hamburger" aria-label="Toggle menu">
+      <a class="btn btn--pink btn--sm header__call" href="tel:+84971842329" data-i18n="common.cta.callHotline">Gọi hotline</a>
+      <button class="hamburger" aria-label="Mở hoặc đóng menu" data-i18n-aria-label="common.a11y.toggleMenu">
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
         <span class="hamburger__line"></span>
@@ -76,15 +75,15 @@
 
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
-    <a href="index.html" data-i18n="common.nav.home">Home</a>
-    <a href="about.html" data-i18n="common.nav.about">About</a>
-    <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-    <a href="frame.html" class="active" data-i18n="common.nav.frame">Frame</a>
-    <a href="price.html" data-i18n="common.nav.price">Price</a>
-    <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+    <a href="index.html" data-i18n="common.nav.home">Trang chủ</a>
+    <a href="about.html" data-i18n="common.nav.about">Dự án</a>
+    <a href="portfolio.html" data-i18n="common.nav.portfolio">Bộ sưu tập</a>
+    <a href="frame.html" class="active" data-i18n="common.nav.frame">Khung ảnh</a>
+    <a href="price.html" data-i18n="common.nav.price">Bảng giá</a>
+    <a href="contact.html" data-i18n="common.nav.contact">Liên hệ</a>
     <a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">Facebook</a>
-    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Call 0971 842 329</a>
+    <a class="btn btn--pink" href="tel:+84971842329" data-i18n="common.cta.callNumber">Gọi 0971 842 329</a>
     <span class="lang-toggle lang-toggle--mobile">
       <button class="lang-toggle__btn active" data-lang="vi">VI</button>
       <span class="lang-toggle__divider">|</span>
@@ -92,27 +91,27 @@
     </span>
   </nav>
 
-  <main id="page-content" data-page="frame" data-title="Frame Designs — Happy Booth — Photobooth Event" class="page-enter">
+  <main id="page-content" data-page="frame" data-title="Khung ảnh Photobooth — Happy Booth | Mẫu cho sự kiện và tiệc cưới">
 
   <!-- Page Header -->
   <section class="page-header">
-    <h1 class="fade-in" data-i18n="frame.title">Frame designs</h1>
-    <p class="fade-in" data-i18n="frame.description">Explore frame styles for weddings and corporate events. Choose a reference you like; Happy Booth will design your own frame with names, the event date and colours that suit your occasion.</p>
+    <h1 class="fade-in" data-i18n="frame.title">Mẫu khung ảnh</h1>
+    <p class="fade-in" data-i18n="frame.description">Tham khảo các phong cách khung ảnh cho tiệc cưới và sự kiện doanh nghiệp. Chọn mẫu bạn thích; Happy Booth sẽ thiết kế khung riêng với tên, ngày tổ chức và màu sắc phù hợp với sự kiện của bạn.</p>
   </section>
 
   <!-- Curated reference previews, with attribution to their source listings. -->
   <section class="section frame-catalog" data-frame-gallery>
     <div class="wrap">
-      <p class="frame-catalog__note" data-i18n="frame.gallery.note">Reference designs from template collections. Select an image to view it larger, or open its source link below.</p>
+      <p class="frame-catalog__note" data-i18n="frame.gallery.note">Bộ mẫu tham khảo từ các kho thiết kế. Bấm vào ảnh để xem lớn hơn hoặc mở liên kết nguồn dưới mỗi mẫu.</p>
       <div class="frame-catalog__grid">
         <article class="frame-card">
           <button class="frame-card__preview" type="button" data-frame-preview="assets/images/frames/references/classic-monochrome.webp" aria-labelledby="frame-classic-monochrome">
             <img src="assets/images/frames/references/classic-monochrome.webp" width="960" height="768" loading="lazy" alt="Mẫu khung photobooth tham khảo: Đen trắng tối giản">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Weddings</span><span>2 × 6 in</span></div>
-            <h2 id="frame-classic-monochrome" data-i18n="frame.reference.classic-monochrome">Classic monochrome</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/1322603355/minimalistic-simple-classic-2x6-photo" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Tiệc cưới</span><span>2 × 6 in</span></div>
+            <h2 id="frame-classic-monochrome" data-i18n="frame.reference.classic-monochrome">Đen trắng tối giản</h2>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/1322603355/minimalistic-simple-classic-2x6-photo" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -120,9 +119,9 @@
             <img src="assets/images/frames/references/pastel-strips.webp" width="570" height="428" loading="lazy" alt="Mẫu khung photobooth tham khảo: Pastel thanh lịch">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Weddings</span><span>2 × 6 in</span></div>
-            <h2 id="frame-pastel-strips" data-i18n="frame.reference.pastel-strips">Elegant pastels</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/1591987582/minimalist-photo-strip-photo-booth" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Tiệc cưới</span><span>2 × 6 in</span></div>
+            <h2 id="frame-pastel-strips" data-i18n="frame.reference.pastel-strips">Pastel thanh lịch</h2>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/1591987582/minimalist-photo-strip-photo-booth" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -130,9 +129,9 @@
             <img src="assets/images/frames/references/blue-floral.webp" width="960" height="960" loading="lazy" alt="Mẫu khung photobooth tham khảo: Hoa xanh lãng mạn">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Weddings</span><span>2 × 6 in</span></div>
-            <h2 id="frame-blue-floral" data-i18n="frame.reference.blue-floral">Blue florals</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/1399103600/elegant-white-blue-rose-floral-wedding" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Tiệc cưới</span><span>2 × 6 in</span></div>
+            <h2 id="frame-blue-floral" data-i18n="frame.reference.blue-floral">Hoa xanh lãng mạn</h2>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/1399103600/elegant-white-blue-rose-floral-wedding" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -140,9 +139,9 @@
             <img src="assets/images/frames/references/greenery.webp" width="794" height="666" loading="lazy" alt="Mẫu khung photobooth tham khảo: Sắc xanh thiên nhiên">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Weddings</span><span>2 × 6 in</span></div>
-            <h2 id="frame-greenery" data-i18n="frame.reference.greenery">Botanical greenery</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/1795019583/green-floral-wedding-photobooth-template" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Tiệc cưới</span><span>2 × 6 in</span></div>
+            <h2 id="frame-greenery" data-i18n="frame.reference.greenery">Sắc xanh thiên nhiên</h2>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/1795019583/green-floral-wedding-photobooth-template" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -150,9 +149,9 @@
             <img src="assets/images/frames/references/sage-watercolor.webp" width="960" height="960" loading="lazy" alt="Mẫu khung photobooth tham khảo: Sage watercolor">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Weddings</span><span>2 × 6 · 4 × 6 in</span></div>
+            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Tiệc cưới</span><span>2 × 6 · 4 × 6 in</span></div>
             <h2 id="frame-sage-watercolor" data-i18n="frame.reference.sage-watercolor">Sage watercolor</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/1685055685/minimalist-photo-booth-strip-canva" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/1685055685/minimalist-photo-booth-strip-canva" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -160,9 +159,9 @@
             <img src="assets/images/frames/references/polaroid-layouts.webp" width="960" height="960" loading="lazy" alt="Mẫu khung photobooth tham khảo: Bố cục Polaroid">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Weddings</span><span data-i18n="frame.format.multiple">Multiple layouts</span></div>
-            <h2 id="frame-polaroid-layouts" data-i18n="frame.reference.polaroid-layouts">Polaroid layouts</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/au/listing/4492557196/wedding-photo-booth-strip-template" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.wedding">Tiệc cưới</span><span data-i18n="frame.format.multiple">Nhiều bố cục</span></div>
+            <h2 id="frame-polaroid-layouts" data-i18n="frame.reference.polaroid-layouts">Bố cục Polaroid</h2>
+            <a class="frame-card__source" href="https://www.etsy.com/au/listing/4492557196/wedding-photo-booth-strip-template" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -170,9 +169,9 @@
             <img src="assets/images/frames/references/navy-gold.webp" width="960" height="960" loading="lazy" alt="Mẫu khung photobooth tham khảo: Navy &amp; gold">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.business">Corporate events</span><span>2 × 6 in</span></div>
+            <div class="frame-card__meta"><span data-i18n="frame.category.business">Doanh nghiệp</span><span>2 × 6 in</span></div>
             <h2 id="frame-navy-gold" data-i18n="frame.reference.navy-gold">Navy &amp; gold</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/1636634081/navy-blue-gold-watercolor-photobooth" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/1636634081/navy-blue-gold-watercolor-photobooth" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -180,9 +179,9 @@
             <img src="assets/images/frames/references/staff-gathering.webp" width="320" height="960" loading="lazy" alt="Mẫu khung photobooth tham khảo: Gala doanh nghiệp">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.business">Corporate events</span><span data-i18n="frame.format.strip">Photo strip</span></div>
-            <h2 id="frame-staff-gathering" data-i18n="frame.reference.staff-gathering">Corporate gala</h2>
-            <a class="frame-card__source" href="https://www.photocorner.id/id/template-premium-1/regal-blue-and-gold-event-photobooth-template?pgid=lxsrkf8k-6a7352_4dfec7e2abf84e4c860a20e3b933cb48mv2.jpg" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.business">Doanh nghiệp</span><span data-i18n="frame.format.strip">Dải ảnh</span></div>
+            <h2 id="frame-staff-gathering" data-i18n="frame.reference.staff-gathering">Gala doanh nghiệp</h2>
+            <a class="frame-card__source" href="https://www.photocorner.id/id/template-premium-1/regal-blue-and-gold-event-photobooth-template?pgid=lxsrkf8k-6a7352_4dfec7e2abf84e4c860a20e3b933cb48mv2.jpg" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
         <article class="frame-card">
@@ -190,25 +189,25 @@
             <img src="assets/images/frames/references/golden-gala.webp" width="794" height="794" loading="lazy" alt="Mẫu khung photobooth tham khảo: Đen vàng sang trọng">
           </button>
           <div class="frame-card__info">
-            <div class="frame-card__meta"><span data-i18n="frame.category.business">Corporate events</span><span>2 × 6 in</span></div>
-            <h2 id="frame-golden-gala" data-i18n="frame.reference.golden-gala">Black &amp; gold gala</h2>
-            <a class="frame-card__source" href="https://www.etsy.com/listing/4424632922/holiday-gala-photobooth-template-2x6" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+            <div class="frame-card__meta"><span data-i18n="frame.category.business">Doanh nghiệp</span><span>2 × 6 in</span></div>
+            <h2 id="frame-golden-gala" data-i18n="frame.reference.golden-gala">Đen vàng sang trọng</h2>
+            <a class="frame-card__source" href="https://www.etsy.com/listing/4424632922/holiday-gala-photobooth-template-2x6" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
           </div>
         </article>
       </div>
     </div>
     <dialog class="frame-modal" aria-labelledby="frame-modal-title">
-      <button class="frame-modal__close" type="button" data-frame-close data-i18n="frame.close">Close photo</button>
+      <button class="frame-modal__close" type="button" data-frame-close data-i18n="frame.close">Đóng ảnh</button>
       <img class="frame-modal__image" alt="">
       <h2 id="frame-modal-title" class="frame-modal__title"></h2>
-      <a class="frame-modal__source" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">View reference source</a>
+      <a class="frame-modal__source" target="_blank" rel="noopener noreferrer" data-i18n="frame.source">Xem nguồn tham khảo</a>
     </dialog>
   </section>
 
   <!-- CTA -->
   <section class="cta section fade-in">
-    <p data-i18n="frame.cta.text">Have a favourite style? Share the reference name or your ideas with Happy Booth for a frame designed for your event.</p>
-    <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Get In Touch</a>
+    <p data-i18n="frame.cta.text">Bạn thích phong cách nào? Gửi tên mẫu hoặc ý tưởng cho Happy Booth để được thiết kế khung ảnh riêng cho sự kiện của bạn.</p>
+    <a href="contact.html" class="btn" data-i18n="common.cta.getInTouch">Liên hệ ngay</a>
   </section>
 
   </main>
@@ -219,37 +218,37 @@
       <div class="footer__grid">
         <div>
           <a class="footer__brand" href="index.html"><img src="assets/SVG/Logo_web.svg" alt="" class="footer__logo-img" width="36" height="36">Happy Booth</a>
-          <p class="footer__tagline" data-i18n="common.footer.tagline">Instant-print photobooth rental in Hanoi.</p>
+          <p class="footer__tagline" data-i18n="common.footer.tagline">Cho thuê photobooth chụp ảnh lấy liền tại Hà Nội.</p>
         </div>
         <div>
-          <h3 class="footer__heading" data-i18n="common.footer.contact">Contact</h3>
+          <h3 class="footer__heading" data-i18n="common.footer.contact">Liên hệ</h3>
           <ul class="footer__list">
             <li><a href="tel:+84971842329">0971 842 329</a></li>
             <li><a href="mailto:happyboothvn@gmail.com">happyboothvn@gmail.com</a></li>
-            <li data-i18n="common.footer.hours">8:00–22:00 every day</li>
+            <li data-i18n="common.footer.hours">8:00–22:00 hằng ngày</li>
           </ul>
         </div>
         <div>
-          <h3 class="footer__heading" data-i18n="common.footer.follow">Follow us</h3>
+          <h3 class="footer__heading" data-i18n="common.footer.follow">Theo dõi</h3>
           <ul class="footer__list">
             <li><a href="https://www.tiktok.com/@happybooth.vn" target="_blank" rel="noopener">TikTok @happybooth.vn</a></li>
             <li><a href="https://www.facebook.com/happyboothvn" target="_blank" rel="noopener">facebook.com/happyboothvn</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="footer__heading" data-i18n="common.footer.area">Service area</h3>
-          <p data-i18n="common.footer.areaText">Hanoi and the nearby provinces of Bac Ninh, Hung Yen, Hai Duong, Hai Phong and Vinh Phuc. We bring the booth and set it up on site.</p>
+          <h3 class="footer__heading" data-i18n="common.footer.area">Khu vực phục vụ</h3>
+          <p data-i18n="common.footer.areaText">Hà Nội và các tỉnh Bắc Ninh, Hưng Yên, Hải Dương, Hải Phòng, Vĩnh Phúc. Có hỗ trợ chở máy và lắp đặt tận nơi.</p>
         </div>
       </div>
       <div class="footer__base">
-        <p class="footer__copyright" data-i18n="common.footer.copyright">&copy; 2026 Happy Booth. Photobooth Event.</p>
-        <nav class="footer__nav" aria-label="Footer">
-          <a href="index.html" data-i18n="common.nav.home">Home</a>
-          <a href="about.html" data-i18n="common.nav.about">About</a>
-          <a href="portfolio.html" data-i18n="common.nav.portfolio">Portfolio</a>
-          <a href="frame.html" data-i18n="common.nav.frame">Frame</a>
-          <a href="price.html" data-i18n="common.nav.price">Price</a>
-          <a href="contact.html" data-i18n="common.nav.contact">Contact</a>
+        <p class="footer__copyright" data-i18n="common.footer.copyright">© 2026 Happy Booth. Photobooth Event.</p>
+        <nav class="footer__nav" aria-label="Điều hướng cuối trang" data-i18n-aria-label="common.a11y.footerNav">
+          <a href="index.html" data-i18n="common.nav.home">Trang chủ</a>
+          <a href="about.html" data-i18n="common.nav.about">Dự án</a>
+          <a href="portfolio.html" data-i18n="common.nav.portfolio">Bộ sưu tập</a>
+          <a href="frame.html" data-i18n="common.nav.frame">Khung ảnh</a>
+          <a href="price.html" data-i18n="common.nav.price">Bảng giá</a>
+          <a href="contact.html" data-i18n="common.nav.contact">Liên hệ</a>
         </nav>
       </div>
     </div>
