@@ -785,3 +785,16 @@ function initAdminPage() {
     });
   });
 }
+
+/* Sharing is delegated so it works after SPA navigation too. */
+document.addEventListener('click', async function (event) {
+  var button = event.target.closest('[data-wd-copy]');
+  if (!button) return;
+  var status = button.closest('.wd-share').querySelector('[role="status"]');
+  try {
+    await navigator.clipboard.writeText(button.getAttribute('data-wd-copy'));
+    status.textContent = 'Đã sao chép liên kết bài viết.';
+  } catch (error) {
+    status.textContent = 'Liên kết bài viết: ' + button.getAttribute('data-wd-copy');
+  }
+});

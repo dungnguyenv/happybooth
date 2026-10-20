@@ -60,7 +60,8 @@
       home: 'index.html', about: 'about.html', portfolio: 'portfolio.html',
       frame: 'frame.html', price: 'price.html',
       contact: 'contact.html', login: 'login.html', admin: 'admin.html',
-      'du-an-note-group': 'du-an-note-group.html'
+      'du-an-note-group': 'du-an-note-group.html',
+      'du-an-20-10': 'du-an-20-10.html'
     };
     return map[page] || null;
   }
@@ -235,7 +236,7 @@
 
   function updateActiveNav(href) {
     var clean = href.split('/').pop() || 'index.html';
-    if (clean === 'du-an-note-group.html') clean = 'about.html';
+    if (clean === 'du-an-note-group.html' || clean === 'du-an-20-10.html') clean = 'about.html';
     // Update desktop nav
     document.querySelectorAll('.header__nav a[href]').forEach(function (a) {
       var linkHref = a.getAttribute('href');
