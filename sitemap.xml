@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://happybooth.vn/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -27,7 +27,7 @@
   </url>
   <url>
     <loc>https://happybooth.vn/about.html</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -41,4 +41,5 @@
     <loc>https://happybooth.vn/du-an-note-group.html</loc>
     <lastmod>2026-10-16</lastmod>
   </url>
+  <url><loc>https://happybooth.vn/du-an-20-10.html</loc><lastmod>2026-10-20</lastmod></url>
 </urlset>
