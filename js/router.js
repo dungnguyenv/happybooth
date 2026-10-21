@@ -33,6 +33,10 @@
       // Cache before animations add .visible classes
       var href = pageToHref(currentPage);
       if (href) {
+        // Old .html links (search results, shared posts) still load — tidy the address bar
+        if (window.location.pathname !== href) {
+          history.replaceState(null, '', href + window.location.search + window.location.hash);
+        }
         pageCache[href] = snapshot(document, main);
       }
 
@@ -40,9 +44,9 @@
       if (window.auth && (currentPage === 'admin' || currentPage === 'login')) {
         window.auth.whenReady().then(function (user) {
           if (currentPage === 'admin' && !user) {
-            window.location.replace('login.html');
+            window.location.replace('/login');
           } else if (currentPage === 'login' && user) {
-            window.location.replace('admin.html');
+            window.location.replace('/admin');
           }
         });
       }
@@ -55,21 +59,27 @@
     preloadPages();
   }
 
+  // Clean URLs — GitHub Pages serves /about from about.html
+  var pagePaths = {
+    home: '/', about: '/about', portfolio: '/portfolio',
+    frame: '/frame', price: '/price',
+    contact: '/contact', login: '/login', admin: '/admin',
+    'du-an-note-group': '/du-an-note-group',
+    'du-an-20-10': '/du-an-20-10'
+  };
+
   function pageToHref(page) {
-    var map = {
-      home: 'index.html', about: 'about.html', portfolio: 'portfolio.html',
-      frame: 'frame.html', price: 'price.html',
-      contact: 'contact.html', login: 'login.html', admin: 'admin.html',
-      'du-an-note-group': 'du-an-note-group.html',
-      'du-an-20-10': 'du-an-20-10.html'
-    };
-    return map[page] || null;
+    return pagePaths[page] || null;
   }
 
+  // '/about', 'about.html', '/index.html' → page name; null if not a site page
   function hrefToPage(href) {
-    var clean = href.split('/').pop().split('?')[0].split('#')[0];
-    if (!clean || clean === '' || clean === 'index.html') return 'home';
-    return clean.replace('.html', '');
+    var path = new URL(href, window.location.href).pathname.replace(/\.html$/, '');
+    if (path === '/index') path = '/';
+    for (var page in pagePaths) {
+      if (pagePaths[page] === path) return page;
+    }
+    return null;
   }
 
   function interceptLinks() {
@@ -80,15 +90,16 @@
       var href = link.getAttribute('href');
       if (!href) return;
 
-      // Skip: external, anchors, mailto, tel, javascript, target=_blank
-      if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:') ||
-          href.startsWith('tel:') || href.startsWith('javascript:')) return;
+      // Skip: external, anchors, mailto, tel, javascript, target=_blank,
+      // query/hash links (a full navigation keeps them)
+      if (href.startsWith('http') || href.startsWith('mailto:') ||
+          href.startsWith('tel:') || href.startsWith('javascript:') || /[?#]/.test(href)) return;
       if (link.target === '_blank') return;
 
-      // Only handle .html links or relative paths
-      if (!href.endsWith('.html') && href !== '/' && href !== '') return;
-
+      // Only handle links to site pages
       var targetPage = hrefToPage(href);
+      if (!targetPage) return;
+
       if (targetPage === currentPage) {
         e.preventDefault();
         window.scrollTo(0, 0);
@@ -102,8 +113,12 @@
 
   async function navigateTo(href, pushState) {
     var requestId = ++navigationId;
-    var clean = href.split('/').pop() || 'index.html';
-    var targetPage = hrefToPage(clean);
+    var targetPage = hrefToPage(href);
+    if (!targetPage) {
+      window.location.href = href;
+      return;
+    }
+    var clean = pageToHref(targetPage);
 
     if (window.i18n && window.i18n.ready) await window.i18n.ready;
     if (requestId !== navigationId) return;
@@ -113,8 +128,8 @@
       await window.auth.whenReady();
       if (requestId !== navigationId) return;
       var guard = window.auth.guardRoute(targetPage);
-      if (guard === 'redirect-login') { navigateTo('login.html', true); return; }
-      if (guard === 'redirect-admin') { navigateTo('admin.html', true); return; }
+      if (guard === 'redirect-login') { navigateTo('/login', true); return; }
+      if (guard === 'redirect-admin') { navigateTo('/admin', true); return; }
     }
 
     // Close mobile nav if open
@@ -229,18 +244,17 @@
       navigateTo(e.state.href, false);
     } else {
       // Initial page or unknown state — use current URL
-      var href = window.location.pathname.split('/').pop() || 'index.html';
-      navigateTo(href, false);
+      navigateTo(window.location.pathname, false);
     }
   }
 
   function updateActiveNav(href) {
-    var clean = href.split('/').pop() || 'index.html';
-    if (clean === 'du-an-note-group.html' || clean === 'du-an-20-10.html') clean = 'about.html';
+    var clean = href;
+    if (clean === '/du-an-note-group' || clean === '/du-an-20-10') clean = '/about';
     // Update desktop nav
     document.querySelectorAll('.header__nav a[href]').forEach(function (a) {
       var linkHref = a.getAttribute('href');
-      if (linkHref === clean || (clean === 'index.html' && linkHref === 'index.html')) {
+      if (linkHref === clean) {
         a.classList.add('active');
       } else {
         a.classList.remove('active');
@@ -258,7 +272,7 @@
   }
 
   function preloadPages() {
-    var pages = ['index.html', 'about.html', 'portfolio.html', 'frame.html', 'price.html', 'contact.html'];
+    var pages = ['/', '/about', '/portfolio', '/frame', '/price', '/contact'];
     var idleCallback = window.requestIdleCallback || function (cb) { setTimeout(cb, 200); };
 
     idleCallback(function () {

@@ -736,7 +736,7 @@ function initLoginForm() {
     btn.textContent = '...';
 
     window.auth.login(email, password).then(function () {
-      window.location.href = 'admin.html';
+      window.location.href = '/admin';
     }).catch(function (err) {
       btn.disabled = false;
       btn.textContent = (window.i18n && window.i18n.t('auth.login.submit')) || 'Sign In';
@@ -781,7 +781,7 @@ function initAdminPage() {
 
   logoutBtn.addEventListener('click', function () {
     window.auth.logout().then(function () {
-      window.location.href = 'login.html';
+      window.location.href = '/login';
     });
   });
 }
