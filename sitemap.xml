@@ -8,38 +8,38 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://happybooth.vn/price.html</loc>
+    <loc>https://happybooth.vn/price</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://happybooth.vn/portfolio.html</loc>
+    <loc>https://happybooth.vn/portfolio</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://happybooth.vn/contact.html</loc>
+    <loc>https://happybooth.vn/contact</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://happybooth.vn/about.html</loc>
+    <loc>https://happybooth.vn/about</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://happybooth.vn/frame.html</loc>
+    <loc>https://happybooth.vn/frame</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://happybooth.vn/du-an-note-group.html</loc>
+    <loc>https://happybooth.vn/du-an-note-group</loc>
     <lastmod>2026-10-16</lastmod>
   </url>
-  <url><loc>https://happybooth.vn/du-an-20-10.html</loc><lastmod>2026-10-20</lastmod></url>
+  <url><loc>https://happybooth.vn/du-an-20-10</loc><lastmod>2026-10-20</lastmod></url>
 </urlset>
