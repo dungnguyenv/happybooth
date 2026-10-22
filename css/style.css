@@ -4,7 +4,7 @@
    ======================================== */
 
 /* Project hub and editorial stories */
-#page-content[data-page="about"], #page-content[data-page="du-an-note-group"] { margin-top: var(--header-height); }
+#page-content[data-page="about"], #page-content[data-page="du-an-note-group"], #page-content[data-page="thue-photobooth-su-kien-ha-noi"] { margin-top: var(--header-height); }
 .project-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .09em; color: var(--color-pink-dark); margin-bottom: 24px; }
 .projects-hero { background: #faf8f5; padding: clamp(48px, 7vw, 96px) 0 clamp(72px, 9vw, 120px); }
 .projects-hero__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
@@ -50,6 +50,11 @@
 .project-story__body section + section { margin-top: 36px; }
 .project-story__body h2 { font-size: clamp(26px, 2.6vw, 34px); line-height: 1.18; margin-bottom: 20px; }
 .project-story__body p { color: var(--color-text-soft); line-height: 1.85; }
+.project-story__body ul { list-style: disc; padding-left: 1.2em; color: var(--color-text-soft); line-height: 1.85; }
+.project-story__body li + li { margin-top: 6px; }
+.project-story__body .packages { margin: 8px 0 20px; }
+.project-story__body .packages td { padding-left: 12px; white-space: nowrap; }
+.project-story__body a, .project-cta p a { text-decoration: underline; }
 .project-facts { background: #faf8f5; border-radius: 12px; padding: 28px; }
 .project-facts h2 { font-size: 25px; line-height: 1.2; margin-bottom: 24px; }
 .project-facts dl > div + div { border-top: 1px solid var(--color-border); padding-top: 16px; margin-top: 16px; }
