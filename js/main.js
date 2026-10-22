@@ -6,6 +6,7 @@
 var _scrollObserver = null;
 var _carouselInterval = null;
 var _heroMessageCleanup = null;
+var _videoObserver = null;
 var _lightboxImages = [];
 var _lightboxIndex = 0;
 
@@ -57,6 +58,10 @@ function cleanup() {
   if (_scrollObserver) {
     _scrollObserver.disconnect();
     _scrollObserver = null;
+  }
+  if (_videoObserver) {
+    _videoObserver.disconnect();
+    _videoObserver = null;
   }
 }
 
@@ -258,26 +263,34 @@ function initPhotoWall() {
 }
 
 /* ----------------------------------------
-   Autoplay videos — honour reduced motion, and kick playback after an
-   SPA swap (videos inserted via outerHTML don't always start on their own)
+   Autoplay videos — play only while on screen. The markup uses
+   data-autoplay + preload="none" so the clips don't download on page load
+   (a native autoplay attribute fetches every video up front). Reduced
+   motion leaves them paused with their controls.
    ---------------------------------------- */
 function prefersReducedMotion() {
   return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 function initAutoplayVideos() {
-  var videos = document.querySelectorAll('#page-content video[autoplay]');
-  if (!videos.length) return;
-  var reduce = prefersReducedMotion();
-  videos.forEach(function (v) {
-    if (reduce) {
-      v.removeAttribute('autoplay');
-      v.pause();
-      return;
-    }
-    v.muted = true;
-    v.play().catch(function () {});
-  });
+  if (_videoObserver) {
+    _videoObserver.disconnect();
+    _videoObserver = null;
+  }
+  var videos = document.querySelectorAll('#page-content video[data-autoplay]');
+  if (!videos.length || prefersReducedMotion()) return;
+  videos.forEach(function (v) { v.muted = true; });
+  if (!window.IntersectionObserver) {
+    videos.forEach(function (v) { v.play().catch(function () {}); });
+    return;
+  }
+  _videoObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) entry.target.play().catch(function () {});
+      else entry.target.pause();
+    });
+  }, { rootMargin: '200px 0px' });
+  videos.forEach(function (v) { _videoObserver.observe(v); });
 }
 
 /* ----------------------------------------
