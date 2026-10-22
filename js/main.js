@@ -6,6 +6,7 @@
 var _scrollObserver = null;
 var _carouselInterval = null;
 var _heroMessageCleanup = null;
+var _videoObserver = null;
 var _lightboxImages = [];
 var _lightboxIndex = 0;
 
@@ -57,6 +58,10 @@ function cleanup() {
   if (_scrollObserver) {
     _scrollObserver.disconnect();
     _scrollObserver = null;
+  }
+  if (_videoObserver) {
+    _videoObserver.disconnect();
+    _videoObserver = null;
   }
 }
 
@@ -258,26 +263,34 @@ function initPhotoWall() {
 }
 
 /* ----------------------------------------
-   Autoplay videos — honour reduced motion, and kick playback after an
-   SPA swap (videos inserted via outerHTML don't always start on their own)
+   Autoplay videos — play only while on screen. The markup uses
+   data-autoplay + preload="none" so the clips don't download on page load
+   (a native autoplay attribute fetches every video up front). Reduced
+   motion leaves them paused with their controls.
    ---------------------------------------- */
 function prefersReducedMotion() {
   return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 function initAutoplayVideos() {
-  var videos = document.querySelectorAll('#page-content video[autoplay]');
-  if (!videos.length) return;
-  var reduce = prefersReducedMotion();
-  videos.forEach(function (v) {
-    if (reduce) {
-      v.removeAttribute('autoplay');
-      v.pause();
-      return;
-    }
-    v.muted = true;
-    v.play().catch(function () {});
-  });
+  if (_videoObserver) {
+    _videoObserver.disconnect();
+    _videoObserver = null;
+  }
+  var videos = document.querySelectorAll('#page-content video[data-autoplay]');
+  if (!videos.length || prefersReducedMotion()) return;
+  videos.forEach(function (v) { v.muted = true; });
+  if (!window.IntersectionObserver) {
+    videos.forEach(function (v) { v.play().catch(function () {}); });
+    return;
+  }
+  _videoObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) entry.target.play().catch(function () {});
+      else entry.target.pause();
+    });
+  }, { rootMargin: '200px 0px' });
+  videos.forEach(function (v) { _videoObserver.observe(v); });
 }
 
 /* ----------------------------------------
@@ -478,7 +491,7 @@ function initLightbox() {
 
 /* ----------------------------------------
    Portfolio Masonry — flex-based columns
-   - Visible items distributed by SHORTEST column (after images load, for balance)
+   - Visible items distributed by SHORTEST column (declared sizes, re-checked after load)
    - Hidden items in a pool outside the grid
    - Load more pops from pool, places in currently shortest column
    - Result: no reflow of existing items + balanced column heights
@@ -503,7 +516,11 @@ function estimateItemHeight(item, colWidth) {
   if (img && img.naturalWidth > 0) {
     return Math.round(colWidth * img.naturalHeight / img.naturalWidth);
   }
-  // Fallback for unloaded images: assume 4:5 portrait (typical photobooth aspect)
+  // Unloaded images: use the declared width/height attributes
+  var w = img ? parseInt(img.getAttribute('width'), 10) : 0;
+  var h = img ? parseInt(img.getAttribute('height'), 10) : 0;
+  if (w > 0 && h > 0) return Math.round(colWidth * h / w);
+  // Fallback: assume 4:5 portrait (typical photobooth aspect)
   return Math.round(colWidth * 1.25);
 }
 
@@ -563,9 +580,14 @@ function initMasonryColumns() {
     colDivs.push(col);
   }
 
-  // Round-robin distribute VISIBLE items for fast first paint
-  visible.forEach(function (item, idx) {
-    colDivs[idx % targetCols].appendChild(item);
+  // Distribute VISIBLE items by their declared heights, so the post-load
+  // rebalance below finds nothing to move (no layout shift)
+  var colWidth = colDivs[0].offsetWidth;
+  var estHeights = colDivs.map(function () { return 0; });
+  visible.forEach(function (item) {
+    var idx = findShortestColumnIdx(estHeights);
+    colDivs[idx].appendChild(item);
+    estHeights[idx] += estimateItemHeight(item, colWidth);
   });
 
   // Pool hidden items outside the grid (display:none container)
