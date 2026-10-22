@@ -65,7 +65,8 @@
     frame: '/frame', price: '/price',
     contact: '/contact', login: '/login', admin: '/admin',
     'du-an-note-group': '/du-an-note-group',
-    'du-an-20-10': '/du-an-20-10'
+    'du-an-20-10': '/du-an-20-10',
+    'thue-photobooth-su-kien-ha-noi': '/thue-photobooth-su-kien-ha-noi'
   };
 
   function pageToHref(page) {
