@@ -1221,6 +1221,20 @@ body:has(.frame-modal[open]) { overflow: hidden; }
   padding: 0 var(--gutter);
 }
 
+/* First paint can land before main.js builds the columns: lay the items out
+   with the same column count (see getMasonryColumnCount) so the gallery is
+   already full height and nothing below it shifts. */
+.gallery__grid:not([data-col-count]) {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1024px) {
+  .gallery__grid:not([data-col-count]) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  .gallery__grid:not([data-col-count]) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 .gallery__col {
   flex: 1 1 0;
   min-width: 0;
