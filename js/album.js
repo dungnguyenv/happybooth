@@ -2,17 +2,27 @@
    Happy Booth — Album page (happybooth.vn/<code>)
    404.html sends short links here as /album?c=<code>; this page restores the
    short URL, reads the album from the API and polls while photos upload.
+   An album holds photos, GIFs and MP4 clips (HBAlbumCore.fileKind).
    ======================================== */
 
 (function () {
   var core = window.HBAlbumCore;
   var HOTLINE = '<a href="tel:+84971842329">0971 842 329</a>';
+  var ALT_NOUN = { photo: 'ảnh', gif: 'GIF', video: 'video' };
+  var THUMB_NOUN = { photo: 'Ảnh', gif: 'GIF', video: 'Video' };
+  var BADGES = {
+    gif: 'GIF',
+    video: '<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12.5-7.5z"/></svg>'
+  };
 
   var main = document.getElementById('album');
   var els = {
     title: document.querySelector('[data-album-title]'),
     photo: document.querySelector('[data-album-photo]'),
     image: document.querySelector('[data-album-image]'),
+    video: document.querySelector('[data-album-video]'),
+    play: document.querySelector('[data-album-play]'),
+    videoError: document.querySelector('[data-album-video-error]'),
     counter: document.querySelector('[data-album-counter]'),
     message: document.querySelector('[data-album-message]'),
     thumbs: document.querySelector('[data-album-thumbs]'),
@@ -60,6 +70,9 @@
     els.prev.addEventListener('click', function () { go(-1); });
     els.next.addEventListener('click', function () { go(1); });
     els.download.addEventListener('click', onDownload);
+    els.play.addEventListener('click', onPlay);
+    els.video.addEventListener('play', onVideoPlay);
+    els.video.addEventListener('error', onVideoError);
     els.share.addEventListener('click', onShare);
     document.addEventListener('keydown', onKey);
     els.stage.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -179,32 +192,117 @@
     var files = album && album.files;
     var showing = (view.kind === 'partial' || view.kind === 'complete') && files && files.length;
     els.download.disabled = true;
-    if (!showing) return;
+    if (!showing) {
+      stopVideo();
+      return;
+    }
     var file = files[index];
+    var kind = core.fileKind(file);
     var pending = els.photo.querySelector('.album-pending');
     els.counter.textContent = (index + 1) + '/' + files.length;
     if (file.status === 'uploaded') {
       if (pending) pending.remove();
-      els.image.hidden = false;
-      var preview = url(file.preview_url);
-      if (wantedSrc !== preview) {
-        showImage(preview);
+      if (kind === 'video') {
+        showVideo(file);
+      } else {
+        stopVideo();
+        showStill(file, kind);
       }
       preloadAround(files);
-      els.image.alt = ((album.event && album.event.name) || 'Album') + ' – ảnh ' + (index + 1);
+      var label = ((album.event && album.event.name) || 'Album') + ' – ' + ALT_NOUN[kind] + ' ' + (index + 1);
+      els.image.alt = label;
+      els.video.setAttribute('aria-label', label);
       els.download.disabled = false;
     } else {
-      els.image.hidden = true;
-      els.image.removeAttribute('src');
-      wantedSrc = '';
+      stopVideo();
+      hideImage();
       if (!pending) {
         pending = document.createElement('div');
         pending.className = 'album-pending';
-        pending.innerHTML = '<div class="album-spinner" aria-hidden="true"></div>' +
-          '<span>Ảnh này đang được tải lên…</span>';
+        pending.innerHTML = '<div class="album-spinner" aria-hidden="true"></div><span></span>';
         els.photo.insertBefore(pending, els.counter);
       }
+      pending.querySelector('span').textContent = kind === 'video'
+        ? 'Video này đang được tải lên…'
+        : 'Ảnh này đang được tải lên…';
     }
+  }
+
+  function hideImage() {
+    els.image.hidden = true;
+    els.image.removeAttribute('src');
+    els.image.classList.remove('is-fading');
+    wantedSrc = '';
+  }
+
+  // A photo, or a GIF: its first frame at once, then the animation once loaded.
+  function showStill(file, kind) {
+    els.image.hidden = false;
+    var preview = url(file.preview_url);
+    var media = kind === 'gif' ? url(file.media_url) : '';
+    // A poll re-renders the same file: leave it, even once the GIF has taken over.
+    if (wantedSrc === preview || (media && wantedSrc === media)) return;
+    showImage(preview);
+    if (!media) return;
+    var loader = new Image();
+    loader.onload = function () {
+      if (wantedSrc !== preview) return; // the guest has moved on
+      wantedSrc = media;
+      els.image.src = media;
+      els.image.classList.remove('is-fading');
+    };
+    loader.src = media;
+  }
+
+  // The clip waits on its first frame for a tap: phones only play sound after one.
+  function showVideo(file) {
+    hideImage();
+    els.video.hidden = false;
+    var media = url(file.media_url);
+    // Polling re-renders every few seconds; a clip being watched must not restart.
+    if (els.video.dataset.src === media) return;
+    els.video.dataset.src = media;
+    els.video.poster = url(file.preview_url);
+    if (file.width && file.height) {
+      els.video.width = file.width;
+      els.video.height = file.height;
+    }
+    els.videoError.hidden = true;
+    // Native controls join once it plays, so the poster shows one ▶, not two.
+    els.video.controls = false;
+    els.play.hidden = false;
+    if (media) els.video.src = media;
+    else onVideoError();
+  }
+
+  function stopVideo() {
+    if (els.video.dataset.src !== undefined) {
+      delete els.video.dataset.src;
+      els.video.pause();
+      // Dropping the source also stops the rest of the download.
+      els.video.removeAttribute('src');
+      els.video.removeAttribute('poster');
+      els.video.load();
+    }
+    els.video.hidden = true;
+    els.play.hidden = true;
+    els.videoError.hidden = true;
+  }
+
+  function onVideoPlay() {
+    els.play.hidden = true;
+    els.video.controls = true;
+  }
+
+  function onPlay() {
+    var started = els.video.play();
+    if (started && started.catch) started.catch(function () {});
+  }
+
+  function onVideoError() {
+    if (els.video.dataset.src === undefined) return; // from stopVideo emptying it
+    els.play.hidden = true;
+    els.videoError.hidden = false;
   }
 
   function renderThumbs(album, kind) {
@@ -218,12 +316,14 @@
     if (key !== thumbsKey) {
       var scroll = els.thumbs.scrollLeft;
       els.thumbs.innerHTML = files.map(function (f, i) {
-        var label = 'Ảnh ' + (i + 1) + (f.status === 'uploaded' ? '' : ' (đang tải lên)');
+        var kind = core.fileKind(f);
+        var label = THUMB_NOUN[kind] + ' ' + (i + 1) + (f.status === 'uploaded' ? '' : ' (đang tải lên)');
         var inner = f.status === 'uploaded'
           ? '<img src="' + attr(url(f.preview_url)) + '" alt="" loading="lazy" decoding="async">'
           : '<span>Đang tải</span>';
+        var badge = BADGES[kind] ? '<span class="album-thumb__badge" aria-hidden="true">' + BADGES[kind] + '</span>' : '';
         return '<li><button type="button" class="album-thumb' + (f.status === 'uploaded' ? '' : ' album-thumb--pending') +
-          '" data-index="' + i + '" aria-label="' + label + '">' + inner + '</button></li>';
+          '" data-index="' + i + '" aria-label="' + label + '">' + inner + badge + '</button></li>';
       }).join('');
       els.thumbs.scrollLeft = scroll;
       thumbsKey = key;
@@ -252,6 +352,7 @@
       els.progress.textContent = '';
       return;
     }
+    var noun = core.albumNoun(album.files);
     if (album.uploaded < album.total) {
       var dot = document.createElement('span');
       dot.className = 'album-progress__dot';
@@ -259,10 +360,10 @@
       els.progress.textContent = '';
       els.progress.appendChild(dot);
       els.progress.appendChild(document.createTextNode(
-        album.uploaded + '/' + album.total + ' ảnh đã sẵn sàng · trang tự cập nhật'
+        album.uploaded + '/' + album.total + ' ' + noun + ' đã sẵn sàng · trang tự cập nhật'
       ));
     } else {
-      els.progress.textContent = album.total + ' ảnh · chạm vào ảnh nhỏ để xem';
+      els.progress.textContent = album.total + ' ' + noun + ' · chạm vào ảnh nhỏ để xem';
     }
   }
 
@@ -350,12 +451,16 @@
 
   function onKey(e) {
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (document.activeElement === els.video) return; // arrows seek the clip
     if (e.key === 'ArrowLeft') go(-1);
     else if (e.key === 'ArrowRight') go(1);
   }
 
   function onTouchStart(e) {
     var one = e.touches.length === 1 ? e.touches[0] : null;
+    // Once a clip has started, a drag on it is the guest scrubbing its timeline.
+    var v = els.video;
+    if (one && e.target === v && (!v.paused || v.currentTime > 0)) one = null;
     touchX = one ? one.clientX : null;
     touchY = one ? one.clientY : null;
   }
