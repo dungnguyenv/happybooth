@@ -121,3 +121,20 @@ test('chooseIndex shows the first photo that arrives until the guest picks one',
   // First load: the first uploaded photo.
   assert.equal(core.chooseIndex(null, 0, after, false), 1);
 });
+
+test('apiUrl only lets through URLs on the API origin', () => {
+  const api = 'https://api.happybooth.vn';
+  const good = 'https://api.happybooth.vn/public/albums/k7m2x9qa/files/a.jpg/preview.webp?v=1';
+  assert.equal(core.apiUrl(good, api), good);
+  assert.equal(core.apiUrl('javascript:alert(1)', api), '');
+  assert.equal(core.apiUrl('https://evil.example/x.webp', api), '');
+  assert.equal(core.apiUrl('', api), '');
+  assert.equal(core.apiUrl(null, api), '');
+});
+
+test('deriveState coerces counts to numbers', () => {
+  const s = core.deriveState({ status: 200, body: { uploaded: '1<b>', total: '3', files: [], created_at: '2026-10-24T09:50:00Z' } }, null, NOW);
+  assert.equal(typeof s.album.uploaded, 'number');
+  assert.equal(s.album.uploaded, 0);
+  assert.equal(s.album.total, 3);
+});

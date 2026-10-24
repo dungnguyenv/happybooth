@@ -133,8 +133,9 @@
 
   function renderMessage(kind, album) {
     var event = album && album.event;
-    var art = event && event.banner_url
-      ? '<img class="album-message__art" src="' + attr(event.banner_url) + '" alt="">'
+    var bannerUrl = event && url(event.banner_url);
+    var art = bannerUrl
+      ? '<img class="album-message__art" src="' + attr(bannerUrl) + '" alt="">'
       : '<img class="album-message__art album-message__art--logo" src="/assets/SVG/Logo_web.svg" alt="">';
     var html = '';
     if (kind === 'not_found') {
@@ -179,8 +180,9 @@
     if (file.status === 'uploaded') {
       if (pending) pending.remove();
       els.image.hidden = false;
-      if (els.image.getAttribute('src') !== file.preview_url) {
-        showImage(file.preview_url);
+      var preview = url(file.preview_url);
+      if (els.image.getAttribute('src') !== preview) {
+        showImage(preview);
       }
       preloadAround(files);
       els.image.alt = (album.event.name || 'Album') + ' – ảnh ' + (index + 1);
@@ -211,7 +213,7 @@
       els.thumbs.innerHTML = files.map(function (f, i) {
         var label = 'Ảnh ' + (i + 1) + (f.status === 'uploaded' ? '' : ' (đang tải lên)');
         var inner = f.status === 'uploaded'
-          ? '<img src="' + attr(f.preview_url) + '" alt="" loading="lazy" decoding="async">'
+          ? '<img src="' + attr(url(f.preview_url)) + '" alt="" loading="lazy" decoding="async">'
           : '<span>Đang tải</span>';
         return '<li><button type="button" class="album-thumb' + (f.status === 'uploaded' ? '' : ' album-thumb--pending') +
           '" data-index="' + i + '" aria-label="' + label + '">' + inner + '</button></li>';
@@ -241,8 +243,13 @@
       return;
     }
     if (album.uploaded < album.total) {
-      els.progress.innerHTML = '<span class="album-progress__dot" aria-hidden="true"></span>' +
-        album.uploaded + '/' + album.total + ' ảnh đã sẵn sàng · trang tự cập nhật';
+      var dot = document.createElement('span');
+      dot.className = 'album-progress__dot';
+      dot.setAttribute('aria-hidden', 'true');
+      els.progress.replaceChildren(
+        dot,
+        album.uploaded + '/' + album.total + ' ảnh đã sẵn sàng · trang tự cập nhật'
+      );
     } else {
       els.progress.textContent = album.total + ' ảnh · chạm vào ảnh nhỏ để xem';
     }
@@ -265,13 +272,14 @@
     els.eventName.textContent = event.name || '';
     els.eventDesc.textContent = event.description || '';
     els.eventDesc.hidden = !event.description;
-    if (event.banner_url) {
-      els.banner.src = event.banner_url;
+    var bannerUrl = url(event.banner_url);
+    if (bannerUrl) {
+      els.banner.src = bannerUrl;
       els.banner.hidden = false;
     } else {
       els.banner.hidden = true;
     }
-    els.event.classList.toggle('album-event--no-banner', !event.banner_url);
+    els.event.classList.toggle('album-event--no-banner', !bannerUrl);
     els.expiry.textContent = kind === 'expired'
       ? 'Link xem ảnh đã hết hạn.'
       : album.expires_at ? 'Ảnh được lưu để xem đến ' + core.formatDate(album.expires_at) + '.' : '';
@@ -317,7 +325,8 @@
   function preloadAround(files) {
     [-1, 1].forEach(function (delta) {
       var f = files[core.wrapIndex(index + delta, files.length)];
-      if (f && f.preview_url) new Image().src = f.preview_url;
+      var preview = f && url(f.preview_url);
+      if (preview) new Image().src = preview;
     });
   }
 
@@ -343,7 +352,8 @@
     // download_url carries ?download=1: the API answers with
     // Content-Disposition: attachment (the download attribute is ignored
     // cross-origin, notably on iOS), so this saves without leaving the page.
-    if (file && file.download_url) window.location.href = file.download_url;
+    var download = file && url(file.download_url);
+    if (download) window.location.href = download;
   }
 
   function onShare() {
@@ -380,6 +390,10 @@
 
   function attr(s) {
     return esc(s);
+  }
+
+  function url(u) {
+    return core.apiUrl(u, api);
   }
 
   init();

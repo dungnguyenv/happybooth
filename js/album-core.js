@@ -39,6 +39,22 @@
     return 'https://api.happybooth.vn';
   }
 
+  // Image and download URLs come from the API; only ever use them on its origin.
+  function apiUrl(url, base) {
+    if (!url) return '';
+    try {
+      var parsed = new URL(url, base);
+      return parsed.origin === new URL(base).origin ? parsed.href : '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function count(n) {
+    var v = Number(n);
+    return isFinite(v) && v >= 0 ? Math.floor(v) : 0;
+  }
+
   function isStale(album, now) {
     if (!album || album.uploaded >= album.total) return false;
     return now - Date.parse(album.created_at) > STALE_AFTER_MS;
@@ -55,6 +71,8 @@
     if (status === 404) return state('not_found', null, now);
     if (status === 410) return state('expired', body || {}, now);
     if (status === 200 && body) {
+      body.uploaded = count(body.uploaded);
+      body.total = count(body.total);
       if (body.uploaded === 0) return state('empty', body, now);
       if (body.uploaded < body.total) return state('partial', body, now);
       return state('complete', body, now);
@@ -117,6 +135,7 @@
     SHORT_PATH_RE: SHORT_PATH_RE,
     readCode: readCode,
     apiBase: apiBase,
+    apiUrl: apiUrl,
     deriveState: deriveState,
     isStale: isStale,
     nextPollDelay: nextPollDelay,
