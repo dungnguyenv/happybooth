@@ -14,9 +14,9 @@
       var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
       if (aliases[path]) {
         window.location.replace(aliases[path] + window.location.search + window.location.hash);
-      } else if (/^\/[2-9a-hjkmnp-z]{8}$/.test(path)) {
+      } else if (/^\/[2-9a-hjkmnp-z]{10}$/.test(path)) {
         // A photo album short link (happybooth.vn/<code>). Same pattern as
-        // SHORT_PATH_RE in js/album-core.js; keep the two in step.
+        // SHORT_PATH_RE in js/album-core.js; a test keeps the two in step.
         window.location.replace('/album?c=' + path.slice(1));
       }
     })();
