@@ -193,3 +193,18 @@ test('a successful poll resets the failure backoff', () => {
   view = core.deriveState(ok(album(1, 3)), view, NOW);
   assert.equal(core.nextPollDelay(view, NOW - 1 * MIN, NOW), 5000);
 });
+
+test('fileKind prefers the API kind and falls back to the extension', () => {
+  assert.equal(core.fileKind({ name: 'a.jpg', kind: 'video' }), 'video');
+  assert.equal(core.fileKind({ name: 'CLIP.MP4' }), 'video');
+  assert.equal(core.fileKind({ name: 'LOOP.GIF' }), 'gif');
+  assert.equal(core.fileKind({ name: 'a.webp' }), 'photo');
+  assert.equal(core.fileKind({ name: 'a.jpg', kind: 'hologram' }), 'photo');
+  assert.equal(core.fileKind({ name: 'constructor' }), 'photo');
+  assert.equal(core.fileKind({ name: 'x.jpg', kind: 'constructor' }), 'photo');
+});
+
+test('albumNoun mentions video only when there is one', () => {
+  assert.equal(core.albumNoun([{ name: 'a.jpg' }, { name: 'b.gif' }]), 'ảnh');
+  assert.equal(core.albumNoun([{ name: 'a.jpg' }, { name: 'c.mp4', kind: 'video' }]), 'ảnh & video');
+});
