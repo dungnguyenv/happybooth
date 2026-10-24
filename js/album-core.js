@@ -168,6 +168,32 @@
     return DATE_FORMAT.format(new Date(iso));
   }
 
+  // 'photo' | 'gif' | 'video'. The API sends `kind`; an older API (or a cached
+  // payload from before it did) leaves it out, and the extension says the same.
+  function fileKind(file) {
+    var kind = file && file.kind;
+    if (kind === 'photo' || kind === 'gif' || kind === 'video') return kind;
+    var name = String((file && file.name) || '').toLowerCase();
+    if (/\.mp4$/.test(name)) return 'video';
+    if (/\.gif$/.test(name)) return 'gif';
+    return 'photo';
+  }
+
+  // MediaError codes: 1 aborted and 2 network (a venue connection dropping
+  // mid-clip) are worth another tap; 3 decode and 4 unsupported mean this
+  // browser cannot play the clip at all.
+  function videoErrorRetryable(code) {
+    return code === 1 || code === 2;
+  }
+
+  // How the album counts its files: a GIF is still a photo to a guest.
+  function albumNoun(files) {
+    for (var i = 0; i < files.length; i++) {
+      if (fileKind(files[i]) === 'video') return 'ảnh & video';
+    }
+    return 'ảnh';
+  }
+
   return {
     SHORT_PATH_RE: SHORT_PATH_RE,
     readCode: readCode,
@@ -181,6 +207,9 @@
     indexAfterUpdate: indexAfterUpdate,
     chooseIndex: chooseIndex,
     wrapIndex: wrapIndex,
-    formatDate: formatDate
+    formatDate: formatDate,
+    fileKind: fileKind,
+    albumNoun: albumNoun,
+    videoErrorRetryable: videoErrorRetryable
   };
 });
