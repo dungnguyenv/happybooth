@@ -66,7 +66,14 @@
   }
 
   function state(kind, album, now) {
-    return { kind: kind, album: album, stale: isStale(album, now), offline: false, throttled: false };
+    return {
+      kind: kind,
+      album: album,
+      stale: isStale(album, now),
+      offline: false,
+      throttled: false,
+      failures: 0
+    };
   }
 
   // result: { status, body } from one fetch; status 0 = network failure.
@@ -83,16 +90,25 @@
       return state('complete', body, now);
     }
     // Anything else (offline, 5xx, 429): keep showing what we had.
+    var failures = ((prev && prev.failures) || 0) + 1;
     if (prev && prev.album && prev.kind !== 'error') {
       return {
         kind: prev.kind,
         album: prev.album,
         stale: isStale(prev.album, now),
         offline: status !== 429,
-        throttled: status === 429
+        throttled: status === 429,
+        failures: failures
       };
     }
-    return { kind: 'error', album: null, stale: false, offline: status !== 429, throttled: status === 429 };
+    return {
+      kind: 'error',
+      album: null,
+      stale: false,
+      offline: status !== 429,
+      throttled: status === 429,
+      failures: failures
+    };
   }
 
   function nextPollDelay(current, lastProgressAt, now) {
@@ -100,6 +116,11 @@
     if (kind === 'complete' || kind === 'expired' || kind === 'not_found') return null;
     // Guests on one venue Wi-Fi share an IP: when rate-limited, back off.
     if (current.throttled) return SLOW_POLL_MS;
+    // Cloudflare's 429 has no CORS header and reaches us as a network failure,
+    // so failures in a row back off too: 5s, 10s, 20s, then 30s.
+    if (current.failures > 1) {
+      return Math.min(FAST_POLL_MS * Math.pow(2, current.failures - 1), SLOW_POLL_MS);
+    }
     return now - lastProgressAt < SLOW_AFTER_MS ? FAST_POLL_MS : SLOW_POLL_MS;
   }
 

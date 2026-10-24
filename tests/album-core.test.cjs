@@ -170,3 +170,26 @@ test('rate-limited polls back off', () => {
   assert.equal(core.nextPollDelay(limited, NOW - 1 * MIN, NOW), 30000);
   assert.equal(core.deriveState(ok(album(2, 3)), limited, NOW).throttled, false);
 });
+
+// Cloudflare's own 429 carries no CORS header, so the browser reports it as a
+// network failure (status 0): repeated failures must back off as well.
+test('consecutive network failures back off to the slow poll', () => {
+  let view = core.deriveState(ok(album(1, 3)), null, NOW);
+  const delays = [];
+  for (let i = 0; i < 5; i++) {
+    view = core.deriveState({ status: 0, body: null }, view, NOW);
+    delays.push(core.nextPollDelay(view, NOW - 1 * MIN, NOW));
+  }
+  assert.deepEqual(delays, [5000, 10000, 20000, 30000, 30000]);
+  assert.equal(view.offline, true);
+  assert.equal(view.kind, 'partial');
+});
+
+test('a successful poll resets the failure backoff', () => {
+  let view = core.deriveState({ status: 0, body: null }, null, NOW);
+  view = core.deriveState({ status: 502, body: null }, view, NOW);
+  view = core.deriveState({ status: 0, body: null }, view, NOW);
+  assert.equal(core.nextPollDelay(view, NOW, NOW), 20000);
+  view = core.deriveState(ok(album(1, 3)), view, NOW);
+  assert.equal(core.nextPollDelay(view, NOW - 1 * MIN, NOW), 5000);
+});
