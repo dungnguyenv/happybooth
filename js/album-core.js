@@ -12,9 +12,9 @@
   }
 })(this, function () {
   // Same alphabet as the API: no 0, o, 1, l, i (codes are read off prints).
-  var CODE_RE = /^[2-9a-hjkmnp-z]{8}$/;
+  var CODE_RE = /^[2-9a-hjkmnp-z]{10}$/;
   // 404.html repeats this pattern inline; keep the two in step.
-  var SHORT_PATH_RE = /^\/[2-9a-hjkmnp-z]{8}$/;
+  var SHORT_PATH_RE = /^\/[2-9a-hjkmnp-z]{10}$/;
   var STALE_AFTER_MS = 2 * 60 * 60 * 1000;
   var FAST_POLL_MS = 5000;
   var SLOW_POLL_MS = 30000;

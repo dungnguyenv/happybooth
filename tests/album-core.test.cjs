@@ -1,6 +1,8 @@
 // Run with: node --test tests/*.test.cjs
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const core = require('../js/album-core.js');
 
 const NOW = Date.parse('2026-10-24T10:00:00Z');
@@ -12,7 +14,7 @@ function album(uploaded, total, createdAt) {
     files.push({ name: 'IMG_' + i + '.jpg', status: i < uploaded ? 'uploaded' : 'pending' });
   }
   return {
-    code: 'k7m2x9qa',
+    code: 'k7m2x9qa4n',
     status: 'active',
     created_at: createdAt || '2026-10-24T09:50:00Z',
     expires_at: '2026-11-08T09:50:00Z',
@@ -28,17 +30,23 @@ function ok(body) {
 }
 
 test('readCode reads ?c= and normalises it', () => {
-  assert.equal(core.readCode('?c=K7M2X9QA'), 'k7m2x9qa');
-  assert.equal(core.readCode('?c=%20k7m2x9qa%20'), 'k7m2x9qa');
+  assert.equal(core.readCode('?c=K7M2X9QA4N'), 'k7m2x9qa4n');
+  assert.equal(core.readCode('?c=%20k7m2x9qa4n%20'), 'k7m2x9qa4n');
   assert.equal(core.readCode('?c=abc'), null);
+  assert.equal(core.readCode('?c=k7m2x9qa'), null); // 8-char codes ended 2026-10-24
   assert.equal(core.readCode(''), null);
 });
 
 test('short path regex matches album codes only', () => {
-  assert.ok(core.SHORT_PATH_RE.test('/k7m2x9qa'));
-  for (const p of ['/about', '/k7m2x9q0', '/k7m2x9qa1', '/price', '/k7m2x9q']) {
+  assert.ok(core.SHORT_PATH_RE.test('/k7m2x9qa4n'));
+  for (const p of ['/about', '/k7m2x9qa', '/k7m2x9qa40', '/k7m2x9qa4n2', '/price', '/k7m2x9q']) {
     assert.ok(!core.SHORT_PATH_RE.test(p), p);
   }
+});
+
+test('404.html redirects the same short paths as SHORT_PATH_RE', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', '404.html'), 'utf8');
+  assert.ok(html.includes(core.SHORT_PATH_RE.source), '404.html must use SHORT_PATH_RE verbatim');
 });
 
 test('apiBase', () => {
@@ -126,7 +134,7 @@ test('chooseIndex shows the first photo that arrives until the guest picks one',
 
 test('apiUrl only lets through URLs on the API origin', () => {
   const api = 'https://api.happybooth.vn';
-  const good = 'https://api.happybooth.vn/public/albums/k7m2x9qa/files/a.jpg/preview.webp?v=1';
+  const good = 'https://api.happybooth.vn/public/albums/k7m2x9qa4n/files/a.jpg/preview.webp?v=1';
   assert.equal(core.apiUrl(good, api), good);
   assert.equal(core.apiUrl('javascript:alert(1)', api), '');
   assert.equal(core.apiUrl('https://evil.example/x.webp', api), '');
