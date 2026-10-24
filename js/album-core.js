@@ -1,6 +1,6 @@
 /* ========================================
    Happy Booth — Album page
-   Pure logic (no DOM): tested with `node --test tests/`
+   Pure logic (no DOM): tested with `node --test tests/*.test.cjs`
    ======================================== */
 
 (function (root, factory) {
@@ -19,6 +19,7 @@
   var FAST_POLL_MS = 5000;
   var SLOW_POLL_MS = 30000;
   var SLOW_AFTER_MS = 10 * 60 * 1000;
+  var SWIPE_MIN_PX = 40;
   var DATE_FORMAT = new Intl.DateTimeFormat('vi-VN', {
     timeZone: 'Asia/Ho_Chi_Minh',
     day: '2-digit',
@@ -60,8 +61,12 @@
     return now - Date.parse(album.created_at) > STALE_AFTER_MS;
   }
 
+  function isExpired(album, now) {
+    return !!(album && album.expires_at) && Date.parse(album.expires_at) <= now;
+  }
+
   function state(kind, album, now) {
-    return { kind: kind, album: album, stale: isStale(album, now), offline: false };
+    return { kind: kind, album: album, stale: isStale(album, now), offline: false, throttled: false };
   }
 
   // result: { status, body } from one fetch; status 0 = network failure.
@@ -83,15 +88,18 @@
         kind: prev.kind,
         album: prev.album,
         stale: isStale(prev.album, now),
-        offline: true
+        offline: status !== 429,
+        throttled: status === 429
       };
     }
-    return { kind: 'error', album: null, stale: false, offline: true };
+    return { kind: 'error', album: null, stale: false, offline: status !== 429, throttled: status === 429 };
   }
 
   function nextPollDelay(current, lastProgressAt, now) {
     var kind = current && current.kind;
     if (kind === 'complete' || kind === 'expired' || kind === 'not_found') return null;
+    // Guests on one venue Wi-Fi share an IP: when rate-limited, back off.
+    if (current.throttled) return SLOW_POLL_MS;
     return now - lastProgressAt < SLOW_AFTER_MS ? FAST_POLL_MS : SLOW_POLL_MS;
   }
 
@@ -123,6 +131,14 @@
     return i;
   }
 
+  // 1 = next, -1 = previous, 0 = not a swipe: too short, mostly vertical (a
+  // page scroll in an arc), or the photo is pinch-zoomed (the guest is panning).
+  function swipeDirection(dx, dy, scale) {
+    if (scale > 1.01) return 0;
+    if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) <= 1.5 * Math.abs(dy)) return 0;
+    return dx < 0 ? 1 : -1;
+  }
+
   function wrapIndex(i, n) {
     return ((i % n) + n) % n;
   }
@@ -138,6 +154,8 @@
     apiUrl: apiUrl,
     deriveState: deriveState,
     isStale: isStale,
+    isExpired: isExpired,
+    swipeDirection: swipeDirection,
     nextPollDelay: nextPollDelay,
     indexAfterUpdate: indexAfterUpdate,
     chooseIndex: chooseIndex,

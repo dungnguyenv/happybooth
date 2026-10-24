@@ -30,7 +30,6 @@
     next: document.querySelector('[data-album-next]'),
     toast: document.querySelector('[data-album-toast]')
   };
-  var SWIPE_PX = 40;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var code = null;
@@ -44,6 +43,9 @@
   var thumbsKey = '';
   var toastTimer = null;
   var touchX = null;
+  var touchY = null;
+  var wantedSrc = '';      // the preview the stage should end up showing
+  var followThumb = true;  // scroll the strip to the selected thumb on the next render
 
   function init() {
     code = core.readCode(window.location.search);
@@ -94,8 +96,10 @@
   }
 
   function onVisibility() {
+    // Every return to the tab re-reads the album, complete ones included, so a
+    // link that expired while the tab was in the background shows as expired.
     if (document.hidden) clearTimeout(timer);
-    else if (code && core.nextPollDelay(view, lastProgressAt, Date.now()) !== null) refresh();
+    else if (code) refresh();
   }
 
   function apply(next) {
@@ -106,7 +110,9 @@
         if (lastUploaded >= 0 && album.uploaded > lastUploaded) lastProgressAt = Date.now();
         lastUploaded = album.uploaded;
       }
+      var before = index;
       index = core.chooseIndex(prevFiles, index, album.files, userPicked);
+      if (index !== before || !prevFiles) followThumb = true;
     }
     view = next;
     render();
@@ -181,15 +187,16 @@
       if (pending) pending.remove();
       els.image.hidden = false;
       var preview = url(file.preview_url);
-      if (els.image.getAttribute('src') !== preview) {
+      if (wantedSrc !== preview) {
         showImage(preview);
       }
       preloadAround(files);
-      els.image.alt = (album.event.name || 'Album') + ' – ảnh ' + (index + 1);
+      els.image.alt = ((album.event && album.event.name) || 'Album') + ' – ảnh ' + (index + 1);
       els.download.disabled = false;
     } else {
       els.image.hidden = true;
       els.image.removeAttribute('src');
+      wantedSrc = '';
       if (!pending) {
         pending = document.createElement('div');
         pending.className = 'album-pending';
@@ -225,7 +232,10 @@
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('aria-current', i === index ? 'true' : 'false');
     }
-    keepThumbInView(buttons[index]);
+    if (followThumb) {
+      keepThumbInView(buttons[index]);
+      followThumb = false;
+    }
   }
 
   function keepThumbInView(button) {
@@ -246,10 +256,11 @@
       var dot = document.createElement('span');
       dot.className = 'album-progress__dot';
       dot.setAttribute('aria-hidden', 'true');
-      els.progress.replaceChildren(
-        dot,
+      els.progress.textContent = '';
+      els.progress.appendChild(dot);
+      els.progress.appendChild(document.createTextNode(
         album.uploaded + '/' + album.total + ' ảnh đã sẵn sàng · trang tự cập nhật'
-      );
+      ));
     } else {
       els.progress.textContent = album.total + ' ảnh · chạm vào ảnh nhỏ để xem';
     }
@@ -257,7 +268,9 @@
 
   function renderNotice() {
     var text = '';
-    if (view.offline && view.kind !== 'error') {
+    if (view.throttled && view.kind !== 'error') {
+      text = 'Nhiều người đang xem cùng lúc, trang sẽ cập nhật chậm hơn một chút…';
+    } else if (view.offline && view.kind !== 'error') {
       text = 'Mất kết nối mạng, đang thử lại…';
     } else if (view.stale) {
       text = 'Một số ảnh chưa được tải lên. Vui lòng liên hệ hotline ' + HOTLINE + ' để được hỗ trợ.';
@@ -290,6 +303,7 @@
     if (!button) return;
     index = Number(button.getAttribute('data-index'));
     userPicked = true;
+    followThumb = true;
     render();
   }
 
@@ -303,16 +317,20 @@
     if (!viewing()) return;
     index = core.wrapIndex(index + delta, view.album.files.length);
     userPicked = true;
+    followThumb = true;
     render();
   }
 
   function showImage(url) {
+    wantedSrc = url;
     if (reduceMotion || !els.image.getAttribute('src')) {
       els.image.src = url;
       return;
     }
     els.image.classList.add('is-fading');
     var swap = function () {
+      // Quick taps queue several swaps; only the latest photo may land.
+      if (wantedSrc !== url) return;
       els.image.src = url;
       els.image.classList.remove('is-fading');
     };
@@ -337,17 +355,25 @@
   }
 
   function onTouchStart(e) {
-    touchX = e.touches.length === 1 ? e.touches[0].clientX : null;
+    var one = e.touches.length === 1 ? e.touches[0] : null;
+    touchX = one ? one.clientX : null;
+    touchY = one ? one.clientY : null;
   }
 
   function onTouchEnd(e) {
     if (touchX === null) return;
-    var dx = e.changedTouches[0].clientX - touchX;
-    touchX = null;
-    if (Math.abs(dx) >= SWIPE_PX) go(dx < 0 ? 1 : -1);
+    var t = e.changedTouches[0];
+    var scale = window.visualViewport ? window.visualViewport.scale : 1;
+    var direction = core.swipeDirection(t.clientX - touchX, t.clientY - touchY, scale);
+    touchX = touchY = null;
+    if (direction) go(direction);
   }
 
   function onDownload() {
+    if (core.isExpired(view && view.album, Date.now())) {
+      refresh();
+      return;
+    }
     var file = viewing() && view.album.files[index];
     // download_url carries ?download=1: the API answers with
     // Content-Disposition: attachment (the download attribute is ignored

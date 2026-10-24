@@ -1,4 +1,4 @@
-// Run with: node --test tests/
+// Run with: node --test tests/*.test.cjs
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const core = require('../js/album-core.js');
@@ -64,8 +64,10 @@ test('deriveState keeps the previous view when the network drops', () => {
   for (const status of [0, 502, 429]) {
     const s = core.deriveState({ status: status, body: null }, prev, NOW);
     assert.equal(s.kind, 'partial');
-    assert.equal(s.offline, true);
     assert.equal(s.album, prev.album);
+    // A 429 is not a lost connection: it is rate limiting, shown differently.
+    assert.equal(s.offline, status !== 429);
+    assert.equal(s.throttled, status === 429);
   }
   assert.equal(core.deriveState(ok(album(2, 3)), prev, NOW).offline, false);
 });
@@ -137,4 +139,26 @@ test('deriveState coerces counts to numbers', () => {
   assert.equal(typeof s.album.uploaded, 'number');
   assert.equal(s.album.uploaded, 0);
   assert.equal(s.album.total, 3);
+});
+
+test('swipeDirection: horizontal, deliberate, not zoomed', () => {
+  assert.equal(core.swipeDirection(-80, 10, 1), 1);   // swipe left → next
+  assert.equal(core.swipeDirection(80, -5, 1), -1);   // swipe right → previous
+  assert.equal(core.swipeDirection(30, 0, 1), 0);     // too short
+  assert.equal(core.swipeDirection(45, 200, 1), 0);   // a page scroll in an arc
+  assert.equal(core.swipeDirection(-120, 10, 2), 0);  // panning a zoomed photo
+});
+
+test('isExpired', () => {
+  assert.equal(core.isExpired({ expires_at: '2026-10-24T09:59:59Z' }, NOW), true);
+  assert.equal(core.isExpired({ expires_at: '2026-11-08T09:50:00Z' }, NOW), false);
+  assert.equal(core.isExpired(null, NOW), false);
+});
+
+test('rate-limited polls back off', () => {
+  const prev = core.deriveState(ok(album(1, 3)), null, NOW);
+  const limited = core.deriveState({ status: 429, body: null }, prev, NOW);
+  assert.equal(limited.throttled, true);
+  assert.equal(core.nextPollDelay(limited, NOW - 1 * MIN, NOW), 30000);
+  assert.equal(core.deriveState(ok(album(2, 3)), limited, NOW).throttled, false);
 });

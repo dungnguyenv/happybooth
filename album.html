@@ -99,7 +99,8 @@
       padding: 24px 88px;
       background: var(--color-stone);
       overflow: hidden;
-      touch-action: pan-y;
+      /* Vertical scroll and pinch-zoom stay native; horizontal swipes change photos. */
+      touch-action: pan-y pinch-zoom;
     }
     .album-photo { position: relative; display: flex; max-width: 100%; max-height: 100%; }
     .album-photo img {
