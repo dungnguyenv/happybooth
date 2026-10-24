@@ -88,6 +88,23 @@
     return Math.max(0, Math.min(currentIndex, nextFiles.length - 1));
   }
 
+  function firstUploaded(files) {
+    for (var i = 0; i < files.length; i++) {
+      if (files[i].status === 'uploaded') return i;
+    }
+    return 0;
+  }
+
+  // Which photo to show after new data arrives. Until the guest picks one,
+  // a pending placeholder gives way to the first photo that has arrived.
+  function chooseIndex(prevFiles, currentIndex, nextFiles, userPicked) {
+    if (!prevFiles) return firstUploaded(nextFiles);
+    var i = indexAfterUpdate(prevFiles, currentIndex, nextFiles);
+    var current = nextFiles[i];
+    if (!userPicked && current && current.status !== 'uploaded') return firstUploaded(nextFiles);
+    return i;
+  }
+
   function wrapIndex(i, n) {
     return ((i % n) + n) % n;
   }
@@ -104,6 +121,7 @@
     isStale: isStale,
     nextPollDelay: nextPollDelay,
     indexAfterUpdate: indexAfterUpdate,
+    chooseIndex: chooseIndex,
     wrapIndex: wrapIndex,
     formatDate: formatDate
   };

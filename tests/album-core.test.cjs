@@ -107,3 +107,17 @@ test('wrapIndex', () => {
 test('formatDate uses Vietnam time', () => {
   assert.equal(core.formatDate('2026-11-07T18:30:00Z'), '08/11/2026');
 });
+
+test('chooseIndex shows the first photo that arrives until the guest picks one', () => {
+  const before = [{ name: 'a', status: 'pending' }, { name: 'b', status: 'pending' }];
+  const after = [{ name: 'a', status: 'pending' }, { name: 'b', status: 'uploaded' }];
+  assert.equal(core.chooseIndex(before, 0, after, false), 1);
+  // Once the guest has picked a photo, never move them.
+  assert.equal(core.chooseIndex(before, 0, after, true), 0);
+  // Viewing an uploaded photo: stay on it.
+  const viewing = [{ name: 'a', status: 'uploaded' }, { name: 'b', status: 'pending' }];
+  const later = [{ name: 'a', status: 'uploaded' }, { name: 'b', status: 'uploaded' }];
+  assert.equal(core.chooseIndex(viewing, 0, later, false), 0);
+  // First load: the first uploaded photo.
+  assert.equal(core.chooseIndex(null, 0, after, false), 1);
+});
