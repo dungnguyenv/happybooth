@@ -23,8 +23,15 @@
     eventName: document.querySelector('[data-album-event-name]'),
     eventDesc: document.querySelector('[data-album-event-desc]'),
     expiry: document.querySelector('[data-album-expiry]'),
-    download: document.querySelector('[data-album-download]')
+    download: document.querySelector('[data-album-download]'),
+    share: document.querySelector('[data-album-share]'),
+    stage: document.querySelector('[data-album-stage]'),
+    prev: document.querySelector('[data-album-prev]'),
+    next: document.querySelector('[data-album-next]'),
+    toast: document.querySelector('[data-album-toast]')
   };
+  var SWIPE_PX = 40;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var code = null;
   var api = null;
@@ -35,6 +42,8 @@
   var lastProgressAt = Date.now();
   var timer = null;
   var thumbsKey = '';
+  var toastTimer = null;
+  var touchX = null;
 
   function init() {
     code = core.readCode(window.location.search);
@@ -46,6 +55,13 @@
     history.replaceState(null, '', '/' + code);
     api = core.apiBase(window.location.hostname);
     els.thumbs.addEventListener('click', onThumbClick);
+    els.prev.addEventListener('click', function () { go(-1); });
+    els.next.addEventListener('click', function () { go(1); });
+    els.download.addEventListener('click', onDownload);
+    els.share.addEventListener('click', onShare);
+    document.addEventListener('keydown', onKey);
+    els.stage.addEventListener('touchstart', onTouchStart, { passive: true });
+    els.stage.addEventListener('touchend', onTouchEnd, { passive: true });
     document.addEventListener('visibilitychange', onVisibility);
     refresh();
   }
@@ -164,8 +180,9 @@
       if (pending) pending.remove();
       els.image.hidden = false;
       if (els.image.getAttribute('src') !== file.preview_url) {
-        els.image.src = file.preview_url;
+        showImage(file.preview_url);
       }
+      preloadAround(files);
       els.image.alt = (album.event.name || 'Album') + ' – ảnh ' + (index + 1);
       els.download.disabled = false;
     } else {
@@ -205,6 +222,16 @@
     var buttons = els.thumbs.querySelectorAll('.album-thumb');
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('aria-current', i === index ? 'true' : 'false');
+    }
+    keepThumbInView(buttons[index]);
+  }
+
+  function keepThumbInView(button) {
+    if (!button) return;
+    var strip = els.thumbs;
+    var left = button.offsetLeft - strip.offsetLeft;
+    if (left < strip.scrollLeft || left + button.offsetWidth > strip.scrollLeft + strip.clientWidth) {
+      strip.scrollLeft = left - (strip.clientWidth - button.offsetWidth) / 2;
     }
   }
 
@@ -256,6 +283,91 @@
     index = Number(button.getAttribute('data-index'));
     userPicked = true;
     render();
+  }
+
+  /* ---------- Viewer ---------- */
+
+  function viewing() {
+    return view && (view.kind === 'partial' || view.kind === 'complete') && view.album.files.length;
+  }
+
+  function go(delta) {
+    if (!viewing()) return;
+    index = core.wrapIndex(index + delta, view.album.files.length);
+    userPicked = true;
+    render();
+  }
+
+  function showImage(url) {
+    if (reduceMotion || !els.image.getAttribute('src')) {
+      els.image.src = url;
+      return;
+    }
+    els.image.classList.add('is-fading');
+    var swap = function () {
+      els.image.src = url;
+      els.image.classList.remove('is-fading');
+    };
+    // Swap once the next photo is decoded, so the fade never shows a blank frame.
+    var next = new Image();
+    next.onload = next.onerror = function () { setTimeout(swap, 120); };
+    next.src = url;
+  }
+
+  function preloadAround(files) {
+    [-1, 1].forEach(function (delta) {
+      var f = files[core.wrapIndex(index + delta, files.length)];
+      if (f && f.preview_url) new Image().src = f.preview_url;
+    });
+  }
+
+  function onKey(e) {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'ArrowRight') go(1);
+  }
+
+  function onTouchStart(e) {
+    touchX = e.touches.length === 1 ? e.touches[0].clientX : null;
+  }
+
+  function onTouchEnd(e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) >= SWIPE_PX) go(dx < 0 ? 1 : -1);
+  }
+
+  function onDownload() {
+    var file = viewing() && view.album.files[index];
+    // download_url carries ?download=1: the API answers with
+    // Content-Disposition: attachment (the download attribute is ignored
+    // cross-origin, notably on iOS), so this saves without leaving the page.
+    if (file && file.download_url) window.location.href = file.download_url;
+  }
+
+  function onShare() {
+    var url = window.location.origin + '/' + code;
+    var title = (view && view.album && view.album.event && view.album.event.name) || 'Ảnh Happy Booth';
+    if (navigator.share) {
+      navigator.share({ title: title, url: url }).catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function () { toast('Đã copy link'); },
+        function () { toast(url); }
+      );
+    } else {
+      toast(url);
+    }
+  }
+
+  function toast(text) {
+    els.toast.textContent = text;
+    els.toast.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { els.toast.classList.remove('is-visible'); }, 2400);
   }
 
   /* ---------- Helpers ---------- */
