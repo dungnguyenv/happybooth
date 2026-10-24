@@ -179,6 +179,13 @@
     return 'photo';
   }
 
+  // MediaError codes: 1 aborted and 2 network (a venue connection dropping
+  // mid-clip) are worth another tap; 3 decode and 4 unsupported mean this
+  // browser cannot play the clip at all.
+  function videoErrorRetryable(code) {
+    return code === 1 || code === 2;
+  }
+
   // How the album counts its files: a GIF is still a photo to a guest.
   function albumNoun(files) {
     for (var i = 0; i < files.length; i++) {
@@ -202,6 +209,7 @@
     wrapIndex: wrapIndex,
     formatDate: formatDate,
     fileKind: fileKind,
-    albumNoun: albumNoun
+    albumNoun: albumNoun,
+    videoErrorRetryable: videoErrorRetryable
   };
 });

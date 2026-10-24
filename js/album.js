@@ -295,12 +295,26 @@
   }
 
   function onPlay() {
+    // After a dropped connection the element is in error: fetch the clip again.
+    if (els.video.error) els.video.load();
     var started = els.video.play();
-    if (started && started.catch) started.catch(function () {});
+    if (started && started.catch) {
+      started.catch(function (err) {
+        if (err && err.name === 'AbortError') return; // the guest moved on
+        // Some in-app browsers refuse even after a tap: hand over the native controls.
+        els.play.hidden = true;
+        els.video.controls = true;
+      });
+    }
   }
 
   function onVideoError() {
     if (els.video.dataset.src === undefined) return; // from stopVideo emptying it
+    var error = els.video.error;
+    if (core.videoErrorRetryable(error && error.code)) {
+      els.play.hidden = false;
+      return;
+    }
     els.play.hidden = true;
     els.videoError.hidden = false;
   }

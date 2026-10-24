@@ -208,3 +208,11 @@ test('albumNoun mentions video only when there is one', () => {
   assert.equal(core.albumNoun([{ name: 'a.jpg' }, { name: 'b.gif' }]), 'ảnh');
   assert.equal(core.albumNoun([{ name: 'a.jpg' }, { name: 'c.mp4', kind: 'video' }]), 'ảnh & video');
 });
+
+test('videoErrorRetryable: a dropped connection is worth another tap, a codec is not', () => {
+  assert.equal(core.videoErrorRetryable(1), true);  // MEDIA_ERR_ABORTED
+  assert.equal(core.videoErrorRetryable(2), true);  // MEDIA_ERR_NETWORK
+  assert.equal(core.videoErrorRetryable(3), false); // MEDIA_ERR_DECODE
+  assert.equal(core.videoErrorRetryable(4), false); // MEDIA_ERR_SRC_NOT_SUPPORTED
+  assert.equal(core.videoErrorRetryable(undefined), false);
+});
